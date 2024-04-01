@@ -3,13 +3,13 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAbtQYUIYNrdYpQmxgvNTEnjsE3SLgvDyo",
-    authDomain: "estudos-react-d4762.firebaseapp.com",
-    projectId: "estudos-react-d4762",
-    storageBucket: "estudos-react-d4762.appspot.com",
-    messagingSenderId: "893680831874",
-    appId: "1:893680831874:web:c8e8322ed38d6e65b0539b",
-    measurementId: "G-Z3872H7GTR"
+    apiKey: "AIzaSyBa3qsXRypCiP8iWFji575kd_53VzI_BaA",
+    authDomain: "cashcontrol-65d7c.firebaseapp.com",
+    projectId: "cashcontrol-65d7c",
+    storageBucket: "cashcontrol-65d7c.appspot.com",
+    messagingSenderId: "1055946286332",
+    appId: "1:1055946286332:web:d3c97307e7099efd042379",
+    measurementId: "G-9BRE55DD2P"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);

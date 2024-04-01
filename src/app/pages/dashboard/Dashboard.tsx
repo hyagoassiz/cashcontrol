@@ -1,12 +1,15 @@
-import { Header } from "../../shared/components/appBar/Header";
 import { MenuDrawer } from "../../shared/components/MenuDrawer/MenuDrawer";
+import { Header } from "../../shared/components/AppBar/AppBar";
 
 export const Dashboard = () => {
   return (
     <div>
-      <MenuDrawer>
+
         <Header />
-      </MenuDrawer>
+        <MenuDrawer>Teste</MenuDrawer>
+        
+
+
     </div>
   );
 };
