@@ -1,11 +1,11 @@
 import { MenuDrawer } from "../../shared/components/MenuDrawer/MenuDrawer";
-import { Header } from "../../shared/components/AppBar/AppBar";
+import { MuiAppBar } from "../../shared/components/MuiAppBar/AppBar";
 
 export const Dashboard = () => {
   return (
     <div>
 
-        <Header />
+        <MuiAppBar />
         <MenuDrawer>Teste</MenuDrawer>
         
 

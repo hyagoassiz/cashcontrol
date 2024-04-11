@@ -5,3 +5,7 @@ export const LOGIN = {
 export const DASHBOARD = {
     LIST: '/inicio'
 }
+
+export const CATEGORIAS = { 
+    LIST: '/categorias'
+}
