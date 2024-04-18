@@ -19,6 +19,19 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
 
   const tipos = [{ value: "Entrada" }, { value: "Saída" }];
 
+  const onSubmitWithDefaults = (data: ICategoria) => {
+    // Defina o nome padrão e o ativo como true
+    const dataWithDefaults: ICategoria = {
+      ...data,
+      usuario: "DxARypJQGMZeb1fMT4ft4BI4S2D2",
+      ativo: true
+    };
+
+    // Chame a função onSubmit com os dados modificados
+    onSubmit(dataWithDefaults);
+  };
+
+
   return (
     <MuiModal
       open={isOpen}
@@ -26,7 +39,7 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
       buttons={
         <>
           <Button onClick={handleModal}>Fechar</Button>
-          <Button variant="contained" onClick={handleSubmit(onSubmit)}>
+          <Button variant="contained" onClick={handleSubmit(onSubmitWithDefaults)}>
             Salvar
           </Button>
         </>
