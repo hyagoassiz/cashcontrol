@@ -17,8 +17,10 @@ interface ISearchBar {
   placeholder?: string;
   value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  toggleOpen: () => void;
   onClickClose: () => void;
+  handleSearchBar: () => void;
+  handleFilter: () => void
+  handleBack: () => void;
 }
 
 export const MuiFrame: React.FC<MuiFrameProps> = ({
@@ -51,7 +53,7 @@ export const MuiFrame: React.FC<MuiFrameProps> = ({
                 sx={{ display: "flex", alignItems: "center", width: "100%" }}
               >
                 <Tooltip title="Voltar" placement="top">
-                  <IconButton onClick={searchBar?.toggleOpen}>
+                  <IconButton onClick={searchBar?.handleBack}>
                     <ArrowBackIosIcon
                       sx={{
                         color: "white",
@@ -73,7 +75,7 @@ export const MuiFrame: React.FC<MuiFrameProps> = ({
                 }}
               >
                 <Tooltip title="Pesquisar" placement="top">
-                  <IconButton onClick={searchBar?.toggleOpen}>
+                  <IconButton onClick={searchBar?.handleSearchBar}>
                     <SearchIcon
                       sx={{ marginRight: theme.spacing(1), color: "white" }}
                     />
@@ -81,7 +83,7 @@ export const MuiFrame: React.FC<MuiFrameProps> = ({
                 </Tooltip>
 
                 <Tooltip title="Filtrar" placement="top">
-                  <IconButton onClick={searchBar?.toggleOpen}>
+                  <IconButton onClick={searchBar?.handleFilter}>
                     <FilterListIcon sx={{ color: "white" }} />
                   </IconButton>
                 </Tooltip>
@@ -92,7 +94,6 @@ export const MuiFrame: React.FC<MuiFrameProps> = ({
           <SearchBar
             onClickClose={searchBar.onClickClose}
             placeholder={searchBar.placeholder}
-            // height="64px"
             value={searchBar.value}
             onChange={searchBar.onChange}
           />

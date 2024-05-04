@@ -7,6 +7,9 @@ import {
   getDocs,
   query,
   where,
+  doc,
+  getDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 export const adcionarCategoria = async function (
@@ -28,17 +31,22 @@ export const adcionarCategoria = async function (
 };
 
 export const obterCategoriasPorUsuario = async function (
-  usuario: string
+  usuario: string,
+  ativo: boolean[] // 'ativo' é uma lista de booleanos
 ): Promise<ICategoria[]> {
   try {
+    // Crie uma consulta base para a coleção 'categoria'
     const categoriasQuery = query(
       collection(db, "categoria"),
-      where("usuario", "==", usuario)
+      where("usuario", "==", usuario),
+      where("ativo", "in", ativo) // Aplica o filtro 'ativo' como uma lista de booleanos
     );
 
+    // Execute a consulta
     const querySnapshot = await getDocs(categoriasQuery);
     const categorias: ICategoria[] = [];
 
+    // Mapeie os resultados da consulta para objetos ICategoria
     querySnapshot.forEach((doc) => {
       const categoriaData = doc.data();
       const categoria: ICategoria = {
@@ -55,5 +63,35 @@ export const obterCategoriasPorUsuario = async function (
   } catch (error) {
     console.error("Erro ao obter categorias do usuário do Firestore:", error);
     return [];
+  }
+};
+
+export const editarSituacaoCategoria = async function (
+  id: string,
+  ativo: boolean
+): Promise<IReturnBackEnd> {
+  try {
+    const categoriaRef = doc(db, "categoria", id);
+    
+    const categoriaDoc = await getDoc(categoriaRef);
+    if (!categoriaDoc.exists()) {
+      throw new Error("Documento não encontrado");
+    }
+
+    // Atualiza somente o campo 'ativo' da categoria
+    await updateDoc(categoriaRef, {
+      ativo: ativo
+    });
+
+    return {
+      status: 200,
+      message: "success",
+    };
+  } catch (error) {
+    console.error("Erro ao editar categoria no Firestore:", error);
+    return {
+      status: 404,
+      message: "error",
+    };
   }
 };

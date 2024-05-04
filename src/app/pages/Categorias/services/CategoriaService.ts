@@ -1,11 +1,10 @@
 import { ICategoria } from "../interfaces"
-import { adcionarCategoria, obterCategoriasPorUsuario } from "./endpoints"
+import { adcionarCategoria, editarSituacaoCategoria, obterCategoriasPorUsuario } from "./endpoints"
 
 export const CategoriaService = {
     async criarCategoria(categoriaData: ICategoria) {
       try {
         const response = await adcionarCategoria(categoriaData);
-        // Verifica a resposta e retorna de acordo com a resposta do backend
         if (response.status === 200) {
           return { success: true, message: 'Categoria adicionada com sucesso!' };
         } else {
@@ -16,13 +15,26 @@ export const CategoriaService = {
         return { success: false, message: 'Erro ao criar categoria. Verifique sua conexão com a internet.' };
       }
     },
-    async obterCategoriasPorUsuario(usuario: string): Promise<ICategoria[]> {
+    async obterCategoriasPorUsuario(usuario: string, ativo: boolean[]): Promise<ICategoria[]> {
       try {
-        const categorias = await obterCategoriasPorUsuario(usuario);
+        const categorias = await obterCategoriasPorUsuario(usuario, ativo);
         return categorias;
       } catch (error) {
         console.error('Erro ao obter categorias do usuário:', error);
         return [];
+      }
+    },
+    async editarCategoria(id: string, ativo: boolean) {
+      try {
+        const response = await editarSituacaoCategoria(id, ativo);
+        if (response.status === 200) {
+          return { success: true, message: 'Categoria editada com sucesso!' };
+        } else {
+          return { success: false, message: 'Erro ao editar categoria.' };
+        }
+      } catch (error) {
+        console.error('Erro ao editar categoria:', error);
+        return { success: false, message: 'Erro ao editar categoria. Verifique sua conexão com a internet.' };
       }
     }
   }

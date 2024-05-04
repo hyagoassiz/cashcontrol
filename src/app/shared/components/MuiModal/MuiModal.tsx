@@ -85,9 +85,8 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
             }}
           >
             {children}
-          </Box>{" "}
-          {/* Aplicando padding apenas a este Box */}
-          <Box //colocar ele no final da modal
+          </Box>
+          <Box
             width="100%"
             height={theme.spacing(6.6)}
             bgcolor={"#F0F0F0"}

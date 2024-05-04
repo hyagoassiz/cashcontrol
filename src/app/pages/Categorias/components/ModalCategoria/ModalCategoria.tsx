@@ -1,36 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
 import { MuiModal } from "../../../../shared/components/MuiModal/MuiModal";
 import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { ICategoria } from "../../interfaces";
 import { Controller, useForm } from "react-hook-form";
+import { CategoriaService } from "../../services/CategoriaService";
+// import { useListagemCategorias } from "../../hooks/useListagemCategorias";
+import { FilterContext } from "../../contexts/filterContext";
 
 interface IModalCategoriaProps {
   isOpen: boolean;
-  handleModal: () => void;
-  onSubmit: (data: ICategoria) => void;
 }
 
-export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
-  isOpen,
-  handleModal,
-  onSubmit,
-}) => {
+export const ModalCategoria: React.FC<IModalCategoriaProps> = ({ isOpen }) => {
+  const { setIsOpenAddModalCategoria } = useContext(FilterContext);
+  
   const { handleSubmit, control } = useForm<ICategoria>();
 
   const tipos = [{ value: "Entrada" }, { value: "Saída" }];
 
-  const onSubmitWithDefaults = (data: ICategoria) => {
-    // Defina o nome padrão e o ativo como true
-    const dataWithDefaults: ICategoria = {
-      ...data,
-      usuario: "DxARypJQGMZeb1fMT4ft4BI4S2D2",
-      ativo: true
-    };
+  const onSubmit = async (data: ICategoria) => {
+    try {
+      const response = await CategoriaService.criarCategoria(data);
+      if (response.success) {
+        console.log(response.message);
+      } else {
+        console.error(response.message);
+      }
+    } catch (error) {
+      console.error("Erro ao criar categoria:", error);
+    }
 
-    // Chame a função onSubmit com os dados modificados
-    onSubmit(dataWithDefaults);
+    setIsOpenAddModalCategoria(false);
   };
-
 
   return (
     <MuiModal
@@ -38,8 +39,10 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
       title="Criar Categoria"
       buttons={
         <>
-          <Button onClick={handleModal}>Fechar</Button>
-          <Button variant="contained" onClick={handleSubmit(onSubmitWithDefaults)}>
+          <Button onClick={() => setIsOpenAddModalCategoria(false)}>
+            Fechar
+          </Button>
+          <Button variant="contained" onClick={handleSubmit(onSubmit)}>
             Salvar
           </Button>
         </>
@@ -53,7 +56,7 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
             rules={{ required: true }}
             render={({ field, fieldState: { error } }) => (
               <TextField
-              {...field}
+                {...field}
                 label="Nome"
                 name="nome"
                 type="text"
@@ -63,7 +66,7 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
                 value={field.value}
                 required
                 style={{
-                  width: "250px",
+                  width: "300px",
                 }}
                 inputProps={{
                   maxLength: 30,
@@ -87,7 +90,7 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
                 variant="standard"
                 required
                 style={{
-                  width: "100px",
+                  width: "130px",
                   marginLeft: "15px",
                 }}
                 inputProps={{

@@ -1,3 +1,3 @@
 export * from './dashboard/Dashboard';
 export * from './login/Login';
-export * from './Categorias/Categorias'
+export * from './Categorias'

@@ -24,11 +24,11 @@ export const MuiTable: React.FC<IMuiTable> = ({ columns, data }) => {
   const theme = useTheme();
   return (
     <>
-      <Table>
-        <TableHead sx={{ height: theme.spacing(3) }} >
+      <Table size="small">
+        <TableHead sx={{ height: theme.spacing(3) }}>
           <TableRow>
             {columns.map((column) => (
-              <TableCell sx={{fontWeight: 600}} key={column.key}>{column.label}</TableCell>
+              <TableCell size="small" sx={{fontWeight: 600}} key={column.key}>{column.label}</TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -36,7 +36,7 @@ export const MuiTable: React.FC<IMuiTable> = ({ columns, data }) => {
           {data.map((row, index) => (
             <TableRow key={index}>
               {columns.map((column) => (
-                <TableCell key={column.key}>{row[column.key]}</TableCell>
+                <TableCell size="small" key={column.key}>{row[column.key]}</TableCell>
               ))}
             </TableRow>
           ))}
