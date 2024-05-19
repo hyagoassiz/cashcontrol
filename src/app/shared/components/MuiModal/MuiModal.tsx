@@ -14,8 +14,7 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
   children,
   buttons,
 }) => {
-  const theme = useTheme();
-
+  const theme = useTheme()
   return (
     <>
       {open && (
@@ -37,67 +36,45 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
         keepMounted
         sx={{
           backgroundColor: "transparent",
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          width: theme.spacing(60),
-          height: theme.spacing(35),
-          transform: "translate(-50%, -50%)",
-          boxShadow: "none",
-          outline: "none",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
+      
       >
         <Box
           sx={{
             backgroundColor: "white",
-            width: "100%",
-            height: "100%",
             display: "flex",
             flexDirection: "column",
+            maxWidth: "90%",
+            maxHeight: "90%",
+            overflow: "auto",
           }}
         >
           <Box
-            width="100%"
-            height={theme.spacing(6.1)}
-            bgcolor={"#1976D2"}
-            alignItems="center"
-            marginBottom={theme.spacing(0.8)}
-            display="flex"
-          >
-            <Typography
-              variant="h6"
-              color="white"
-              sx={{
-                marginLeft: theme.spacing(2),
-              }}
-            >
-              {title}
-            </Typography>
-          </Box>
-          <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexGrow: 1,
-              padding: theme.spacing(2),
-              marginBottom: 1,
+              bgcolor: "#1976D2",
+              color: "white",
+              padding: theme.spacing(1),
             }}
           >
-            {children}
+            <Typography variant="h6">{title}</Typography>
           </Box>
-          <Box
-            width="100%"
-            height={theme.spacing(6.6)}
-            bgcolor={"#F0F0F0"}
-            alignItems="center"
-            display="flex"
-            justifyContent="flex-end"
-          >
-            {buttons && (
-              <Box sx={{ marginRight: theme.spacing(2) }}>{buttons}</Box>
-            )}
-          </Box>
+          <Box sx={{ padding: theme.spacing(3) }}>{children}</Box>
+          {buttons && (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginTop: theme.spacing(4),
+                backgroundColor: '#EBEBEB',
+                padding: theme.spacing(1),
+              }}
+            >
+              {buttons}
+            </Box>
+          )}
         </Box>
       </Modal>
     </>

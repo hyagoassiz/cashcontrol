@@ -1,2 +1,2 @@
-export * from './ICategoria'
+export * from './IContas'
 export * from './IFilterData'

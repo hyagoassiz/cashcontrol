@@ -1,3 +1,2 @@
-export * from './dashboard/Dashboard';
-export * from './login/Login';
 export * from './Categorias'
+export * from './Contas'

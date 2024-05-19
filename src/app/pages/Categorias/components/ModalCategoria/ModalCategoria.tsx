@@ -5,16 +5,23 @@ import { ICategoria } from "../../interfaces";
 import { Controller, useForm } from "react-hook-form";
 import { CategoriaService } from "../../services/CategoriaService";
 // import { useListagemCategorias } from "../../hooks/useListagemCategorias";
-import { FilterContext } from "../../contexts/filterContext";
+import { ListagemCategoriasContext } from "../../contexts";
 
 interface IModalCategoriaProps {
   isOpen: boolean;
 }
 
 export const ModalCategoria: React.FC<IModalCategoriaProps> = ({ isOpen }) => {
-  const { setIsOpenAddModalCategoria } = useContext(FilterContext);
+  const { setIsOpenAddModalCategoria } = useContext(ListagemCategoriasContext);
   
-  const { handleSubmit, control } = useForm<ICategoria>();
+  const { handleSubmit, control } = useForm<ICategoria>({
+    defaultValues: {
+      usuario: "DxARypJQGMZeb1fMT4ft4BI4S2D2",
+      nome: "",
+      tipo: "Entrada",
+      ativo: true
+    },
+  });
 
   const tipos = [{ value: "Entrada" }, { value: "Saída" }];
 

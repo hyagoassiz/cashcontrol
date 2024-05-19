@@ -1,16 +1,17 @@
-// import { ThemeProvider } from "@emotion/react";
 import "../App.css";
 import { AppRoutes } from "./routes";
-// import { DarkTheme } from './shared/themes';
+import { MuiCircularProgress } from "./shared/components/MuiCircularProgress/MuiCircularProgress";
+import { ProgressProvider } from "./shared/contexts/ProgressContext";
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
-      {/* <ThemeProvider theme={DarkTheme}> */}
+      <ProgressProvider>
         <AppRoutes />
-      {/* </ThemeProvider> */}
+        <MuiCircularProgress />
+      </ProgressProvider>
     </>
   );
-}
+};
 
 export default App;

@@ -2,15 +2,14 @@ import { Container } from "@mui/material";
 import MuiAddButton from "../../../shared/components/MuiAddButton/MuiAddButton";
 import { MuiAppBar } from "../../../shared/components/MuiAppBar/AppBar";
 import { MuiFrame } from "../../../shared/components/MuiFrame/MuiFrame";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ModalCategoria } from "../components/ModalCategoria/ModalCategoria";
 import { useListagemCategorias } from "../hooks/useListagemCategorias";
 import { MuiTable } from "../../../shared/components/MuiTable/MuiTable";
 import { COLLUMS_CATEGORIA } from "../utils/collumnsNames";
 import { mountData } from "../utils/mountData";
-import { MuiCircularProgress } from "../../../shared/components/MuiCircularProgress/MuiCircularProgress";
 import Filter from "../components/Filter/Filter";
-import { FilterContext } from "../contexts/filterContext";
+import { ListagemCategoriasContext } from "../contexts";
 import Dialog from "../components/Dialog/Dialog";
 
 export const ListagemCategorias: React.FC = () => {
@@ -20,16 +19,13 @@ export const ListagemCategorias: React.FC = () => {
     setActivateDeactivateData,
     setIsOpenAddModalCategoria,
     isOpenAddModalCategoria,
-  } = useContext(FilterContext);
-
-  const { categorias, setTextFilter, textFilter, isLoading } =
-    useListagemCategorias();
-
-  const [isOpenSearchBar, setIsOpenSearchBar] = useState<boolean>(false);
-
-  const handleSearchBar = () => {
-    setIsOpenSearchBar(!isOpenSearchBar);
-  };
+    textFilter,
+    setTextFilter,
+    setIsOpenSearchBar,
+    isOpenSearchBar,
+  } = useContext(ListagemCategoriasContext);
+  
+  const { categorias, isLoading } = useListagemCategorias();
 
   return (
     <>
@@ -43,24 +39,21 @@ export const ListagemCategorias: React.FC = () => {
             placeholder: "Buscar categorias...",
             value: textFilter,
             onChange: (e) => setTextFilter(e.target.value),
-            handleSearchBar: handleSearchBar,
-            onClickClose: handleSearchBar,
+            handleSearchBar: ()=> setIsOpenSearchBar(!isOpenSearchBar),
+            onClickClose: ()=> setIsOpenSearchBar(!isOpenSearchBar),
             handleFilter: () => setIsOpenFilter(true),
             handleBack: () => setIsOpenFilter(true),
           }}
         >
-          {isLoading ? (
-            <MuiCircularProgress />
-          ) : (
-            <MuiTable
-              columns={COLLUMS_CATEGORIA}
-              data={mountData({
-                categorias,
-                openModal: setIsOpenDialog,
-                handleActivateDeactivate: setActivateDeactivateData,
-              })}
-            />
-          )}
+          <MuiTable
+            columns={COLLUMS_CATEGORIA}
+            data={mountData({
+              categorias,
+              openModal: setIsOpenDialog,
+              handleActivateDeactivate: setActivateDeactivateData,
+            })}
+            isLoading={isLoading}
+          />
         </MuiFrame>
 
         <MuiAddButton

@@ -1,12 +1,12 @@
 import { Button } from "@mui/material";
 import MuiDialog from "../../../../shared/components/MuiDialog/MuiDialog";
 import { useContext } from "react";
-import { FilterContext } from "../../contexts/filterContext";
+import {  ListagemCategoriasContext } from "../../contexts";
 import { useListagemCategorias } from "../../hooks/useListagemCategorias";
 
 const Dialog = () => {
   const { isOpenDialog, setIsOpenDialog, activateDeactivateData,  } =
-    useContext(FilterContext);
+    useContext(ListagemCategoriasContext);
   const { handleEditarCategoria} = useListagemCategorias()
 
   const handleConfirm = () => {

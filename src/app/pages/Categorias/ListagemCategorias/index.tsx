@@ -1,10 +1,10 @@
 import { ListagemCategorias } from "./ListagemCategorias";
-import { FilterProvider } from "../contexts/filterContext";
+import { ListagemCategoriasProvider } from "../contexts";
 
 export function CategoriasRoute(): JSX.Element  {
   return (
-    <FilterProvider>
+    <ListagemCategoriasProvider>
       <ListagemCategorias />
-    </FilterProvider>
+    </ListagemCategoriasProvider>
   );
 }

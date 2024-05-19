@@ -11,7 +11,7 @@ export function mountData({
   categorias,
   openModal,
   handleActivateDeactivate,
-}: IMountData): any {
+}: IMountData) {
   if (categorias?.length) {
     categorias.sort((a, b) => a.nome.localeCompare(b.nome));
 

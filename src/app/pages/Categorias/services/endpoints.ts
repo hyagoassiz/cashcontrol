@@ -1,5 +1,5 @@
 import { IReturnBackEnd } from "../../../shared/interfaces/IReturnBackEnd";
-import { ICategoria } from "../interfaces";
+import { ICategoria, IFilterData } from "../interfaces";
 import { db } from "../../../../FirebaseConnection";
 import {
   collection,
@@ -32,14 +32,15 @@ export const adcionarCategoria = async function (
 
 export const obterCategoriasPorUsuario = async function (
   usuario: string,
-  ativo: boolean[] // 'ativo' é uma lista de booleanos
+  filterData: IFilterData // 'ativo' é uma lista de booleanos
 ): Promise<ICategoria[]> {
   try {
     // Crie uma consulta base para a coleção 'categoria'
     const categoriasQuery = query(
       collection(db, "categoria"),
       where("usuario", "==", usuario),
-      where("ativo", "in", ativo) // Aplica o filtro 'ativo' como uma lista de booleanos
+      where("ativo", "in", filterData.ativo), // Aplica o filtro 'ativo' como uma lista de booleanos
+      where("tipo", "in", filterData.tipo) // Aplica o filtro 'ativo' como uma lista de booleanos
     );
 
     // Execute a consulta
@@ -78,7 +79,6 @@ export const editarSituacaoCategoria = async function (
       throw new Error("Documento não encontrado");
     }
 
-    // Atualiza somente o campo 'ativo' da categoria
     await updateDoc(categoriaRef, {
       ativo: ativo
     });

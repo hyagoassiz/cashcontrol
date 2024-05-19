@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Login, Dashboard, CategoriasRoute } from '../pages/index';
-import Private from "./Private";
+import { CategoriasRoute, ContasRoute } from '../pages/index';
 import * as PATHS from './paths';
  
 
@@ -8,11 +7,9 @@ export const AppRoutes =  () => {
     return(
         <BrowserRouter>
             <Routes>
-                <Route path={PATHS.LOGIN.LIST} element={<Login/>} />
-                <Route path={PATHS.DASHBOARD.LIST} element={<Private><Dashboard/></Private>} />
                 <Route path={PATHS.CATEGORIAS.LIST} element={<CategoriasRoute/>} />
-                
-                <Route path="*" element={<Navigate to={PATHS.DASHBOARD.LIST}/>} />
+                <Route path={PATHS.CONTAS.LIST} element={<ContasRoute/>} />
+                <Route path="*" element={<Navigate to={PATHS.CATEGORIAS.LIST}/>} />
             </Routes>
         </BrowserRouter>
     );

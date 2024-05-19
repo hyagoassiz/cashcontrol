@@ -1,7 +1,9 @@
 import {
-  Container,
-  Pagination,
-  PaginationItem,
+  Box,
+  // Container,
+  LinearProgress,
+  // Pagination,
+  // PaginationItem,
   TableBody,
   TableCell,
   TableHead,
@@ -10,17 +12,18 @@ import {
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import { ITableColumn } from "./interfaces/ITableCollum";
-import { Link, useLocation } from "react-router-dom";
+// import {  useLocation } from "react-router-dom";
 
 interface IMuiTable {
   columns: ITableColumn[];
   data: [];
+  isLoading?: boolean;
 }
 
-export const MuiTable: React.FC<IMuiTable> = ({ columns, data }) => {
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const page = parseInt(query.get("page") || "1", 10);
+export const MuiTable: React.FC<IMuiTable> = ({ columns, data, isLoading }) => {
+  // const location = useLocation();
+  // const query = new URLSearchParams(location.search);
+  // const page = parseInt(query.get("page") || "1", 10);
   const theme = useTheme();
   return (
     <>
@@ -28,21 +31,43 @@ export const MuiTable: React.FC<IMuiTable> = ({ columns, data }) => {
         <TableHead sx={{ height: theme.spacing(3) }}>
           <TableRow>
             {columns.map((column) => (
-              <TableCell size="small" sx={{fontWeight: 600}} key={column.key}>{column.label}</TableCell>
+              <TableCell size="small" sx={{ fontWeight: 600 }} key={column.key}>
+                {column.label}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
+
         <TableBody>
           {data.map((row, index) => (
             <TableRow key={index}>
               {columns.map((column) => (
-                <TableCell size="small" key={column.key}>{row[column.key]}</TableCell>
+                <TableCell size="small" key={column.key}>
+                  {row[column.key]}
+                </TableCell>
               ))}
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <Container sx={{display: 'flex', alignItems:'center', justifyContent: 'center', padding: '20px'}}>
+      {isLoading && (
+        <Box
+          sx={{
+            width: "100%",
+          }}
+        >
+          <LinearProgress />
+        </Box>
+      )}
+
+      {/* <Container
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "20px",
+        }}
+      >
         <Pagination
           page={page}
           count={10}
@@ -54,7 +79,7 @@ export const MuiTable: React.FC<IMuiTable> = ({ columns, data }) => {
             />
           )}
         />
-      </Container>
+      </Container> */}
     </>
   );
 };

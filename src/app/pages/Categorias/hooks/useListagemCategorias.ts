@@ -2,44 +2,46 @@
 import { useContext, useEffect, useState } from "react";
 import { ICategoria } from "../interfaces";
 import { obterCategoriasPorUsuario } from "../services/endpoints";
-import { FilterContext } from "../contexts/filterContext";
 import { CategoriaService } from "../services/CategoriaService";
+import { ListagemCategoriasContext } from "../contexts";
+// import { ProgressContext } from "../../../shared/contexts/ProgressContext";
 
 interface IUseListagemCategorias {
   isLoading: boolean;
   categorias: ICategoria[];
-  setTextFilter: (data: string) => void;
-  textFilter: string;
   handleEditarCategoria: (id: string, ativo: boolean) => void;
 }
 
 export const useListagemCategorias = (): IUseListagemCategorias => {
+  const { textFilter, filterData} = useContext(ListagemCategoriasContext)
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [categorias, setCategorias] = useState<ICategoria[]>([]);
 
-  const [textFilter, setTextFilter] = useState<string>("");
-  
-  const { situacao} = useContext(FilterContext)
+
+  // const { setLoading} = useContext(ProgressContext)
   
 
   const fetchData = async () => {
     try {
       setIsLoading(true);
+      // setLoading(true)
       const categoriasDoUsuario = await obterCategoriasPorUsuario(
-        "DxARypJQGMZeb1fMT4ft4BI4S2D2", situacao
+        "DxARypJQGMZeb1fMT4ft4BI4S2D2", filterData
       );
       setCategorias(categoriasDoUsuario);
     } catch (error) {
       console.error("Erro ao obter categorias do usuário:", error);
     } finally {
       setIsLoading(false);
+      // setLoading(false)
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, [situacao]);
+  }, [filterData]);
 
   useEffect(() => {
     const filterCategories = () => {
@@ -74,8 +76,6 @@ export const useListagemCategorias = (): IUseListagemCategorias => {
   return {
     isLoading,
     categorias,
-    setTextFilter,
-    textFilter,
     handleEditarCategoria,
   };
 };
