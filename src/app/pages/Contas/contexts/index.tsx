@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useState } from "react";
-import {  IFilterData } from "../interfaces";
+import { IConta, IFilterData } from "../interfaces";
 
 interface IListagemContasContextProps {
   children: ReactNode;
@@ -8,41 +8,47 @@ interface IListagemContasContextProps {
 interface IListagemContasContextData {
   isOpenFilter: boolean;
   setIsOpenFilter: (setIsOpenFilter: boolean) => void;
-  isOpenDialog: boolean;
-  setIsOpenDialog: (setIsOpenDialog: boolean) => void;
+
   filterData: IFilterData;
   setFilterData: (setFilterData: IFilterData) => void;
   setTextFilter: (setTextFilter: string) => void;
   textFilter: string;
-  setIsOpenSearchBar: (setIsOpenSearchBar: boolean) => void
-  isOpenSearchBar: boolean
+  setIsOpenSearchBar: (setIsOpenSearchBar: boolean) => void;
+  isOpenSearchBar: boolean;
+  ativarInativarContaData: IConta | null
+  setAtivarInativarContaData: (setAtivarInativarConta: IConta) => void
 }
 
-export const ListagemContasContext = createContext({} as IListagemContasContextData);
+export const ListagemContasContext = createContext(
+  {} as IListagemContasContextData
+);
 
-export function ListagemContasProvider({ children }: IListagemContasContextProps): JSX.Element {
+export function ListagemContasProvider({
+  children,
+}: IListagemContasContextProps): JSX.Element {
   const [isOpenFilter, setIsOpenFilter] = useState<boolean>(false);
-  const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
+
   const [filterData, setFilterData] = useState<IFilterData>({
-    ativo: [true]
+    ativo: [true],
+    tipoConta: ["Conta Corrente", "Poupança", "Investimentos", "Outros"],
   });
   const [textFilter, setTextFilter] = useState<string>("");
-  const [isOpenSearchBar, setIsOpenSearchBar] = useState<boolean>(false)
-
+  const [isOpenSearchBar, setIsOpenSearchBar] = useState<boolean>(false);
+  const [ativarInativarContaData, setAtivarInativarContaData] = useState<IConta | null>(null)
 
   return (
     <ListagemContasContext.Provider
       value={{
         isOpenFilter,
         setIsOpenFilter,
-        isOpenDialog,
-        setIsOpenDialog,
         filterData,
         setFilterData,
         setTextFilter,
         textFilter,
         isOpenSearchBar,
         setIsOpenSearchBar,
+        ativarInativarContaData,
+        setAtivarInativarContaData
       }}
     >
       {children}

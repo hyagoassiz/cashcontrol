@@ -9,6 +9,8 @@ import { COLLUMS_CONTA } from "../utils/collumnsNames";
 import { mountData } from "../utils/mountData";
 import { useListagemContas } from "../hooks/useListagemContas";
 import { ModalConta } from "../components/ModalConta/ModalConta";
+import Filter from "../components/Filter/Filter";
+import Dialog from "../components/Dialog/Dialog";
 
 export const ListagemContas: React.FC = () => {
   const {
@@ -17,6 +19,7 @@ export const ListagemContas: React.FC = () => {
     setTextFilter,
     setIsOpenFilter,
     setIsOpenSearchBar,
+    setAtivarInativarContaData
   } = useContext(ListagemContasContext);
 
   const {
@@ -28,9 +31,10 @@ export const ListagemContas: React.FC = () => {
     handleModalConta,
     modeShowConta,
     handleEditarConta,
+    modeEditConta
   } = useListagemContas();
 
-  console.log(conta)
+  console.log(conta);
 
   return (
     <>
@@ -55,8 +59,8 @@ export const ListagemContas: React.FC = () => {
             data={mountData({
               contas,
               showConta: handleShowConta,
+              handleAtivarInativarConta: setAtivarInativarContaData
               // openModal: setIsOpenDialog,
-              // handleActivateDeactivate: setActivateDeactivateData,
             })}
             isLoading={isLoading}
           />
@@ -64,17 +68,21 @@ export const ListagemContas: React.FC = () => {
 
         <MuiAddButton title="Adicionar Conta" onClick={handleModalConta} />
 
-        <ModalConta
-          isOpen={toggleModalConta}
-          onClose={handleModalConta}
-          data={conta}
-          modeShowConta={modeShowConta}
-          onEdit={handleEditarConta}
-        />
+        {toggleModalConta && (
+          <ModalConta
+            isOpen={toggleModalConta}
+            onClose={handleModalConta}
+            data={conta}
+            modeShowConta={modeShowConta}
+            modeEditConta={modeEditConta}
+            onEdit={handleEditarConta}
 
-        {/* <Dialog /> */}
+          />
+        )}
 
-        {/* <Filter /> */}
+        <Dialog />
+
+        <Filter />
       </Container>
     </>
   );

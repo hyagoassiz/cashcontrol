@@ -19,6 +19,7 @@ interface IModalContaProps {
   onEdit: () => void;
   data: IConta | null;
   modeShowConta: boolean;
+  modeEditConta: boolean
 }
 
 export const ModalConta: React.FC<IModalContaProps> = ({
@@ -26,6 +27,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
   onClose,
   data,
   modeShowConta,
+  modeEditConta,
   onEdit,
 }) => {
   // const { handleModalConta, conta, modeShowConta, handleEditarConta } = useContext(
@@ -55,7 +57,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
   return (
     <MuiModal
       open={isOpen}
-      title={modeShowConta ? "Conta" : "Criar Conta"}
+      title={modeShowConta || modeEditConta ? "Conta" : "Nova Conta" }
       buttons={
         <>
           <Button onClick={onClose}>Fechar</Button>
@@ -77,7 +79,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
             <Controller
               name="nome"
               control={control}
-              rules={{ required: false }}
+              rules={{ required: true }}
               defaultValue={data?.nome || ""}
               render={({ field, fieldState: { error } }) => (
                 <TextField
@@ -91,6 +93,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
                   inputProps={{
                     maxLength: 30,
                   }}
+                  required
                   error={!!error}
                   fullWidth
                 />
@@ -102,7 +105,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
               name="tipoConta"
               control={control}
               rules={{ required: true }}
-              defaultValue={data?.tipoConta || "Conta Corrente"}
+              defaultValue={data?.tipoConta || null}
               render={({ field, fieldState: { error } }) => (
                 <Autocomplete
                   {...field}

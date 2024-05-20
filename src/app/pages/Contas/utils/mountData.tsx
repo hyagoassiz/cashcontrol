@@ -5,12 +5,13 @@ import { IConta } from "../interfaces";
 interface IMountData {
   contas: IConta[];
   showConta: (seeConta: IConta) => void;
-  // handleActivateDeactivate: (handleActivateDeactivate: IConta) => void;
+  handleAtivarInativarConta: (handleAtivarInativarConta: IConta) => void;
 }
 
 export function mountData({
   contas,
   showConta,
+  handleAtivarInativarConta
 }: // openModal,
 // handleActivateDeactivate,
 IMountData) {
@@ -35,12 +36,12 @@ IMountData) {
         <MuiMoreVertIcon
           options={[
             {
-              label: "Visualizar",
-              action: () => showConta(conta),
+              label: conta.ativo === true ? "Inativar" : "Ativar",
+              action: () => handleAtivarInativarConta(conta),
             },
             {
-              label: "Editar",
-              action: () => alert("CLicou"),
+              label: "Visualizar",
+              action: () => showConta(conta),
             },
           ]}
         />

@@ -1,9 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { IConta } from "../interfaces";
 import { obterContasPorUsuario } from "../services/endpoints";
 import { ListagemContasContext } from "../contexts";
-// import { ProgressContext } from "../../../shared/contexts/ProgressContext";
 
 interface IUseListagemContas {
   isLoading: boolean;
@@ -14,6 +12,8 @@ interface IUseListagemContas {
   conta: IConta | null;
   toggleModalConta: boolean;
   handleShowConta(handleShowConta: IConta): void;
+  modeEditConta: boolean
+  fetchData: () => void
 }
 
 export const useListagemContas = (): IUseListagemContas => {
@@ -24,6 +24,7 @@ export const useListagemContas = (): IUseListagemContas => {
   const [contas, setContas] = useState<IConta[]>([]);
 
   const [modeShowConta, setModeShowConta] = useState<boolean>(false);
+  const [modeEditConta, setModeEditConta] = useState<boolean>(false);
   const [toggleModalConta, setToggleModalConta] = useState<boolean>(false);
   const [conta, setConta] = useState<IConta | null>(null);
 
@@ -54,12 +55,17 @@ export const useListagemContas = (): IUseListagemContas => {
   };
 
   const handleModalConta = () => {
+    if (conta) {
+      setConta(null)
+      setModeShowConta(false);
+      setModeEditConta(false)
+    }
     setToggleModalConta((prevState) => !prevState);
-    setModeShowConta(false);
   };
 
   const handleEditarConta = () => {
     setModeShowConta(false);
+    setModeEditConta(true)
   };
 
   return {
@@ -71,5 +77,7 @@ export const useListagemContas = (): IUseListagemContas => {
     conta,
     toggleModalConta,
     handleShowConta,
+    modeEditConta,
+    fetchData
   };
 };
