@@ -17,15 +17,23 @@ export const ListagemCategorias: React.FC = () => {
     setIsOpenFilter,
     setIsOpenDialog,
     setActivateDeactivateData,
-    setIsOpenAddModalCategoria,
-    isOpenAddModalCategoria,
     textFilter,
     setTextFilter,
     setIsOpenSearchBar,
     isOpenSearchBar,
   } = useContext(ListagemCategoriasContext);
-  
-  const { categorias, isLoading } = useListagemCategorias();
+
+  const {
+    categorias,
+    categoria,
+    modeEditCategoria,
+    modeShowCategoria,
+    isLoading,
+    handleShowCategoria,
+    handleModalCategoria,
+    handleEditarCategoria2,
+    toggleModalCategoria,
+  } = useListagemCategorias();
 
   return (
     <>
@@ -39,8 +47,8 @@ export const ListagemCategorias: React.FC = () => {
             placeholder: "Buscar categorias...",
             value: textFilter,
             onChange: (e) => setTextFilter(e.target.value),
-            handleSearchBar: ()=> setIsOpenSearchBar(!isOpenSearchBar),
-            onClickClose: ()=> setIsOpenSearchBar(!isOpenSearchBar),
+            handleSearchBar: () => setIsOpenSearchBar(!isOpenSearchBar),
+            onClickClose: () => setIsOpenSearchBar(!isOpenSearchBar),
             handleFilter: () => setIsOpenFilter(true),
             handleBack: () => setIsOpenFilter(true),
           }}
@@ -51,6 +59,7 @@ export const ListagemCategorias: React.FC = () => {
               categorias,
               openModal: setIsOpenDialog,
               handleActivateDeactivate: setActivateDeactivateData,
+              showConta: handleShowCategoria,
             })}
             isLoading={isLoading}
           />
@@ -58,10 +67,17 @@ export const ListagemCategorias: React.FC = () => {
 
         <MuiAddButton
           title="Adicionar Categoria"
-          onClick={() => setIsOpenAddModalCategoria(true)}
+          onClick={handleModalCategoria}
         />
 
-        <ModalCategoria isOpen={isOpenAddModalCategoria} />
+        <ModalCategoria
+          isOpen={toggleModalCategoria}
+          onClose={handleModalCategoria}
+          data={categoria}
+          modeEditConta={modeEditCategoria}
+          modeShowConta={modeShowCategoria}
+          onEdit={handleEditarCategoria2}
+        />
 
         <Dialog />
 

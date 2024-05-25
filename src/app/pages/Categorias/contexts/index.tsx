@@ -14,8 +14,6 @@ interface IListagemCategoriasContextData {
   setActivateDeactivateData: (setActivateDeactivateData: ICategoria) => void;
   filterData: IFilterData;
   setFilterData: (setFilterData: IFilterData) => void;
-  isOpenAddModalCategoria: boolean;
-  setIsOpenAddModalCategoria: (setIsOpenAddModalCategoria: boolean) => void;
   setTextFilter: (setTextFilter: string) => void;
   textFilter: string;
   setIsOpenSearchBar: (setIsOpenSearchBar: boolean) => void
@@ -33,8 +31,6 @@ export function ListagemCategoriasProvider({ children }: IListagemCategoriasCont
     tipo: ["Entrada", "Saída"],
     ativo: [true]
   });
-  const [isOpenAddModalCategoria, setIsOpenAddModalCategoria] =
-    useState<boolean>(false);
   const [textFilter, setTextFilter] = useState<string>("");
   const [isOpenSearchBar, setIsOpenSearchBar] = useState<boolean>(false)
 
@@ -49,8 +45,6 @@ export function ListagemCategoriasProvider({ children }: IListagemCategoriasCont
         filterData,
         setFilterData,
         setActivateDeactivateData,
-        isOpenAddModalCategoria,
-        setIsOpenAddModalCategoria,
         setTextFilter,
         textFilter,
         isOpenSearchBar,

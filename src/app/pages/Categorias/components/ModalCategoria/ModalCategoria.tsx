@@ -1,25 +1,27 @@
-import React, { useContext } from "react";
+import React from "react";
 import { MuiModal } from "../../../../shared/components/MuiModal/MuiModal";
 import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { ICategoria } from "../../interfaces";
 import { Controller, useForm } from "react-hook-form";
 import { CategoriaService } from "../../services/CategoriaService";
-// import { useListagemCategorias } from "../../hooks/useListagemCategorias";
-import { ListagemCategoriasContext } from "../../contexts";
 
 interface IModalCategoriaProps {
   isOpen: boolean;
+  onClose: () => void;
+  onEdit: () => void;
+  data: ICategoria | null;
+  modeShowConta: boolean;
+  modeEditConta: boolean
 }
 
-export const ModalCategoria: React.FC<IModalCategoriaProps> = ({ isOpen }) => {
-  const { setIsOpenAddModalCategoria } = useContext(ListagemCategoriasContext);
-  
+export const ModalCategoria: React.FC<IModalCategoriaProps> = ({ isOpen, onClose }) => {
+
   const { handleSubmit, control } = useForm<ICategoria>({
     defaultValues: {
       usuario: "DxARypJQGMZeb1fMT4ft4BI4S2D2",
       nome: "",
       tipo: "Entrada",
-      ativo: true
+      ativo: true,
     },
   });
 
@@ -37,7 +39,7 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({ isOpen }) => {
       console.error("Erro ao criar categoria:", error);
     }
 
-    setIsOpenAddModalCategoria(false);
+    onClose();
   };
 
   return (
@@ -46,9 +48,7 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({ isOpen }) => {
       title="Criar Categoria"
       buttons={
         <>
-          <Button onClick={() => setIsOpenAddModalCategoria(false)}>
-            Fechar
-          </Button>
+          <Button onClick={onClose}>Fechar</Button>
           <Button variant="contained" onClick={handleSubmit(onSubmit)}>
             Salvar
           </Button>

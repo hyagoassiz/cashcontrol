@@ -9,26 +9,36 @@ import { ListagemCategoriasContext } from "../contexts";
 interface IUseListagemCategorias {
   isLoading: boolean;
   categorias: ICategoria[];
+  categoria: ICategoria | null;
+  modeShowCategoria: boolean;
+  modeEditCategoria: boolean;
+  toggleModalCategoria: boolean;
   handleEditarCategoria: (id: string, ativo: boolean) => void;
+  handleShowCategoria(handleShowCategoria: ICategoria): void;
+  handleModalCategoria: () => void;
+  handleEditarCategoria2: () => void //ajustar o nome pois tem outra função com o mesmo nome
 }
 
 export const useListagemCategorias = (): IUseListagemCategorias => {
-  const { textFilter, filterData} = useContext(ListagemCategoriasContext)
+  const { textFilter, filterData } = useContext(ListagemCategoriasContext);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const [categorias, setCategorias] = useState<ICategoria[]>([]);
-
+  const [categoria, setCategoria] = useState<ICategoria | null>(null);
+  const [modeShowCategoria, setModeShowCategoria] = useState<boolean>(false);
+  const [modeEditCategoria, setModeEditCategoria] = useState<boolean>(false);
+  const [toggleModalCategoria, setToggleModalCategoria] =
+    useState<boolean>(false);
 
   // const { setLoading} = useContext(ProgressContext)
-  
 
   const fetchData = async () => {
     try {
       setIsLoading(true);
       // setLoading(true)
       const categoriasDoUsuario = await obterCategoriasPorUsuario(
-        "DxARypJQGMZeb1fMT4ft4BI4S2D2", filterData
+        "DxARypJQGMZeb1fMT4ft4BI4S2D2",
+        filterData
       );
       setCategorias(categoriasDoUsuario);
     } catch (error) {
@@ -73,9 +83,36 @@ export const useListagemCategorias = (): IUseListagemCategorias => {
     }
   };
 
+  const handleShowCategoria = (data: ICategoria) => {
+    setCategoria(data);
+    setModeShowCategoria(true);
+    handleModalCategoria();
+  };
+
+  const handleModalCategoria = () => {
+    if (categoria) {
+      setCategoria(null);
+      setModeShowCategoria(false);
+      setModeEditCategoria(false);
+    }
+    setToggleModalCategoria((prevState) => !prevState);
+  };
+
+  const handleEditarCategoria2 = () => {
+    setModeShowCategoria(false);
+    setModeEditCategoria(true);
+  };
+
   return {
     isLoading,
     categorias,
+    modeShowCategoria,
+    modeEditCategoria,
+    toggleModalCategoria,
     handleEditarCategoria,
+    handleShowCategoria,
+    handleModalCategoria,
+    handleEditarCategoria2,
+    categoria,
   };
 };

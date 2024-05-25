@@ -5,12 +5,14 @@ interface IMountData {
   categorias: ICategoria[];
   openModal: (openModal: boolean) => void;
   handleActivateDeactivate: (handleActivateDeactivate: ICategoria) => void;
+  showConta: (showConta: ICategoria) => void;
 }
 
 export function mountData({
   categorias,
   openModal,
   handleActivateDeactivate,
+  showConta
 }: IMountData) {
   if (categorias?.length) {
     categorias.sort((a, b) => a.nome.localeCompare(b.nome));
@@ -28,6 +30,10 @@ export function mountData({
               action: () => {
                 openModal(true), handleActivateDeactivate(categoria);
               },
+            },
+            {
+              label: "Visualizar",
+              action: () => showConta(categoria),
             },
           ]}
         />
