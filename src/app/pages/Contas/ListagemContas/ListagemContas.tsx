@@ -34,8 +34,6 @@ export const ListagemContas: React.FC = () => {
     modeEditConta,
   } = useListagemContas();
 
-  console.log(conta);
-
   return (
     <>
       <MuiAppBar />

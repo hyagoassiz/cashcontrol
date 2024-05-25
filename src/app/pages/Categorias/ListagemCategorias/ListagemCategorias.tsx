@@ -70,14 +70,16 @@ export const ListagemCategorias: React.FC = () => {
           onClick={handleModalCategoria}
         />
 
-        <ModalCategoria
-          isOpen={toggleModalCategoria}
-          onClose={handleModalCategoria}
-          data={categoria}
-          modeEditConta={modeEditCategoria}
-          modeShowConta={modeShowCategoria}
-          onEdit={handleEditarCategoria2}
-        />
+        {toggleModalCategoria && (
+          <ModalCategoria
+            isOpen={toggleModalCategoria}
+            onClose={handleModalCategoria}
+            data={categoria}
+            modeEditCategoria={modeEditCategoria}
+            modeShowCategoria={modeShowCategoria}
+            onEdit={handleEditarCategoria2}
+          />
+        )}
 
         <Dialog />
 
