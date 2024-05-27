@@ -1,20 +1,23 @@
 import { Button } from "@mui/material";
 import MuiDialog from "../../../../shared/components/MuiDialog/MuiDialog";
 import { useContext } from "react";
-import {  ListagemCategoriasContext } from "../../contexts";
+import { ListagemCategoriasContext } from "../../contexts";
 import { useListagemCategorias } from "../../hooks/useListagemCategorias";
 
 const Dialog = () => {
-  const { isOpenDialog, setIsOpenDialog, activateDeactivateData,  } =
-    useContext(ListagemCategoriasContext);
-  const { handleEditarCategoria} = useListagemCategorias()
+  const { isOpenDialog, setIsOpenDialog, activateDeactivateData } = useContext(
+    ListagemCategoriasContext
+  );
+  const { handleEditarCategoria } = useListagemCategorias();
 
   const handleConfirm = () => {
     if (activateDeactivateData) {
-      handleEditarCategoria(activateDeactivateData.id, !activateDeactivateData.ativo);
-      setIsOpenDialog(false)
+      handleEditarCategoria(
+        activateDeactivateData.id,
+        !activateDeactivateData.ativo
+      );
+      setIsOpenDialog(false);
     }
-    
   };
 
   return (
@@ -31,7 +34,9 @@ const Dialog = () => {
           <Button variant="text" onClick={() => setIsOpenDialog(false)}>
             Fechar
           </Button>
-          <Button variant="contained" onClick={handleConfirm}>Confirmar</Button>
+          <Button variant="contained" onClick={handleConfirm}>
+            Confirmar
+          </Button>
         </>
       }
     ></MuiDialog>

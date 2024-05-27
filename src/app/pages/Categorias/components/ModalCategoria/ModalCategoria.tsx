@@ -3,7 +3,7 @@ import { MuiModal } from "../../../../shared/components/MuiModal/MuiModal";
 import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { ICategoria } from "../../interfaces";
 import { Controller, useForm } from "react-hook-form";
-import { CategoriaService } from "../../services/CategoriaService";
+import { usePersistirCategoria } from "./hooks/usePersistirCategoria";
 
 interface IModalCategoriaProps {
   isOpen: boolean;
@@ -26,18 +26,10 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
 
   const tipos = [{ value: "Entrada" }, { value: "Saída" }];
 
-  const onSubmit = async (data: ICategoria) => {
-    try {
-      const response = await CategoriaService.criarCategoria(data);
-      if (response.success) {
-        console.log(response.message);
-      } else {
-        console.error(response.message);
-      }
-    } catch (error) {
-      console.error("Erro ao criar categoria:", error);
-    }
+  const { handlePersistirCategoria} = usePersistirCategoria()
 
+  const onSubmit = async (data: ICategoria) => {
+    handlePersistirCategoria(data)
     onClose();
   };
 

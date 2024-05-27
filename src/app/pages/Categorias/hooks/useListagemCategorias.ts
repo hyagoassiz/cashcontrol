@@ -16,7 +16,8 @@ interface IUseListagemCategorias {
   handleEditarCategoria: (id: string, ativo: boolean) => void;
   handleShowCategoria(handleShowCategoria: ICategoria): void;
   handleModalCategoria: () => void;
-  handleEditarCategoria2: () => void //ajustar o nome pois tem outra função com o mesmo nome
+  handleEditarCategoria2: () => void; //ajustar o nome pois tem outra função com o mesmo nome
+  fetchData: () => void;
 }
 
 export const useListagemCategorias = (): IUseListagemCategorias => {
@@ -80,6 +81,7 @@ export const useListagemCategorias = (): IUseListagemCategorias => {
       console.error("Erro ao editar categoria:", error);
     } finally {
       setIsLoading(false);
+      fetchData()
     }
   };
 
@@ -114,5 +116,6 @@ export const useListagemCategorias = (): IUseListagemCategorias => {
     handleModalCategoria,
     handleEditarCategoria2,
     categoria,
+    fetchData
   };
 };
