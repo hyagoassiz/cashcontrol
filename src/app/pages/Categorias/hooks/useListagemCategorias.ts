@@ -4,7 +4,6 @@ import { ICategoria } from "../interfaces";
 import { obterCategoriasPorUsuario } from "../services/endpoints";
 import { CategoriaService } from "../services/CategoriaService";
 import { ListagemCategoriasContext } from "../contexts";
-// import { ProgressContext } from "../../../shared/contexts/ProgressContext";
 
 interface IUseListagemCategorias {
   isLoading: boolean;
@@ -21,7 +20,9 @@ interface IUseListagemCategorias {
 }
 
 export const useListagemCategorias = (): IUseListagemCategorias => {
-  const { textFilter, filterData } = useContext(ListagemCategoriasContext);
+  const { textFilter, filterData, reload } = useContext(
+    ListagemCategoriasContext
+  );
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [categorias, setCategorias] = useState<ICategoria[]>([]);
@@ -52,7 +53,7 @@ export const useListagemCategorias = (): IUseListagemCategorias => {
 
   useEffect(() => {
     fetchData();
-  }, [filterData]);
+  }, [filterData, reload]);
 
   useEffect(() => {
     const filterCategories = () => {
@@ -75,13 +76,13 @@ export const useListagemCategorias = (): IUseListagemCategorias => {
   const handleEditarCategoria = async (id: string, ativo: boolean) => {
     try {
       setIsLoading(true);
-      await CategoriaService.editarCategoria(id, ativo);
+      await CategoriaService.editarSituacao(id, ativo);
       fetchData();
     } catch (error) {
       console.error("Erro ao editar categoria:", error);
     } finally {
       setIsLoading(false);
-      fetchData()
+      fetchData();
     }
   };
 
@@ -116,6 +117,6 @@ export const useListagemCategorias = (): IUseListagemCategorias => {
     handleModalCategoria,
     handleEditarCategoria2,
     categoria,
-    fetchData
+    fetchData,
   };
 };

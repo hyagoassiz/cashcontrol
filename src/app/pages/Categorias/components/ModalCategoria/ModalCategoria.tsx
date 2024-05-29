@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { MuiModal } from "../../../../shared/components/MuiModal/MuiModal";
 import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { ICategoria } from "../../interfaces";
 import { Controller, useForm } from "react-hook-form";
 import { usePersistirCategoria } from "./hooks/usePersistirCategoria";
+import { GlobalContext } from "../../../../shared/contexts";
+import { ListagemCategoriasContext } from "../../contexts";
 
 interface IModalCategoriaProps {
   isOpen: boolean;
@@ -22,15 +24,33 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
   modeShowCategoria,
   modeEditCategoria,
 }) => {
-  const { handleSubmit, control } = useForm<ICategoria>({});
+  const { usuario } = useContext(GlobalContext);
+  const { setReload } = useContext(ListagemCategoriasContext);
+
+  const { handleSubmit, control } = useForm<ICategoria>({
+    defaultValues: {
+      id: data?.id || null,
+      usuario: usuario.id,
+      nome: data?.nome || "",
+      tipo: data?.tipo || null,
+      ativo: data?.ativo || true,
+    },
+  });
 
   const tipos = [{ value: "Entrada" }, { value: "Saída" }];
 
-  const { handlePersistirCategoria} = usePersistirCategoria()
+  const { handleCriarCategoria, handleEditarCategoria } =
+    usePersistirCategoria();
 
   const onSubmit = async (data: ICategoria) => {
-    handlePersistirCategoria(data)
+    console.log(data);
+    if (!modeEditCategoria) {
+      handleCriarCategoria(data);
+    } else {
+      handleEditarCategoria(data);
+    }
     onClose();
+    setReload((prevState) => !prevState);
   };
 
   return (
@@ -58,7 +78,6 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
               name="nome"
               control={control}
               rules={{ required: true }}
-              defaultValue={data?.nome || ""}
               render={({ field, fieldState: { error } }) => (
                 <TextField
                   label="Nome"
@@ -83,7 +102,6 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
               name="tipo"
               control={control}
               rules={{ required: true }}
-              defaultValue={data?.tipo || null}
               render={({ field, fieldState: { error } }) => (
                 <TextField
                   {...field}
@@ -106,7 +124,6 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
                     </MenuItem>
                   ))}
                 </TextField>
-                
               )}
             />
           </Grid>

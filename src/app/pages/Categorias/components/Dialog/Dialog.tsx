@@ -5,9 +5,8 @@ import { ListagemCategoriasContext } from "../../contexts";
 import { useListagemCategorias } from "../../hooks/useListagemCategorias";
 
 const Dialog = () => {
-  const { isOpenDialog, setIsOpenDialog, activateDeactivateData } = useContext(
-    ListagemCategoriasContext
-  );
+  const { isOpenDialog, setIsOpenDialog, activateDeactivateData, setReload } =
+    useContext(ListagemCategoriasContext);
   const { handleEditarCategoria } = useListagemCategorias();
 
   const handleConfirm = () => {
@@ -17,6 +16,7 @@ const Dialog = () => {
         !activateDeactivateData.ativo
       );
       setIsOpenDialog(false);
+      setReload((prevState) => !prevState);
     }
   };
 

@@ -1,23 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useContext } from "react";
+import { useListagemCategorias } from "../../../hooks/useListagemCategorias";
 import { ICategoria } from "../../../interfaces";
 import { CategoriaService } from "../../../services/CategoriaService";
-import { UserContext } from "../../../../../shared/contexts";
 
 interface IUsePersistirCategoria {
-  handlePersistirCategoria: (data: ICategoria) => void;
+  handleCriarCategoria: (data: ICategoria) => void;
+  handleEditarCategoria: (data: ICategoria) => void;
 }
 
 export const usePersistirCategoria = (): IUsePersistirCategoria => {
-  const { userId } = useContext(UserContext);
-
-  const handlePersistirCategoria = async (data: ICategoria) => {
+  const { fetchData } = useListagemCategorias();
+  const handleCriarCategoria = async (data: ICategoria) => {
     try {
-      const categoriaComIdUsuario = { ...data, ativo: true, usuario: userId };
-      const response = await CategoriaService.criarCategoria(
-        categoriaComIdUsuario
-      );
+      const response = await CategoriaService.criarCategoria(data);
       if (response.success) {
         console.log(response.message);
       } else {
@@ -25,10 +21,28 @@ export const usePersistirCategoria = (): IUsePersistirCategoria => {
       }
     } catch (error) {
       console.error("Erro ao criar categoria:", error);
+    } finally {
+      fetchData();
+    }
+  };
+
+  const handleEditarCategoria = async (data: ICategoria) => {
+    try {
+      const response = await CategoriaService.editarCategoria(data);
+      if (response.success) {
+        console.log(response.message);
+      } else {
+        console.error(response.message);
+      }
+    } catch (error) {
+      console.error("Erro ao editar categoria:", error);
+    } finally {
+      fetchData();
     }
   };
 
   return {
-    handlePersistirCategoria,
+    handleCriarCategoria,
+    handleEditarCategoria,
   };
 };
