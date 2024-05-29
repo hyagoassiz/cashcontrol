@@ -55,7 +55,7 @@ export const obterCategoriasPorUsuario = async function (
         usuario: categoriaData.usuario,
         nome: categoriaData.nome,
         tipo: categoriaData.tipo,
-        ativo: categoriaData.ativo
+        ativo: categoriaData.ativo,
       };
       categorias.push(categoria);
     });
@@ -73,15 +73,52 @@ export const editarSituacaoCategoria = async function (
 ): Promise<IReturnBackEnd> {
   try {
     const categoriaRef = doc(db, "categoria", id);
-    
+
     const categoriaDoc = await getDoc(categoriaRef);
     if (!categoriaDoc.exists()) {
       throw new Error("Documento não encontrado");
     }
 
     await updateDoc(categoriaRef, {
-      ativo: ativo
+      ativo: ativo,
     });
+
+    return {
+      status: 200,
+      message: "success",
+    };
+  } catch (error) {
+    console.error("Erro ao editar categoria no Firestore:", error);
+    return {
+      status: 404,
+      message: "error",
+    };
+  }
+};
+
+export const editarCategoria = async function (
+  payload: ICategoria
+): Promise<IReturnBackEnd> {
+  try {
+    // Extrair o id do payload
+    const { id, ...updateData } = payload;
+
+    // Verificar se o id está presente
+    if (!id) {
+      throw new Error("ID não fornecido");
+    }
+
+    // Referenciar o documento com o id fornecido
+    const categoriaRef = doc(db, "categoria", id);
+
+    // Verificar se o documento existe
+    const categoriaDoc = await getDoc(categoriaRef);
+    if (!categoriaDoc.exists()) {
+      throw new Error("Documento não encontrado");
+    }
+
+    // Atualizar o documento com os dados fornecidos no payload
+    await updateDoc(categoriaRef, updateData);
 
     return {
       status: 200,

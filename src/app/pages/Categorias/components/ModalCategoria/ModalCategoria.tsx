@@ -3,116 +3,130 @@ import { MuiModal } from "../../../../shared/components/MuiModal/MuiModal";
 import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { ICategoria } from "../../interfaces";
 import { Controller, useForm } from "react-hook-form";
-import { CategoriaService } from "../../services/CategoriaService";
-// import { useListagemCategorias } from "../../hooks/useListagemCategorias";
+import { usePersistirCategoria } from "./hooks/usePersistirCategoria";
+import { GlobalContext } from "../../../../shared/contexts";
 import { ListagemCategoriasContext } from "../../contexts";
 
 interface IModalCategoriaProps {
   isOpen: boolean;
+  onClose: () => void;
+  onEdit: () => void;
+  data: ICategoria | null;
+  modeShowCategoria: boolean;
+  modeEditCategoria: boolean;
 }
 
-export const ModalCategoria: React.FC<IModalCategoriaProps> = ({ isOpen }) => {
-  const { setIsOpenAddModalCategoria } = useContext(ListagemCategoriasContext);
-  
+export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
+  isOpen,
+  onClose,
+  onEdit,
+  data,
+  modeShowCategoria,
+  modeEditCategoria,
+}) => {
+  const { usuario } = useContext(GlobalContext);
+  const { setReload } = useContext(ListagemCategoriasContext);
+
   const { handleSubmit, control } = useForm<ICategoria>({
     defaultValues: {
-      usuario: "DxARypJQGMZeb1fMT4ft4BI4S2D2",
-      nome: "",
-      tipo: "Entrada",
-      ativo: true
+      id: data?.id || null,
+      usuario: usuario.id,
+      nome: data?.nome || "",
+      tipo: data?.tipo || null,
+      ativo: data?.ativo || true,
     },
   });
 
   const tipos = [{ value: "Entrada" }, { value: "Saída" }];
 
-  const onSubmit = async (data: ICategoria) => {
-    try {
-      const response = await CategoriaService.criarCategoria(data);
-      if (response.success) {
-        console.log(response.message);
-      } else {
-        console.error(response.message);
-      }
-    } catch (error) {
-      console.error("Erro ao criar categoria:", error);
-    }
+  const { handleCriarCategoria, handleEditarCategoria } =
+    usePersistirCategoria();
 
-    setIsOpenAddModalCategoria(false);
+  const onSubmit = async (data: ICategoria) => {
+    console.log(data);
+    if (!modeEditCategoria) {
+      handleCriarCategoria(data);
+    } else {
+      handleEditarCategoria(data);
+    }
+    onClose();
+    setReload((prevState) => !prevState);
   };
 
   return (
     <MuiModal
       open={isOpen}
-      title="Criar Categoria"
+      title={
+        modeShowCategoria || modeEditCategoria ? "Categoria" : "Nova Categoria"
+      }
       buttons={
         <>
-          <Button onClick={() => setIsOpenAddModalCategoria(false)}>
-            Fechar
-          </Button>
-          <Button variant="contained" onClick={handleSubmit(onSubmit)}>
-            Salvar
+          <Button onClick={onClose}>Fechar</Button>
+          <Button
+            variant="contained"
+            onClick={modeShowCategoria ? onEdit : handleSubmit(onSubmit)}
+          >
+            {modeShowCategoria ? "Editar" : "Salvar"}
           </Button>
         </>
       }
     >
       <form>
-        <Grid sx={{ display: "flex" }}>
-          <Controller
-            name="nome"
-            control={control}
-            rules={{ required: true }}
-            render={({ field, fieldState: { error } }) => (
-              <TextField
-                {...field}
-                label="Nome"
-                name="nome"
-                type="text"
-                variant="standard"
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                value={field.value}
-                required
-                style={{
-                  width: "300px",
-                }}
-                inputProps={{
-                  maxLength: 30,
-                }}
-                error={!!error}
-              />
-            )}
-          />
-
-          <Controller
-            name="tipo"
-            control={control}
-            rules={{ required: true }}
-            render={({ field, fieldState: { error } }) => (
-              <TextField
-                {...field}
-                label="Tipo"
-                name="tipo"
-                type="text"
-                select
-                variant="standard"
-                required
-                style={{
-                  width: "130px",
-                  marginLeft: "15px",
-                }}
-                inputProps={{
-                  maxLength: 30,
-                }}
-                error={!!error}
-              >
-                {tipos.map((tipo) => (
-                  <MenuItem key={tipo.value} value={tipo.value}>
-                    {tipo.value}
-                  </MenuItem>
-                ))}
-              </TextField>
-            )}
-          />
+        <Grid container spacing={2}>
+          <Grid item xs={8}>
+            <Controller
+              name="nome"
+              control={control}
+              rules={{ required: true }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  label="Nome"
+                  type="text"
+                  variant="standard"
+                  onChange={(e) => field.onChange(e.target.value)}
+                  onBlur={field.onBlur}
+                  value={field.value}
+                  disabled={modeShowCategoria || false}
+                  inputProps={{
+                    maxLength: 30,
+                  }}
+                  required
+                  error={!!error}
+                  fullWidth
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <Controller
+              name="tipo"
+              control={control}
+              rules={{ required: true }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  {...field}
+                  label="Tipo"
+                  name="tipo"
+                  type="text"
+                  select
+                  variant="standard"
+                  required
+                  disabled={modeShowCategoria || false}
+                  inputProps={{
+                    maxLength: 30,
+                  }}
+                  error={!!error}
+                  fullWidth
+                >
+                  {tipos.map((tipo) => (
+                    <MenuItem key={tipo.value} value={tipo.value}>
+                      {tipo.value}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+          </Grid>
         </Grid>
       </form>
     </MuiModal>
