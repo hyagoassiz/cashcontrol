@@ -65,7 +65,11 @@ export const ListagemContas: React.FC = () => {
           />
         </MuiFrame>
 
-        <MuiAddButton title="Adicionar Conta" onClick={handleModalConta} />
+        <MuiAddButton
+          tooltip="Adicionar Conta"
+          title="NOVA"
+          onClick={handleModalConta}
+        />
 
         {toggleModalConta && (
           <ModalConta
