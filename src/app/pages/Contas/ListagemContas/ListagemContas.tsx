@@ -54,6 +54,7 @@ export const ListagemContas: React.FC = () => {
         >
           <MuiTable
             columns={COLLUMS_CONTA}
+            textForEmptyData="Nenhuma conta encontrada"
             data={mountData({
               contas,
               showConta: handleShowConta,
