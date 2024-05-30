@@ -19,7 +19,7 @@ interface IModalContaProps {
   onEdit: () => void;
   data: IConta | null;
   modeShowConta: boolean;
-  modeEditConta: boolean
+  modeEditConta: boolean;
 }
 
 export const ModalConta: React.FC<IModalContaProps> = ({
@@ -33,7 +33,6 @@ export const ModalConta: React.FC<IModalContaProps> = ({
   // const { handleModalConta, conta, modeShowConta, handleEditarConta } = useContext(
   //   ListagemContasContext
   // );
-
 
   const { handleSubmit, control } = useForm<IConta>({});
 
@@ -57,7 +56,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
   return (
     <MuiModal
       open={isOpen}
-      title={modeShowConta || modeEditConta ? "Conta" : "Nova Conta" }
+      title={modeShowConta || modeEditConta ? "Conta" : "Nova Conta"}
       buttons={
         <>
           <Button onClick={onClose}>Fechar</Button>
