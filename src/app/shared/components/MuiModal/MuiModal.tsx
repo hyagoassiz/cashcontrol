@@ -47,8 +47,8 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
             backgroundColor: "white",
             display: "flex",
             flexDirection: "column",
-            maxWidth: "90%",
-            maxHeight: "90%",
+            minWidth: '400px',
+            maxHeight: '500px',
             overflow: "auto",
           }}
         >

@@ -19,7 +19,7 @@ export const ListagemContas: React.FC = () => {
     setTextFilter,
     setIsOpenFilter,
     setIsOpenSearchBar,
-    setAtivarInativarContaData
+    setAtivarInativarContaData,
   } = useContext(ListagemContasContext);
 
   const {
@@ -31,10 +31,8 @@ export const ListagemContas: React.FC = () => {
     handleModalConta,
     modeShowConta,
     handleEditarConta,
-    modeEditConta
+    modeEditConta,
   } = useListagemContas();
-
-  console.log(conta);
 
   return (
     <>
@@ -59,7 +57,7 @@ export const ListagemContas: React.FC = () => {
             data={mountData({
               contas,
               showConta: handleShowConta,
-              handleAtivarInativarConta: setAtivarInativarContaData
+              handleAtivarInativarConta: setAtivarInativarContaData,
               // openModal: setIsOpenDialog,
             })}
             isLoading={isLoading}
@@ -76,7 +74,6 @@ export const ListagemContas: React.FC = () => {
             modeShowConta={modeShowConta}
             modeEditConta={modeEditConta}
             onEdit={handleEditarConta}
-
           />
         )}
 
