@@ -55,6 +55,7 @@ export const ListagemCategorias: React.FC = () => {
         >
           <MuiTable
             columns={COLLUMS_CATEGORIA}
+            textForEmptyData="Nenhuma categoria encontrada"
             data={mountData({
               categorias,
               openModal: setIsOpenDialog,
@@ -66,7 +67,8 @@ export const ListagemCategorias: React.FC = () => {
         </MuiFrame>
 
         <MuiAddButton
-          title="Adicionar Categoria"
+          tooltip="Adicionar Categoria"
+          title="NOVA"
           onClick={handleModalCategoria}
         />
 

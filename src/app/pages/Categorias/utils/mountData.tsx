@@ -1,5 +1,7 @@
 import { ICategoria } from "../interfaces";
 import MuiMoreVertIcon from "../../../shared/components/MuiMoreVertIcon/MuiMoreVertIcon";
+import MuiSituacao from "../../../shared/components/MuiSituacao/MuiSituacao";
+import MuiTipo from "../../../shared/components/MuiTipo/MuiTipo";
 
 interface IMountData {
   categorias: ICategoria[];
@@ -12,7 +14,7 @@ export function mountData({
   categorias,
   openModal,
   handleActivateDeactivate,
-  showConta
+  showConta,
 }: IMountData) {
   if (categorias?.length) {
     categorias.sort((a, b) => a.nome.localeCompare(b.nome));
@@ -20,8 +22,8 @@ export function mountData({
     return categorias.map((categoria) => ({
       id: categoria.id,
       nome: categoria.nome,
-      tipo: categoria.tipo,
-      situacao: categoria.ativo === true ? "Ativo" : "Inativo",
+      tipo: <MuiTipo tipo={categoria.tipo} />,
+      situacao: <MuiSituacao ativo={categoria.ativo} />,
       options: (
         <MuiMoreVertIcon
           options={[
