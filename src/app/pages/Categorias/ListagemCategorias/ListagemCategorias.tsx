@@ -55,6 +55,7 @@ export const ListagemCategorias: React.FC = () => {
         >
           <MuiTable
             columns={COLLUMS_CATEGORIA}
+            textForEmptyData="Nenhuma categoria encontrada"
             data={mountData({
               categorias,
               openModal: setIsOpenDialog,
