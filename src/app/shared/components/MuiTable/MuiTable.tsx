@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import { ITableColumn } from "./interfaces/ITableCollum";
-import ErrorIcon from "@mui/icons-material/Error";
+import InfoIcon from "@mui/icons-material/Info";
 
 interface IMuiTable {
   columns: ITableColumn[];
@@ -49,7 +49,11 @@ export const MuiTable: React.FC<IMuiTable> = ({
               {data.map((row, index) => (
                 <TableRow key={index}>
                   {columns.map((column) => (
-                    <TableCell size="small" key={column.key}>
+                    <TableCell
+                      size="small"
+                      key={column.key}
+                      style={{ ...column?.style }}
+                    >
                       {row[column.key]}
                     </TableCell>
                   ))}
@@ -63,7 +67,7 @@ export const MuiTable: React.FC<IMuiTable> = ({
           {isLoading ? (
             <Box
               sx={{
-                width: '100%'
+                width: "100%",
               }}
             >
               <LinearProgress />
@@ -77,7 +81,7 @@ export const MuiTable: React.FC<IMuiTable> = ({
                 justifyContent: "center",
               }}
             >
-              <ErrorIcon
+              <InfoIcon
                 sx={{ color: "orange", marginRight: theme.spacing(0.5) }}
               />
               <Typography variant="body2">{textForEmptyData}</Typography>

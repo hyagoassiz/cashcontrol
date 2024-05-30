@@ -67,7 +67,8 @@ export const ListagemCategorias: React.FC = () => {
         </MuiFrame>
 
         <MuiAddButton
-          title="Adicionar Categoria"
+          tooltip="Adicionar Categoria"
+          title="NOVA"
           onClick={handleModalCategoria}
         />
 
