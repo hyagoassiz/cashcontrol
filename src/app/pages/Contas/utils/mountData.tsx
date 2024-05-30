@@ -1,6 +1,7 @@
 import { ListItemText } from "@mui/material";
 import MuiMoreVertIcon from "../../../shared/components/MuiMoreVertIcon/MuiMoreVertIcon";
 import { IConta } from "../interfaces";
+import MuiSituacao from "../../../shared/components/MuiSituacao/MuiSituacao";
 
 interface IMountData {
   contas: IConta[];
@@ -31,7 +32,7 @@ IMountData) {
         />
       ),
       tipoConta: conta.tipoConta,
-      situacao: conta.ativo === true ? "Ativo" : "Inativo",
+      situacao: <MuiSituacao ativo={conta.ativo} />,
       options: (
         <MuiMoreVertIcon
           options={[

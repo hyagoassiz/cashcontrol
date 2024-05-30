@@ -1,11 +1,8 @@
-import { ReactNode } from "react"
+import { CSSProperties, ReactNode } from "react"
 
 export interface ITableColumn {
     key: string
     label: string | ReactNode
-    // style?: CSSProperties
-    // align?: 'left' | 'center' | 'right' | 'justify' | 'inherit'
-    // disablePadding?: boolean
-    // sortable?: boolean
-    // verticalAlign?: string
+    style?: CSSProperties
+    align?: 'left' | 'center' | 'right' | 'justify' | 'inherit'
   }

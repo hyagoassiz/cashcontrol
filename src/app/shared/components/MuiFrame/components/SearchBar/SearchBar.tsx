@@ -28,17 +28,18 @@ const SearchBar: React.FC<Props> = ({
         onChange={onChange}
         InputProps={{
           style: { paddingLeft: theme.spacing(1), 
+            color: 'white',
             paddingRight: theme.spacing(1),
-              height: theme.spacing(7), width: '100%' },
+              height: theme.spacing(4), width: '100%' },
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon/>
+              <SearchIcon style={{ color: 'white' }}/>
             </InputAdornment>
           ),
           endAdornment: (
             <Tooltip title="Fechar" placement="top">
               <IconButton onClick={onClickClose}>
-                <CloseIcon fontSize={'small'} style={{ color: '#828D8C' }} />
+                <CloseIcon fontSize={'small'} style={{ color: 'white' }} />
               </IconButton>
             </Tooltip>
           )
