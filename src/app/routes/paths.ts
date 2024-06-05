@@ -1,15 +1,11 @@
-// export const LOGIN = {
-//     LIST: '/entrar'
-// }
-
-// export const DASHBOARD = {
-//     LIST: '/inicio'
-// }
+export const MENU = {
+    LIST: '/menu'
+}
 
 export const CATEGORIAS = { 
-    LIST: '/categorias'
+    LIST: `${MENU.LIST}/categorias`
 }
 
 export const CONTAS = { 
-    LIST: '/contas'
+    LIST: `${MENU.LIST}/contas`
 }
