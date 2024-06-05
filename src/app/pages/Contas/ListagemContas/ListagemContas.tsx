@@ -32,7 +32,6 @@ export const ListagemContas: React.FC = () => {
     modeShowConta,
     handleEditarConta,
     modeEditConta,
-    handleNavigate
   } = useListagemContas();
 
   return (
@@ -42,7 +41,6 @@ export const ListagemContas: React.FC = () => {
       <Container>
         <MuiFrame
           title="Contas"
-          handleBack= {handleNavigate}
           searchBar={{
             open: isOpenSearchBar,
             placeholder: "Buscar conta...",
@@ -51,6 +49,7 @@ export const ListagemContas: React.FC = () => {
             handleSearchBar: () => setIsOpenSearchBar(!isOpenSearchBar),
             onClickClose: () => setIsOpenSearchBar(!isOpenSearchBar),
             handleFilter: () => setIsOpenFilter(true),
+            handleBack: () => setIsOpenFilter(true),
           }}
         >
           <MuiTable

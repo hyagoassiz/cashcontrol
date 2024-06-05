@@ -2,8 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { IConta } from "../interfaces";
 import { obterContasPorUsuario } from "../services/endpoints";
 import { ListagemContasContext } from "../contexts";
-import { useNavigate } from "react-router-dom";
-import * as PATHS from "../../../routes/paths";
 
 interface IUseListagemContas {
   isLoading: boolean;
@@ -16,7 +14,6 @@ interface IUseListagemContas {
   handleShowConta(handleShowConta: IConta): void;
   modeEditConta: boolean
   fetchData: () => void
-  handleNavigate: () => void
 }
 
 export const useListagemContas = (): IUseListagemContas => {
@@ -30,8 +27,6 @@ export const useListagemContas = (): IUseListagemContas => {
   const [modeEditConta, setModeEditConta] = useState<boolean>(false);
   const [toggleModalConta, setToggleModalConta] = useState<boolean>(false);
   const [conta, setConta] = useState<IConta | null>(null);
-  const navigate = useNavigate()
-  
 
   const fetchData = async () => {
     try {
@@ -73,10 +68,6 @@ export const useListagemContas = (): IUseListagemContas => {
     setModeEditConta(true)
   };
 
-  const handleNavigate = () => {
-    navigate(PATHS.MENU.LIST);
-  };
-
   return {
     isLoading,
     contas,
@@ -87,7 +78,6 @@ export const useListagemContas = (): IUseListagemContas => {
     toggleModalConta,
     handleShowConta,
     modeEditConta,
-    fetchData,
-    handleNavigate
+    fetchData
   };
 };

@@ -1,11 +1,15 @@
-export const MENU = {
-    LIST: '/menu'
-}
+// export const LOGIN = {
+//     LIST: '/entrar'
+// }
+
+// export const DASHBOARD = {
+//     LIST: '/inicio'
+// }
 
 export const CATEGORIAS = { 
-    LIST: `${MENU.LIST}/categorias`
+    LIST: '/categorias'
 }
 
 export const CONTAS = { 
-    LIST: `${MENU.LIST}/contas`
+    LIST: '/contas'
 }
