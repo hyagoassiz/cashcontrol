@@ -4,6 +4,8 @@ import { ICategoria } from "../interfaces";
 import { obterCategoriasPorUsuario } from "../services/endpoints";
 import { CategoriaService } from "../services/CategoriaService";
 import { ListagemCategoriasContext } from "../contexts";
+import { useNavigate } from "react-router-dom";
+import * as PATHS from "../../../routes/paths";
 
 interface IUseListagemCategorias {
   isLoading: boolean;
@@ -17,6 +19,7 @@ interface IUseListagemCategorias {
   handleModalCategoria: () => void;
   handleEditarCategoria2: () => void; //ajustar o nome pois tem outra função com o mesmo nome
   fetchData: () => void;
+  handleNavigate: () => void;
 }
 
 export const useListagemCategorias = (): IUseListagemCategorias => {
@@ -31,6 +34,7 @@ export const useListagemCategorias = (): IUseListagemCategorias => {
   const [modeEditCategoria, setModeEditCategoria] = useState<boolean>(false);
   const [toggleModalCategoria, setToggleModalCategoria] =
     useState<boolean>(false);
+  const navigate = useNavigate();
 
   // const { setLoading} = useContext(ProgressContext)
 
@@ -106,6 +110,10 @@ export const useListagemCategorias = (): IUseListagemCategorias => {
     setModeEditCategoria(true);
   };
 
+  const handleNavigate = () => {
+    navigate(PATHS.MENU.LIST);
+  };
+
   return {
     isLoading,
     categorias,
@@ -118,5 +126,6 @@ export const useListagemCategorias = (): IUseListagemCategorias => {
     handleEditarCategoria2,
     categoria,
     fetchData,
+    handleNavigate,
   };
 };

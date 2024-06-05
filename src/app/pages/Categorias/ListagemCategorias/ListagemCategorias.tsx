@@ -33,6 +33,7 @@ export const ListagemCategorias: React.FC = () => {
     handleModalCategoria,
     handleEditarCategoria2,
     toggleModalCategoria,
+    handleNavigate
   } = useListagemCategorias();
 
   return (
@@ -42,6 +43,7 @@ export const ListagemCategorias: React.FC = () => {
       <Container>
         <MuiFrame
           title="Categorias"
+          handleBack= {handleNavigate}
           searchBar={{
             open: isOpenSearchBar,
             placeholder: "Buscar categorias...",
@@ -50,7 +52,6 @@ export const ListagemCategorias: React.FC = () => {
             handleSearchBar: () => setIsOpenSearchBar(!isOpenSearchBar),
             onClickClose: () => setIsOpenSearchBar(!isOpenSearchBar),
             handleFilter: () => setIsOpenFilter(true),
-            handleBack: () => setIsOpenFilter(true),
           }}
         >
           <MuiTable
