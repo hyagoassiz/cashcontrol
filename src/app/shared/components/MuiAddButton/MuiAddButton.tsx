@@ -15,21 +15,16 @@ const MuiAddButton: React.FC<FloatingButtonPros> = ({
   return (
     <Tooltip placement="top" title={tooltip}>
       <Button
+        variant="contained"
         sx={{
           display: "flex !important",
-          margin: "12px 17px 92px auto",
-          backgroundColor: "#1976D2 !important",
-          ":hover": {
-            opacity: 0.8,
-          },
-          color: "white",
-          fontSize: "12px",
+          margin: "12px 17px 92px auto"
         }}
         onClick={onClick}
       >
         {title}
-        <AddCircleIcon
-          style={{ marginLeft: "1px", color: "white", height: "18px" }}
+        <AddCircleIcon color="inherit"
+          style={{ marginLeft: "1px", height: "18px" }}
         />
       </Button>
     </Tooltip>

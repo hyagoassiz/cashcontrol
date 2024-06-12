@@ -1,35 +1,115 @@
 import { createTheme } from "@mui/material";
 
+const darkThemePalette = {
+  primary: {
+    main: "#4C3575",
+    dark: "#371B58",
+    light: "#5B4B8A",
+    contrastText: "#D3D3D3",
+  },
+
+  secondary: {
+    main: "#E0980C",
+    dark: "#FFFFFF",
+    light: "#FFFFFF",
+    contrastText: "#151819",
+  },
+
+  background: {
+    paper: "#FFFFFF",
+    default: "#F5F5F5",
+  },
+};
+
 export const DarkTheme = createTheme({
-  palette: {
-    primary: {// usada normalmente para coisas que precisam de destaque
-      // variações da cor
-      main: "#4285F4",
-      dark: "#1967D2",
-      light: "#66A3FF",
-
-            // serve para fazer contraste com a cor primária
-      contrastText: "#000000",
-
+  palette: darkThemePalette,
+  components: {
+    MuiTypography: {
+      variants: [
+        {
+          props: {
+            variant: "h5",
+          },
+          style: { color: darkThemePalette.primary.contrastText },
+        },
+        {
+          props: {
+            variant: "h6",
+          },
+          style: { color: darkThemePalette.primary.contrastText },
+        },
+        {
+          props: {
+            variant: "body1",
+          },
+          style: { color: darkThemePalette.primary.contrastText },
+        },
+      ],
     },
-
-    secondary: {
-
-      // variações da cor
-      main: "#DB4437",
-      dark: "#CC0000",
-      light: "#FF6B60",
-
-
-      // serve para fazer contraste com a cor primária
-      contrastText: "#FFFFFF",
+    MuiButton: {
+      variants: [
+        {
+          props: {
+            variant: "contained",
+          },
+          style: {
+            color: darkThemePalette.secondary.contrastText,
+            backgroundColor: darkThemePalette.secondary.main,
+            "&:hover": {
+              backgroundColor: darkThemePalette.secondary.main,
+              opacity: 0.8,
+            },
+          },
+        },
+        {
+          props: {
+            variant: "text",
+          },
+          style: {
+            color: darkThemePalette.secondary.contrastText,
+            "&:hover": {
+              opacity: 0.8,
+            },
+          },
+        },
+      ],
     },
-
-    background: {
-        paper: "#FFFFFF", //usado dentro de carde normalnete destaca do fundo
-        default: "#F5F5F5", //normalmenbte usado em fundo
-        
-
-    }
+    MuiTableCell: {
+      variants: [
+        {
+          props: {
+            variant: "head",
+          },
+          style: {
+            color: darkThemePalette.primary.contrastText,
+            borderColor: darkThemePalette.primary.dark,
+          },
+        },
+        {
+          props: {
+            variant: "body",
+          },
+          style: {
+            color: darkThemePalette.primary.contrastText,
+            borderColor: darkThemePalette.primary.dark,
+          },
+        },
+      ],
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "& .MuiInputLabel-root": {
+            color: darkThemePalette.secondary.main, // cor do label
+          },
+          "& .MuiInputLabel-root.Mui-focused": {
+            color: darkThemePalette.secondary.main, // cor do label quando focado
+          },
+          "& .MuiInputBase-input": {
+            color: darkThemePalette.primary.contrastText, // cor do texto
+          },
+        },
+      },
+    },
   },
 });
