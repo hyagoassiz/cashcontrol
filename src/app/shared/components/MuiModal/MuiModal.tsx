@@ -1,5 +1,7 @@
 import { Box, Modal, Typography, useTheme } from "@mui/material";
 import { ReactNode } from "react";
+import CustomBoxHead from "./styles/CustomBoxHead";
+import CustomBoxBody from "./styles/CustomBoxBody";
 
 interface IMuiModalProps {
   title: string;
@@ -14,7 +16,7 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
   children,
   buttons,
 }) => {
-  const theme = useTheme()
+  const theme = useTheme();
   return (
     <>
       {open && (
@@ -40,27 +42,23 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
           alignItems: "center",
           justifyContent: "center",
         }}
-      
       >
-        <Box
+        <CustomBoxBody
           sx={{
-            backgroundColor: "white",
             display: "flex",
             flexDirection: "column",
-            minWidth: '400px',
-            maxHeight: '500px',
+            minWidth: "400px",
+            maxHeight: "500px",
             overflow: "auto",
           }}
         >
-          <Box
+          <CustomBoxHead
             sx={{
-              bgcolor: "#1976D2",
-              color: "white",
               padding: theme.spacing(1),
             }}
           >
             <Typography variant="h6">{title}</Typography>
-          </Box>
+          </CustomBoxHead>
           <Box sx={{ padding: theme.spacing(3) }}>{children}</Box>
           {buttons && (
             <Box
@@ -68,14 +66,14 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
                 display: "flex",
                 justifyContent: "flex-end",
                 marginTop: theme.spacing(4),
-                backgroundColor: '#EBEBEB',
+                backgroundColor: "transparent",
                 padding: theme.spacing(1),
               }}
             >
               {buttons}
             </Box>
           )}
-        </Box>
+        </CustomBoxBody>
       </Modal>
     </>
   );

@@ -34,6 +34,7 @@ export const MuiTable: React.FC<IMuiTable> = ({
             <TableRow>
               {columns.map((column) => (
                 <TableCell
+                  variant="head"
                   size="small"
                   sx={{ fontWeight: 600 }}
                   key={column.key}
@@ -47,9 +48,10 @@ export const MuiTable: React.FC<IMuiTable> = ({
           <TableBody>
             <>
               {data.map((row, index) => (
-                <TableRow key={index}>
+                <TableRow key={index} >
                   {columns.map((column) => (
                     <TableCell
+                      variant="body"
                       size="small"
                       key={column.key}
                       style={{ ...column?.style }}

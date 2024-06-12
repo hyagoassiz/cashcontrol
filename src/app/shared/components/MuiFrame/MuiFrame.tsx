@@ -1,11 +1,13 @@
 import { Divider, IconButton, Tooltip, useTheme } from "@mui/material";
-import { Container, Box, Typography } from "@mui/material";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { Box, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import SearchBar from "./components/SearchBar/SearchBar";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import SearchIcon from "@mui/icons-material/Search";
-import HomeIcon from "@mui/icons-material/Home";
+import CustomBox from "./styles/CustomBox";
+import CustomContainer from "./styles/CustomContainer";
+import CustomArrowBackIosIcon from "./styles/CustomArrowBackIosIcon";
+import CustomHomeIcon from "./styles/CustomHomeIcon";
+import CustomSearchIcon from "./styles/CustomSearchIcon";
+import CustomFilterListIcon from "./styles/CustomFilterListIcon";
 
 interface MuiFrameProps {
   title?: string;
@@ -33,22 +35,21 @@ export const MuiFrame: React.FC<MuiFrameProps> = ({
   const theme = useTheme();
   return (
     <>
-      <Container
+      <CustomContainer
         style={{
           height: "auto",
-          width: '1000px',
+          width: "1000px",
           boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.3)",
           padding: 0,
           marginTop: theme.spacing(3),
         }}
       >
-        <Box
+        <CustomBox
           sx={{
             display: "flex",
             alignItems: "center",
             height: theme.spacing(4),
             padding: theme.spacing(1),
-            backgroundColor: "#1976D2",
           }}
         >
           {!searchBar?.open ? (
@@ -57,18 +58,15 @@ export const MuiFrame: React.FC<MuiFrameProps> = ({
                 <>
                   <Tooltip title="Voltar" placement="top">
                     <IconButton onClick={handleBack}>
-                      <ArrowBackIosIcon
+                      <CustomArrowBackIosIcon
                         sx={{
                           cursor: "pointer",
                           fontSize: theme.spacing(2.3),
-                          color: "white",
                         }}
                       />
                     </IconButton>
                   </Tooltip>
-                  <Typography variant="body1" sx={{ color: "white" }}>
-                    Voltar
-                  </Typography>
+                  <Typography variant="body1">Voltar</Typography>
                 </>
               ) : (
                 <Box
@@ -77,16 +75,13 @@ export const MuiFrame: React.FC<MuiFrameProps> = ({
                     alignItems: "center",
                   }}
                 >
-                  <HomeIcon
+                  <CustomHomeIcon
                     sx={{
-                      color: "white",
                       paddingRight: theme.spacing(0.5),
                       height: theme.spacing(2.5),
                     }}
                   />
-                  <Typography variant="body2" sx={{ color: "white" }}>
-                    Cash Control Project
-                  </Typography>
+                  <Typography>Cash Control Project</Typography>
                 </Box>
               )}
             </>
@@ -103,17 +98,17 @@ export const MuiFrame: React.FC<MuiFrameProps> = ({
             <Box sx={{ display: "flex" }}>
               <Tooltip title="Pesquisar" placement="top">
                 <IconButton onClick={searchBar?.handleSearchBar}>
-                  <SearchIcon sx={{ color: "white" }} />
+                  <CustomSearchIcon />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Filtrar" placement="top">
                 <IconButton onClick={searchBar?.handleFilter}>
-                  <FilterListIcon sx={{ color: "white" }} />
+                  <CustomFilterListIcon />
                 </IconButton>
               </Tooltip>
             </Box>
           )}
-        </Box>
+        </CustomBox>
         {title && (
           <>
             <Box
@@ -131,7 +126,7 @@ export const MuiFrame: React.FC<MuiFrameProps> = ({
         )}
 
         <Box sx={{ padding: theme.spacing(1) }}>{children}</Box>
-      </Container>
+      </CustomContainer>
     </>
   );
 };
