@@ -1,6 +1,6 @@
+import { MoreVert } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
-import CustomMoreVert from "./styles/CustomMoreVert";
 
 interface IMuiMoreVertIcon {
   options: {
@@ -29,7 +29,7 @@ const MuiMoreVertIcon = ({ options }: IMuiMoreVertIcon) => {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <CustomMoreVert />
+        <MoreVert />
       </IconButton>
       <Menu
         id="options-menu"
