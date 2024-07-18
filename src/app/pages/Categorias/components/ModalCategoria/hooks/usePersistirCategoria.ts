@@ -10,7 +10,7 @@ interface IUsePersistirCategoria {
 }
 
 export const usePersistirCategoria = (): IUsePersistirCategoria => {
-  const { fetchData } = useListagemCategorias();
+  const { refetch } = useListagemCategorias();
   const handleCriarCategoria = async (data: ICategoria) => {
     try {
       const response = await CategoriaService.criarCategoria(data);
@@ -22,7 +22,7 @@ export const usePersistirCategoria = (): IUsePersistirCategoria => {
     } catch (error) {
       console.error("Erro ao criar categoria:", error);
     } finally {
-      fetchData();
+      refetch();
     }
   };
 
@@ -37,7 +37,7 @@ export const usePersistirCategoria = (): IUsePersistirCategoria => {
     } catch (error) {
       console.error("Erro ao editar categoria:", error);
     } finally {
-      fetchData();
+      refetch();
     }
   };
 
