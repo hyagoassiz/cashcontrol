@@ -7,18 +7,23 @@ import {
   ProgressProvider,
 } from "./shared/contexts/index";
 import { DarkTheme } from "./shared/themes";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const App: React.FC = () => {
+  const queryClient = new QueryClient();
+
   return (
     <>
-      <ThemeProvider theme={DarkTheme}>
-        <GlobalContextProvider>
-          <ProgressProvider>
-            <AppRoutes />
-            <MuiCircularProgress />
-          </ProgressProvider>
-        </GlobalContextProvider>
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={DarkTheme}>
+          <GlobalContextProvider>
+            <ProgressProvider>
+              <AppRoutes />
+              <MuiCircularProgress />
+            </ProgressProvider>
+          </GlobalContextProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
     </>
   );
 };
