@@ -6,10 +6,11 @@ import { CategoriaService } from "../services/CategoriaService";
 import { ListagemCategoriasContext } from "../contexts";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "../../../routes/paths";
+import { useQuery } from "@tanstack/react-query";
 
 interface IUseListagemCategorias {
   isLoading: boolean;
-  categorias: ICategoria[];
+  categorias: ICategoria[] | undefined;
   categoria: ICategoria | null;
   modeShowCategoria: boolean;
   modeEditCategoria: boolean;
@@ -18,17 +19,13 @@ interface IUseListagemCategorias {
   handleShowCategoria(handleShowCategoria: ICategoria): void;
   handleModalCategoria: () => void;
   handleEditarCategoria2: () => void; //ajustar o nome pois tem outra função com o mesmo nome
-  fetchData: () => void;
+  refetch: () => void;
   handleNavigate: () => void;
 }
 
 export const useListagemCategorias = (): IUseListagemCategorias => {
-  const { textFilter, filterData, reload } = useContext(
-    ListagemCategoriasContext
-  );
+  const { filterData, reload } = useContext(ListagemCategoriasContext);
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [categorias, setCategorias] = useState<ICategoria[]>([]);
   const [categoria, setCategoria] = useState<ICategoria | null>(null);
   const [modeShowCategoria, setModeShowCategoria] = useState<boolean>(false);
   const [modeEditCategoria, setModeEditCategoria] = useState<boolean>(false);
@@ -36,57 +33,28 @@ export const useListagemCategorias = (): IUseListagemCategorias => {
     useState<boolean>(false);
   const navigate = useNavigate();
 
-  // const { setLoading} = useContext(ProgressContext)
-
-  const fetchData = async () => {
-    try {
-      setIsLoading(true);
-      // setLoading(true)
-      const categoriasDoUsuario = await obterCategoriasPorUsuario(
-        "DxARypJQGMZeb1fMT4ft4BI4S2D2",
-        filterData
-      );
-      setCategorias(categoriasDoUsuario);
-    } catch (error) {
-      console.error("Erro ao obter categorias do usuário:", error);
-    } finally {
-      setIsLoading(false);
-      // setLoading(false)
-    }
-  };
+  const {
+    data: categorias,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["categorias"],
+    queryFn: () =>
+      obterCategoriasPorUsuario("DxARypJQGMZeb1fMT4ft4BI4S2D2", filterData),
+  });
 
   useEffect(() => {
-    fetchData();
+    refetch();
   }, [filterData, reload]);
-
-  useEffect(() => {
-    const filterCategories = () => {
-      const result = categorias.filter(
-        (value) =>
-          value.nome.toUpperCase().includes(textFilter.toUpperCase()) ||
-          String(value.nome).toUpperCase().includes(textFilter.toUpperCase())
-      );
-      setCategorias(result);
-    };
-
-    if (textFilter.length > 1) {
-      filterCategories();
-    } else if (textFilter.length === 0) {
-      setIsLoading(true);
-      fetchData();
-    }
-  }, [textFilter]);
 
   const handleEditarCategoria = async (id: string, ativo: boolean) => {
     try {
-      setIsLoading(true);
       await CategoriaService.editarSituacao(id, ativo);
-      fetchData();
+      refetch();
     } catch (error) {
       console.error("Erro ao editar categoria:", error);
     } finally {
-      setIsLoading(false);
-      fetchData();
+      refetch();
     }
   };
 
@@ -125,7 +93,7 @@ export const useListagemCategorias = (): IUseListagemCategorias => {
     handleModalCategoria,
     handleEditarCategoria2,
     categoria,
-    fetchData,
+    refetch,
     handleNavigate,
   };
 };

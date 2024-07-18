@@ -32,7 +32,7 @@ export const ListagemContas: React.FC = () => {
     modeShowConta,
     handleEditarConta,
     modeEditConta,
-    handleNavigate
+    handleNavigate,
   } = useListagemContas();
 
   return (
@@ -42,7 +42,7 @@ export const ListagemContas: React.FC = () => {
       <Container>
         <MuiFrame
           title="Contas"
-          handleBack= {handleNavigate}
+          handleBack={handleNavigate}
           searchBar={{
             open: isOpenSearchBar,
             placeholder: "Buscar conta...",
@@ -53,17 +53,19 @@ export const ListagemContas: React.FC = () => {
             handleFilter: () => setIsOpenFilter(true),
           }}
         >
-          <MuiTable
-            columns={COLLUMS_CONTA}
-            textForEmptyData="Nenhuma conta encontrada"
-            data={mountData({
-              contas,
-              showConta: handleShowConta,
-              handleAtivarInativarConta: setAtivarInativarContaData,
-              // openModal: setIsOpenDialog,
-            })}
-            isLoading={isLoading}
-          />
+          {contas && (
+            <MuiTable
+              columns={COLLUMS_CONTA}
+              textForEmptyData="Nenhuma conta encontrada"
+              data={mountData({
+                contas,
+                showConta: handleShowConta,
+                handleAtivarInativarConta: setAtivarInativarContaData,
+                // openModal: setIsOpenDialog,
+              })}
+              isLoading={isLoading}
+            />
+          )}
         </MuiFrame>
 
         <MuiAddButton
