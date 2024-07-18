@@ -13,7 +13,7 @@ interface IUseAtivarInativarConta {
 export const useAtivarInativarConta = (): IUseAtivarInativarConta => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const { fetchData } = useListagemContas();
+  const { refetch } = useListagemContas();
 
   const { ativarInativarContaData} = useContext(ListagemContasContext);
 
@@ -23,7 +23,7 @@ export const useAtivarInativarConta = (): IUseAtivarInativarConta => {
     try {
       setIsLoading(true);
       await ContaService.ativarInativarConta(id, ativo);
-      fetchData();
+      refetch();
     } catch (error) {
       console.error("Erro ao editar conta:", error);
     } finally {
