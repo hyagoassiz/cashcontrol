@@ -3,42 +3,25 @@ import {
   FormControl,
   Grid,
   TextField,
-  useTheme,
 } from "@mui/material";
-import MuiDrawer from "../../../../shared/components/MuiDrawer/MuiDrawer";
-import { useContext } from "react";
-import { ListagemContasContext } from "../../contexts";
-import { Controller, useForm } from "react-hook-form";
-import { IFilterData } from "../../interfaces";
+import MuiDrawer from "../../../../../shared/components/MuiDrawer/MuiDrawer";
+import { Controller } from "react-hook-form";
+import { useFilter } from "./hooks/useFilter";
 
 const Filter = () => {
-  const { isOpenFilter, setIsOpenFilter, setFilterData } =
-    useContext(ListagemContasContext);
-
   const {
+    toggleFilter,
+    setToggleFilter,
     control,
     handleSubmit,
-    formState: { errors },
-  } = useForm<IFilterData>();
-
-  const theme = useTheme();
-
-  const onSubmit = (data: IFilterData) => {
-    // const situacao: boolean[] = data.ativo
-    //   ? data.ativo.map((option) => option === true)
-    //   : [];
-
-    setFilterData(data);
-
-    console.log(data);
-    setIsOpenFilter(false);
-  };
+    onSubmit
+  } = useFilter();
 
   return (
     <>
       <MuiDrawer
-        open={isOpenFilter}
-        closeFilter={() => setIsOpenFilter(false)}
+        open={toggleFilter}
+        closeFilter={() => setToggleFilter(false)}
         applyFilter={handleSubmit(onSubmit)}
       >
         <FormControl component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -46,14 +29,24 @@ const Filter = () => {
             <Controller
               name="tipoConta"
               control={control}
-              defaultValue={["Conta Corrente", "Poupança", "Investimentos", "Outros"]}
+              defaultValue={[
+                "Conta Corrente",
+                "Poupança",
+                "Investimentos",
+                "Outros",
+              ]}
               rules={{ required: "Este campo é obrigatório" }}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Autocomplete
                   {...field}
                   multiple
                   id="tipoConta"
-                  options={["Conta Corrente", "Poupança", "Investimentos", "Outros"]}
+                  options={[
+                    "Conta Corrente",
+                    "Poupança",
+                    "Investimentos",
+                    "Outros",
+                  ]}
                   onChange={(event, value) => field.onChange(value)}
                   renderInput={(params) => (
                     <TextField
@@ -62,8 +55,7 @@ const Filter = () => {
                       sx={{ width: "330px" }}
                       label="Tipo da Conta"
                       placeholder="Selecionar"
-                      error={!!errors.tipoConta}
-                      helperText={errors.tipoConta?.message}
+                      error={!!fieldState.error}
                     />
                   )}
                 />
@@ -71,13 +63,13 @@ const Filter = () => {
             />
           </Grid>
 
-          <Grid paddingTop={theme.spacing(2)}>
+          <Grid paddingTop={2}>
             <Controller
               name="ativo"
               control={control}
               defaultValue={[true]}
               rules={{ required: "Este campo é obrigatório" }}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Autocomplete
                   {...field}
                   multiple
@@ -99,8 +91,7 @@ const Filter = () => {
                       sx={{ width: "330px" }}
                       label="Situação"
                       placeholder="Selecionar"
-                      error={!!errors.ativo}
-                      helperText={errors.ativo?.message}
+                      error={!!fieldState.error}
                     />
                   )}
                 />
