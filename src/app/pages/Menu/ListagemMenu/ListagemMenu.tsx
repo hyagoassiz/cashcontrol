@@ -1,3 +1,4 @@
+import { BoxContainer } from "../../../shared/components/BoxContainer/BoxContainer";
 import { MuiAppBar } from "../../../shared/components/MuiAppBar/AppBar";
 import { MuiCardMenu } from "../../../shared/components/MuiCardMenu/MuiCardMenu";
 import { MuiFrame } from "../../../shared/components/MuiFrame/MuiFrame";
@@ -8,11 +9,11 @@ export const ListagemMenu: React.FC = () => {
   return (
     <>
       <MuiAppBar />
-      {/* <CardMenu /> */}
 
-      <MuiFrame>
+      <BoxContainer>
+        <MuiFrame />
         <MuiCardMenu options={OPTIONS} />
-      </MuiFrame>
+      </BoxContainer>
     </>
   );
 };

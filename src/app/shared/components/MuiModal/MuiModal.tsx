@@ -1,4 +1,4 @@
-import { Box, Modal, Typography, useTheme } from "@mui/material";
+import { Box, BoxProps, Modal, Typography, useTheme } from "@mui/material";
 import { ReactNode } from "react";
 
 interface IMuiModalProps {
@@ -6,6 +6,7 @@ interface IMuiModalProps {
   open: boolean;
   children: ReactNode;
   buttons?: ReactNode;
+  style: BoxProps;
 }
 
 export const MuiModal: React.FC<IMuiModalProps> = ({
@@ -13,12 +14,13 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
   open,
   children,
   buttons,
+  style,
 }) => {
-  const theme = useTheme()
+  const theme = useTheme();
   return (
     <>
       {open && (
-        <div
+        <Box
           style={{
             position: "fixed",
             top: 0,
@@ -40,16 +42,14 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
           alignItems: "center",
           justifyContent: "center",
         }}
-      
       >
         <Box
           sx={{
             backgroundColor: "white",
             display: "flex",
             flexDirection: "column",
-            minWidth: '400px',
-            maxHeight: '500px',
             overflow: "auto",
+            ...style,
           }}
         >
           <Box
@@ -68,7 +68,7 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
                 display: "flex",
                 justifyContent: "flex-end",
                 marginTop: theme.spacing(4),
-                backgroundColor: '#EBEBEB',
+                backgroundColor: "#EBEBEB",
                 padding: theme.spacing(1),
               }}
             >
