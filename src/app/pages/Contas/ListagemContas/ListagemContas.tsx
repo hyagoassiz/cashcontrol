@@ -2,37 +2,27 @@ import { Container } from "@mui/material";
 import MuiAddButton from "../../../shared/components/MuiAddButton/MuiAddButton";
 import { MuiAppBar } from "../../../shared/components/MuiAppBar/AppBar";
 import { MuiFrame } from "../../../shared/components/MuiFrame/MuiFrame";
-import { useContext } from "react";
-import { ListagemContasContext } from "../contexts";
 import { MuiTable } from "../../../shared/components/MuiTable/MuiTable";
-import { COLLUMS_CONTA } from "../utils/collumnsNames";
-import { mountData } from "../utils/mountData";
-import { useListagemContas } from "../hooks/useListagemContas";
-import { ModalConta } from "../components/ModalConta/ModalConta";
-import Filter from "../components/Filter/Filter";
-import Dialog from "../components/Dialog/Dialog";
+import { COLLUMS_CONTA } from "./utils/collumnsNames";
+import { mountData } from "./utils/mountData";
+import { useListagemContas } from "./hooks/useListagemContas";
+import { ModalConta } from "./components/ModalConta/ModalConta";
+import Filter from "./components/Filter/Filter";
+import Dialog from "./components/Dialog/Dialog";
 
 export const ListagemContas: React.FC = () => {
   const {
-    isOpenSearchBar,
-    textFilter,
-    setTextFilter,
-    setIsOpenFilter,
-    setIsOpenSearchBar,
-    setAtivarInativarContaData,
-  } = useContext(ListagemContasContext);
-
-  const {
     isLoading,
     contas,
-    conta,
-    handleShowConta,
-    toggleModalConta,
-    handleModalConta,
-    modeShowConta,
     handleEditarConta,
-    modeEditConta,
+    handleModalConta,
     handleNavigate,
+    setToggleFilter,
+    setToggleSearchBar,
+    toggleSearchBar,
+    textFilter,
+    setTextFilter,
+    setAtivarInativarContaData,
   } = useListagemContas();
 
   return (
@@ -44,13 +34,13 @@ export const ListagemContas: React.FC = () => {
           title="Contas"
           handleBack={handleNavigate}
           searchBar={{
-            open: isOpenSearchBar,
+            open: toggleSearchBar,
             placeholder: "Buscar conta...",
             value: textFilter,
             onChange: (e) => setTextFilter(e.target.value),
-            handleSearchBar: () => setIsOpenSearchBar(!isOpenSearchBar),
-            onClickClose: () => setIsOpenSearchBar(!isOpenSearchBar),
-            handleFilter: () => setIsOpenFilter(true),
+            handleSearchBar: () => setToggleSearchBar(!toggleSearchBar),
+            onClickClose: () => setToggleSearchBar(!toggleSearchBar),
+            handleFilter: () => setToggleFilter(true),
           }}
         >
           {contas && (
@@ -59,7 +49,7 @@ export const ListagemContas: React.FC = () => {
               textForEmptyData="Nenhuma conta encontrada"
               data={mountData({
                 contas,
-                showConta: handleShowConta,
+                editarConta: handleEditarConta,
                 handleAtivarInativarConta: setAtivarInativarContaData,
                 // openModal: setIsOpenDialog,
               })}
@@ -74,17 +64,7 @@ export const ListagemContas: React.FC = () => {
           onClick={handleModalConta}
         />
 
-        {toggleModalConta && (
-          <ModalConta
-            isOpen={toggleModalConta}
-            onClose={handleModalConta}
-            data={conta}
-            modeShowConta={modeShowConta}
-            modeEditConta={modeEditConta}
-            onEdit={handleEditarConta}
-          />
-        )}
-
+        <ModalConta />
         <Dialog />
 
         <Filter />
