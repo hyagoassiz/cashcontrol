@@ -70,6 +70,7 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
           </Button>
         </>
       }
+      style={{ width: "300px" }}
     >
       <form>
         <Grid container spacing={2}>

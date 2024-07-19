@@ -1,5 +1,4 @@
-import { Container } from "@mui/material";
-import MuiAddButton from "../../../shared/components/MuiAddButton/MuiAddButton";
+import { Button } from "@mui/material";
 import { MuiAppBar } from "../../../shared/components/MuiAppBar/AppBar";
 import { MuiFrame } from "../../../shared/components/MuiFrame/MuiFrame";
 import { useContext } from "react";
@@ -11,6 +10,9 @@ import { mountData } from "../utils/mountData";
 import Filter from "../components/Filter/Filter";
 import { ListagemCategoriasContext } from "../contexts";
 import Dialog from "../components/Dialog/Dialog";
+import { BoxContainer } from "../../../shared/components/BoxContainer/BoxContainer";
+import { ToolPainel } from "../../../shared/components/ToolPanel/ToolPanel";
+import { Add } from "@mui/icons-material";
 
 export const ListagemCategorias: React.FC = () => {
   const {
@@ -40,10 +42,21 @@ export const ListagemCategorias: React.FC = () => {
     <>
       <MuiAppBar />
 
-      <Container>
-        <MuiFrame
-          title="Categorias"
-          handleBack={handleNavigate}
+      <BoxContainer>
+        <MuiFrame title="Categorias" handleBack={handleNavigate} />
+        <ToolPainel
+          title={`Quantidade (${categorias?.length})`}
+          buttons={
+            <>
+              <Button
+                onClick={handleModalCategoria}
+                variant="text"
+                startIcon={<Add />}
+              >
+                Adicionar
+              </Button>
+            </>
+          }
           searchBar={{
             open: isOpenSearchBar,
             placeholder: "Buscar categorias...",
@@ -53,26 +66,17 @@ export const ListagemCategorias: React.FC = () => {
             onClickClose: () => setIsOpenSearchBar(!isOpenSearchBar),
             handleFilter: () => setIsOpenFilter(true),
           }}
-        >
-          {categorias && (
-            <MuiTable
-              columns={COLLUMS_CATEGORIA}
-              textForEmptyData="Nenhuma categoria encontrada"
-              data={mountData({
-                categorias,
-                openModal: setIsOpenDialog,
-                handleActivateDeactivate: setActivateDeactivateData,
-                showConta: handleShowCategoria,
-              })}
-              isLoading={isLoading}
-            />
-          )}
-        </MuiFrame>
-
-        <MuiAddButton
-          tooltip="Adicionar Categoria"
-          title="NOVA"
-          onClick={handleModalCategoria}
+        />
+        <MuiTable
+          columns={COLLUMS_CATEGORIA}
+          textForEmptyData="Nenhuma categoria encontrada"
+          data={mountData({
+            categorias,
+            openModal: setIsOpenDialog,
+            handleActivateDeactivate: setActivateDeactivateData,
+            showConta: handleShowCategoria,
+          })}
+          isLoading={isLoading}
         />
 
         {toggleModalCategoria && (
@@ -89,7 +93,7 @@ export const ListagemCategorias: React.FC = () => {
         <Dialog />
 
         <Filter />
-      </Container>
+      </BoxContainer>
     </>
   );
 };
