@@ -1,4 +1,4 @@
-import { ListagemContasProvider } from "../contexts";
+import { ListagemContasProvider } from "./contexts";
 import { ListagemContas } from "./ListagemContas";
 
 export function ContasRoute(): JSX.Element {
