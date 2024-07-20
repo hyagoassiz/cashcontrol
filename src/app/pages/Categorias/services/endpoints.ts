@@ -16,7 +16,10 @@ export const adcionarCategoria = async function (
   data: ICategoria
 ): Promise<IReturnBackEnd> {
   try {
-    await addDoc(collection(db, "categoria"), data);
+    const { id, ...categoriaSemId } = data;
+
+    await addDoc(collection(db, "categoria"), categoriaSemId);
+
     return {
       status: 200,
       message: "success",
@@ -56,6 +59,7 @@ export const obterCategoriasPorUsuario = async function (
         nome: categoriaData.nome,
         tipo: categoriaData.tipo,
         ativo: categoriaData.ativo,
+        incluirSoma: categoriaData.incluirSoma,
       };
       categorias.push(categoria);
     });
