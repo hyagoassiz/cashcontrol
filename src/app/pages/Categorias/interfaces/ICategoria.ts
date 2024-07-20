@@ -4,4 +4,5 @@ export interface ICategoria {
   nome: string;
   tipo: "Entrada" | "Saída" | null;
   ativo: boolean;
+  incluirSoma: boolean
 }
