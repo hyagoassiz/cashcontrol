@@ -4,7 +4,7 @@ import { IConta } from "../interfaces";
 import MuiSituacao from "../../../../shared/components/MuiSituacao/MuiSituacao";
 
 interface IMountData {
-  contas: IConta[];
+  contas: IConta[] | undefined;
   editarConta: (conta: IConta) => void;
   handleAtivarInativarConta: (handleAtivarInativarConta: IConta) => void;
 }
@@ -12,7 +12,7 @@ interface IMountData {
 export function mountData({
   contas,
   editarConta,
-  handleAtivarInativarConta
+  handleAtivarInativarConta,
 }: // openModal,
 // handleActivateDeactivate,
 IMountData) {

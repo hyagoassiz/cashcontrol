@@ -20,6 +20,7 @@ export const ModalConta: React.FC = () => {
     toggleModalConta,
     handleModalConta,
     getValues,
+    handleSubmit,
   } = useModalConta();
 
   return (
@@ -29,15 +30,16 @@ export const ModalConta: React.FC = () => {
       buttons={
         <>
           <Button onClick={handleModalConta}>Fechar</Button>
-          <Button variant="contained" onClick={onSubmit}>
+          <Button variant="contained" onClick={handleSubmit(onSubmit)}>
             Salvar
           </Button>
         </>
       }
+      style={{ width: 600 }}
     >
       <form>
         <Grid container spacing={2}>
-          <Grid item xs={7.1}>
+          <Grid item xs={12}>
             <Controller
               name="nome"
               control={control}
@@ -59,6 +61,7 @@ export const ModalConta: React.FC = () => {
               )}
             />
           </Grid>
+
           <Grid item xs={6}>
             <Controller
               name="tipoConta"
@@ -88,7 +91,7 @@ export const ModalConta: React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={1}>
+          <Grid item xs={3}>
             <Controller
               name="agencia"
               control={control}
@@ -110,7 +113,8 @@ export const ModalConta: React.FC = () => {
               )}
             />
           </Grid>
-          <Grid item xs={2}>
+
+          <Grid item xs={3}>
             <Controller
               name="conta"
               control={control}
@@ -132,6 +136,7 @@ export const ModalConta: React.FC = () => {
               )}
             />
           </Grid>
+
           <Grid item xs={12}>
             <Controller
               name="observacao"
@@ -154,6 +159,7 @@ export const ModalConta: React.FC = () => {
               )}
             />
           </Grid>
+
           <Grid item xs={12}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography variant="body2">Incluir na soma</Typography>
