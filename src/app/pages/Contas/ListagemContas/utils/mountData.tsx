@@ -2,6 +2,7 @@ import { ListItemText } from "@mui/material";
 import MuiMoreVertIcon from "../../../../shared/components/MuiMoreVertIcon/MuiMoreVertIcon";
 import { IConta } from "../interfaces";
 import MuiSituacao from "../../../../shared/components/MuiSituacao/MuiSituacao";
+import { SituacaoColors } from "../../../../shared/constants";
 
 interface IMountData {
   contas: IConta[] | undefined;
@@ -32,7 +33,15 @@ IMountData) {
         />
       ),
       tipoConta: conta.tipoConta,
-      situacao: <MuiSituacao ativo={conta.ativo} />,
+      soma: conta.incluirSoma ? "Sim" : "Não",
+      situacao: (
+        <MuiSituacao
+          title={conta.ativo ? "Ativo" : "Inativo"}
+          situacao={
+            conta.ativo ? SituacaoColors.ativo : SituacaoColors.inativo_pendente
+          }
+        />
+      ),
       options: (
         <MuiMoreVertIcon
           options={[
