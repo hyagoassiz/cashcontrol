@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { MuiModal } from "../../../../shared/components/MuiModal/MuiModal";
-import { Button, Grid, MenuItem, TextField } from "@mui/material";
+import { Box, Button, Grid, MenuItem, Switch, TextField, Typography } from "@mui/material";
 import { ICategoria } from "../../interfaces";
 import { Controller, useForm } from "react-hook-form";
 import { usePersistirCategoria } from "./hooks/usePersistirCategoria";
@@ -29,11 +29,12 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
 
   const { handleSubmit, control } = useForm<ICategoria>({
     defaultValues: {
-      id: data?.id || null,
+      id: data?.id || undefined,
       usuario: usuario.id,
       nome: data?.nome || "",
       tipo: data?.tipo || null,
       ativo: data?.ativo || true,
+      incluirSoma: data?.incluirSoma
     },
   });
 
@@ -70,10 +71,11 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
           </Button>
         </>
       }
+      style={{ width: 600 }}
     >
       <form>
         <Grid container spacing={2}>
-          <Grid item xs={8}>
+          <Grid item xs={9}>
             <Controller
               name="nome"
               control={control}
@@ -97,7 +99,7 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
               )}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <Controller
               name="tipo"
               control={control}
@@ -126,6 +128,24 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
                 </TextField>
               )}
             />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography variant="body2">Incluir na soma</Typography>
+              <Controller
+                name="incluirSoma"
+                control={control}
+                render={({ field }) => (
+                  <Switch
+                    checked={field.value ?? true}
+                    onChange={field.onChange}
+                    size="small"
+                    disabled={modeShowCategoria || false}
+                  />
+                )}
+              />
+            </Box>
           </Grid>
         </Grid>
       </form>

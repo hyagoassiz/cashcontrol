@@ -1,5 +1,4 @@
-import { Container } from "@mui/material";
-import MuiAddButton from "../../../shared/components/MuiAddButton/MuiAddButton";
+import { Button } from "@mui/material";
 import { MuiAppBar } from "../../../shared/components/MuiAppBar/AppBar";
 import { MuiFrame } from "../../../shared/components/MuiFrame/MuiFrame";
 import { MuiTable } from "../../../shared/components/MuiTable/MuiTable";
@@ -9,6 +8,9 @@ import { useListagemContas } from "./hooks/useListagemContas";
 import { ModalConta } from "./components/ModalConta/ModalConta";
 import Filter from "./components/Filter/Filter";
 import Dialog from "./components/Dialog/Dialog";
+import { ToolPainel } from "../../../shared/components/ToolPanel/ToolPanel";
+import { Add } from "@mui/icons-material";
+import { BoxContainer } from "../../../shared/components/BoxContainer/BoxContainer";
 
 export const ListagemContas: React.FC = () => {
   const {
@@ -29,10 +31,21 @@ export const ListagemContas: React.FC = () => {
     <>
       <MuiAppBar />
 
-      <Container>
-        <MuiFrame
-          title="Contas"
-          handleBack={handleNavigate}
+      <BoxContainer>
+        <MuiFrame title="Contas" handleBack={handleNavigate} />
+        <ToolPainel
+          title={`Quantidade (${contas?.length})`}
+          buttons={
+            <>
+              <Button
+                onClick={handleModalConta}
+                variant="text"
+                startIcon={<Add />}
+              >
+                Adicionar
+              </Button>
+            </>
+          }
           searchBar={{
             open: toggleSearchBar,
             placeholder: "Buscar conta...",
@@ -42,33 +55,24 @@ export const ListagemContas: React.FC = () => {
             onClickClose: () => setToggleSearchBar(!toggleSearchBar),
             handleFilter: () => setToggleFilter(true),
           }}
-        >
-          {contas && (
-            <MuiTable
-              columns={COLLUMS_CONTA}
-              textForEmptyData="Nenhuma conta encontrada"
-              data={mountData({
-                contas,
-                editarConta: handleEditarConta,
-                handleAtivarInativarConta: setAtivarInativarContaData,
-                // openModal: setIsOpenDialog,
-              })}
-              isLoading={isLoading}
-            />
-          )}
-        </MuiFrame>
-
-        <MuiAddButton
-          tooltip="Adicionar Conta"
-          title="NOVA"
-          onClick={handleModalConta}
+        />
+        <MuiTable
+          columns={COLLUMS_CONTA}
+          textForEmptyData="Nenhuma conta encontrada"
+          data={mountData({
+            contas,
+            editarConta: handleEditarConta,
+            handleAtivarInativarConta: setAtivarInativarContaData,
+            // openModal: setIsOpenDialog,
+          })}
+          isLoading={isLoading}
         />
 
         <ModalConta />
         <Dialog />
 
         <Filter />
-      </Container>
+      </BoxContainer>
     </>
   );
 };
