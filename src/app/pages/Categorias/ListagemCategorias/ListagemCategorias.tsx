@@ -33,7 +33,7 @@ export const ListagemCategorias: React.FC = () => {
     handleModalCategoria,
     handleEditarCategoria2,
     toggleModalCategoria,
-    handleNavigate
+    handleNavigate,
   } = useListagemCategorias();
 
   return (
@@ -43,7 +43,7 @@ export const ListagemCategorias: React.FC = () => {
       <Container>
         <MuiFrame
           title="Categorias"
-          handleBack= {handleNavigate}
+          handleBack={handleNavigate}
           searchBar={{
             open: isOpenSearchBar,
             placeholder: "Buscar categorias...",
@@ -54,17 +54,19 @@ export const ListagemCategorias: React.FC = () => {
             handleFilter: () => setIsOpenFilter(true),
           }}
         >
-          <MuiTable
-            columns={COLLUMS_CATEGORIA}
-            textForEmptyData="Nenhuma categoria encontrada"
-            data={mountData({
-              categorias,
-              openModal: setIsOpenDialog,
-              handleActivateDeactivate: setActivateDeactivateData,
-              showConta: handleShowCategoria,
-            })}
-            isLoading={isLoading}
-          />
+          {categorias && (
+            <MuiTable
+              columns={COLLUMS_CATEGORIA}
+              textForEmptyData="Nenhuma categoria encontrada"
+              data={mountData({
+                categorias,
+                openModal: setIsOpenDialog,
+                handleActivateDeactivate: setActivateDeactivateData,
+                showConta: handleShowCategoria,
+              })}
+              isLoading={isLoading}
+            />
+          )}
         </MuiFrame>
 
         <MuiAddButton
