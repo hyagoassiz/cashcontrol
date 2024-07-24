@@ -29,9 +29,9 @@ interface IListagemContasContextData {
   toggleSearchBar: boolean;
   setToggleModalConta: Dispatch<SetStateAction<boolean>>;
   toggleModalConta: boolean;
-  ativarInativarContaData: IConta | null;
-  setAtivarInativarContaData: (setAtivarInativarConta: IConta) => void;
   refetch: () => void;
+  isOpenDialog: boolean;
+  setIsOpenDialog: Dispatch<SetStateAction<boolean>>;
 }
 
 export const ListagemContasContext = createContext(
@@ -49,10 +49,9 @@ export function ListagemContasProvider({
   });
   const [textFilter, setTextFilter] = useState<string>("");
   const [toggleSearchBar, setToggleSearchBar] = useState<boolean>(false);
-  const [ativarInativarContaData, setAtivarInativarContaData] =
-    useState<IConta | null>(null);
   const [toggleModalConta, setToggleModalConta] = useState<boolean>(false);
   const [conta, setConta] = useState<IConta | undefined>(undefined);
+  const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
 
   const {
     data: contas,
@@ -83,11 +82,11 @@ export function ListagemContasProvider({
         setToggleSearchBar,
         toggleModalConta,
         setToggleModalConta,
-        ativarInativarContaData,
-        setAtivarInativarContaData,
         refetch,
         conta,
         setConta,
+        isOpenDialog,
+        setIsOpenDialog,
       }}
     >
       {children}
