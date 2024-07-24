@@ -2,19 +2,20 @@ import { ICategoria } from "../interfaces";
 import MuiMoreVertIcon from "../../../shared/components/MuiMoreVertIcon/MuiMoreVertIcon";
 import MuiSituacao from "../../../shared/components/MuiSituacao/MuiSituacao";
 import MuiTipo from "../../../shared/components/MuiTipo/MuiTipo";
+import { SituacaoColors } from "../../../shared/constants";
 
 interface IMountData {
   categorias: ICategoria[] | undefined;
   openModal: (openModal: boolean) => void;
   handleActivateDeactivate: (handleActivateDeactivate: ICategoria) => void;
-  showConta: (showConta: ICategoria) => void;
+  showCategoria: (showCategoria: ICategoria) => void;
 }
 
 export function mountData({
   categorias,
   openModal,
   handleActivateDeactivate,
-  showConta,
+  showCategoria,
 }: IMountData) {
   if (categorias?.length) {
     categorias.sort((a, b) => a.nome.localeCompare(b.nome));
@@ -23,7 +24,14 @@ export function mountData({
       id: categoria.id,
       nome: categoria.nome,
       tipo: <MuiTipo tipo={categoria.tipo} />,
-      situacao: <MuiSituacao ativo={categoria.ativo} />,
+      situacao: (
+        <MuiSituacao
+          title={categoria.ativo ? "Ativo" : "Inativo"}
+          situacao={
+            categoria.ativo ? SituacaoColors.ativo : SituacaoColors.inativo_pendente
+          }
+        />
+      ),
       options: (
         <MuiMoreVertIcon
           options={[
@@ -35,7 +43,7 @@ export function mountData({
             },
             {
               label: "Visualizar",
-              action: () => showConta(categoria),
+              action: () => showCategoria(categoria),
             },
           ]}
         />

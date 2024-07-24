@@ -10,6 +10,8 @@ import { useContext, useEffect } from "react";
 import { ListagemContasContext } from "../../../contexts";
 import { GlobalContext } from "../../../../../../shared/contexts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
 
 interface IUseModalConta {
   control: Control<IConta>;
@@ -28,17 +30,22 @@ export const useModalConta = (): IUseModalConta => {
 
   const { usuario } = useContext(GlobalContext);
 
-  const { handleSubmit, control, getValues, setValue } = useForm<IConta>();
+  const { handleSubmit, control, getValues, setValue, reset } =
+    useForm<IConta>();
 
   const queryClient = useQueryClient();
+
+  const dispatch = useDispatch();
 
   const { mutate } = useMutation({
     mutationFn: ContaService.criarConta,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["contas"] });
+      dispatch(showSnackbar("Conta criada com sucesso"));
     },
     onError: (error) => {
       console.log(error);
+      dispatch(showSnackbar("Erro ao criar conta", "error"));
     },
   });
 
@@ -46,9 +53,11 @@ export const useModalConta = (): IUseModalConta => {
     mutationFn: ContaService.editarConta,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["contas"] });
+      dispatch(showSnackbar("Conta editada com sucesso"));
     },
     onError: (error) => {
       console.log(error);
+      dispatch(showSnackbar("Erro ao editar conta", "error"));
     },
   });
 
@@ -80,7 +89,7 @@ export const useModalConta = (): IUseModalConta => {
       if (data.id) {
         editarConta(payload);
       } else {
-        mutate(payload);
+        console.log(payload);
       }
     })();
   };
@@ -88,6 +97,7 @@ export const useModalConta = (): IUseModalConta => {
   const handleModalConta = () => {
     setToggleModalConta((prevState) => !prevState);
     setConta(undefined);
+    reset();
   };
 
   return {

@@ -74,7 +74,7 @@ export const ListagemCategorias: React.FC = () => {
             categorias,
             openModal: setIsOpenDialog,
             handleActivateDeactivate: setActivateDeactivateData,
-            showConta: handleShowCategoria,
+            showCategoria: handleShowCategoria,
           })}
           isLoading={isLoading}
         />

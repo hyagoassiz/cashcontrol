@@ -5,7 +5,7 @@ export const OPTIONS: IOptionsMenu[] = [
   {
     title: "Movimentações",
     routes: [
-      { name: "Entradas e Saídas", route: '#' },
+      { name: "Entradas e Saídas", route: PATHS.ENTRADAS_SAIDAS.LIST },
       { name: "Saldos", route: "#" },
     ],
   },

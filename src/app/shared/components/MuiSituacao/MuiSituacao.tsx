@@ -1,28 +1,25 @@
-import { Box, Typography } from "@mui/material";
-import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import { Typography } from "@mui/material";
+import { MuiSituacaoContainer, StyledBox } from "./style/style";
+import { SituacaoColors } from "../../constants";
 
 interface IMuiSituacao {
-  ativo: boolean;
+  title: string;
+  situacao: SituacaoColors;
 }
 
-const MuiSituacao: React.FC<IMuiSituacao> = ({ ativo }) => {
+const MuiSituacao: React.FC<IMuiSituacao> = ({ title, situacao }) => {
   return (
     <>
-      {ativo ? (
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <PowerSettingsNewIcon sx={{ color: "dodgerblue", height: "16px" }} />
-          <Typography variant="body2" sx={{ color: "dodgerblue" }}>
-            Ativo
-          </Typography>
-        </Box>
-      ) : (
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <PowerSettingsNewIcon sx={{ color: "orange", height: "16px" }} />
-          <Typography variant="body2" sx={{ color: "orange" }}>
-            Inativo
-          </Typography>
-        </Box>
-      )}
+      <MuiSituacaoContainer>
+        <StyledBox sx={{ backgroundColor: situacao }} />
+        <Typography
+          variant="subtitle2"
+          textTransform="lowercase"
+          sx={{ fontStyle: "italic" }}
+        >
+          {title}
+        </Typography>
+      </MuiSituacaoContainer>
     </>
   );
 };
