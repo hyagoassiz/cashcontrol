@@ -1,43 +1,17 @@
-import {
-  Autocomplete,
-  FormControl,
-  Grid,
-  TextField,
-  useTheme,
-} from "@mui/material";
-import MuiDrawer from "../../../../shared/components/MuiDrawer/MuiDrawer";
-import { useContext } from "react";
-import { ListagemCategoriasContext } from "../../contexts";
-import { Controller, useForm } from "react-hook-form";
-import { IFilterData } from "../../interfaces";
+import { Autocomplete, FormControl, Grid, TextField } from "@mui/material";
+import { Controller } from "react-hook-form";
+import { useFilter } from "./hooks/useFilter";
+import MuiDrawer from "../../../../../shared/components/MuiDrawer/MuiDrawer";
 
 const Filter = () => {
-  const { isOpenFilter, setIsOpenFilter, setFilterData } =
-    useContext(ListagemCategoriasContext);
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IFilterData>();
-
-  const theme = useTheme();
-
-  const onSubmit = (data: IFilterData) => {
-    // const situacao: boolean[] = data.ativo
-    //   ? data.ativo.map((option) => option === true)
-    //   : [];
-
-    setFilterData(data);
-
-    setIsOpenFilter(false);
-  };
+  const { toggleFilter, handleToggleFilter, handleSubmit, onSubmit, control } =
+    useFilter();
 
   return (
     <>
       <MuiDrawer
-        open={isOpenFilter}
-        closeFilter={() => setIsOpenFilter(false)}
+        open={toggleFilter}
+        closeFilter={handleToggleFilter}
         applyFilter={handleSubmit(onSubmit)}
       >
         <FormControl component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -47,7 +21,7 @@ const Filter = () => {
               control={control}
               defaultValue={["Entrada", "Saída"]}
               rules={{ required: "Este campo é obrigatório" }}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Autocomplete
                   {...field}
                   multiple
@@ -61,8 +35,7 @@ const Filter = () => {
                       sx={{ width: "330px" }}
                       label="Tipo"
                       placeholder="Selecionar"
-                      error={!!errors.tipo}
-                      helperText={errors.tipo?.message}
+                      error={!!fieldState.error}
                     />
                   )}
                 />
@@ -70,13 +43,13 @@ const Filter = () => {
             />
           </Grid>
 
-          <Grid paddingTop={theme.spacing(2)}>
+          <Grid paddingTop={2}>
             <Controller
               name="ativo"
               control={control}
               defaultValue={[true]}
               rules={{ required: "Este campo é obrigatório" }}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Autocomplete
                   {...field}
                   multiple
@@ -98,8 +71,7 @@ const Filter = () => {
                       sx={{ width: "330px" }}
                       label="Situação"
                       placeholder="Selecionar"
-                      error={!!errors.ativo}
-                      helperText={errors.ativo?.message}
+                      error={!!fieldState.error}
                     />
                   )}
                 />

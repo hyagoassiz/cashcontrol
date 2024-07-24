@@ -1,5 +1,5 @@
-import { ListagemCategorias } from "./ListagemCategorias";
-import { ListagemCategoriasProvider } from "../contexts";
+import { ListagemCategoriasProvider } from "./contexts";
+import { ListagemCategorias } from "./Listagem";
 
 export function CategoriasRoute(): JSX.Element  {
   return (
