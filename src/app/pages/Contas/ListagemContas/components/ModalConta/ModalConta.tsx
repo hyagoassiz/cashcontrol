@@ -72,7 +72,7 @@ export const ModalConta: React.FC = () => {
                   disablePortal
                   id="tipoConta"
                   options={tipos}
-                  onChange={(event, newValue) => {
+                  onChange={(_, newValue) => {
                     field.onChange(newValue);
                   }}
                   value={field.value ?? null}

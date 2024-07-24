@@ -44,7 +44,6 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
     usePersistirCategoria();
 
   const onSubmit = async (data: ICategoria) => {
-    console.log(data);
     if (!modeEditCategoria) {
       handleCriarCategoria(data);
     } else {

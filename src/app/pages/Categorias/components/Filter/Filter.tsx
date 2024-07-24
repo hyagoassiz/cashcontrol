@@ -30,7 +30,6 @@ const Filter = () => {
 
     setFilterData(data);
 
-    console.log(data);
     setIsOpenFilter(false);
   };
 
