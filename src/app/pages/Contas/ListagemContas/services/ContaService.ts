@@ -1,5 +1,10 @@
 import { IConta, IFilterData } from "../interfaces";
-import { adcionarConta, ativarInativarConta, obterContasPorUsuario } from "./endpoints";
+import {
+  adcionarConta,
+  ativarInativarConta,
+  editarConta,
+  obterContasPorUsuario,
+} from "./endpoints";
 
 export const ContaService = {
   async obterCategoriasPorUsuario(
@@ -31,9 +36,26 @@ export const ContaService = {
       };
     }
   },
-  async ativarInativarConta(id: string, ativo: boolean) {
+  async editarConta(data: IConta) {
     try {
-      const response = await ativarInativarConta(id, ativo);
+      const response = await editarConta(data);
+      if (response.status === 200) {
+        return { success: true, message: "Categoria editada com sucesso!" };
+      } else {
+        return { success: false, message: "Erro ao editar categoria." };
+      }
+    } catch (error) {
+      console.error("Erro ao editar categoria:", error);
+      return {
+        success: false,
+        message:
+          "Erro ao editar categoria. Verifique sua conexão com a internet.",
+      };
+    }
+  },
+  ativarInativarConta: async ({ id, ativo }: { id: string; ativo: boolean }) => {
+    try {
+      const response = await ativarInativarConta({ id, ativo });
       if (response.status === 200) {
         return { success: true, message: "Conta editada com sucesso!" };
       } else {
@@ -43,8 +65,7 @@ export const ContaService = {
       console.error("Erro ao editar conta:", error);
       return {
         success: false,
-        message:
-          "Erro ao editar conta. Verifique sua conexão com a internet.",
+        message: "Erro ao editar conta. Verifique sua conexão com a internet.",
       };
     }
   },
