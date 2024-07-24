@@ -5,16 +5,21 @@ import {
   GlobalContextProvider,
   ProgressProvider,
 } from "./shared/contexts/index";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const App: React.FC = () => {
+  const queryClient = new QueryClient();
+
   return (
     <>
-      <GlobalContextProvider>
-        <ProgressProvider>
-          <AppRoutes />
-          <MuiCircularProgress />
-        </ProgressProvider>
-      </GlobalContextProvider>
+      <QueryClientProvider client={queryClient}>
+          <GlobalContextProvider>
+            <ProgressProvider>
+              <AppRoutes />
+              <MuiCircularProgress />
+            </ProgressProvider>
+          </GlobalContextProvider>
+      </QueryClientProvider>
     </>
   );
 };

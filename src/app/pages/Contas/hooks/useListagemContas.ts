@@ -4,53 +4,39 @@ import { obterContasPorUsuario } from "../services/endpoints";
 import { ListagemContasContext } from "../contexts";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "../../../routes/paths";
+import { useQuery } from "@tanstack/react-query";
 
 interface IUseListagemContas {
   isLoading: boolean;
-  contas: IConta[];
+  contas: IConta[] | undefined;
   modeShowConta: boolean;
   handleModalConta: () => void;
   handleEditarConta: () => void;
   conta: IConta | null;
   toggleModalConta: boolean;
   handleShowConta(handleShowConta: IConta): void;
-  modeEditConta: boolean
-  fetchData: () => void
-  handleNavigate: () => void
+  modeEditConta: boolean;
+  refetch: () => void;
+  handleNavigate: () => void;
 }
 
 export const useListagemContas = (): IUseListagemContas => {
   const { filterData } = useContext(ListagemContasContext);
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  const [contas, setContas] = useState<IConta[]>([]);
-
   const [modeShowConta, setModeShowConta] = useState<boolean>(false);
   const [modeEditConta, setModeEditConta] = useState<boolean>(false);
   const [toggleModalConta, setToggleModalConta] = useState<boolean>(false);
   const [conta, setConta] = useState<IConta | null>(null);
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
 
-  const fetchData = async () => {
-    try {
-      setIsLoading(true);
-      const contasDoUsuario = await obterContasPorUsuario(
-        "DxARypJQGMZeb1fMT4ft4BI4S2D2",
-        filterData
-      );
-      console.log(filterData);
-      setContas(contasDoUsuario);
-    } catch (error) {
-      console.error("Erro ao obter contas do usuário:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { data: contas, isLoading, refetch} = useQuery({
+    queryKey: ["contas"],
+    queryFn: () =>
+      obterContasPorUsuario("DxARypJQGMZeb1fMT4ft4BI4S2D2", filterData),
+  });
 
   useEffect(() => {
-    fetchData();
+    refetch();
   }, [filterData]);
 
   const handleShowConta = (data: IConta) => {
@@ -61,16 +47,16 @@ export const useListagemContas = (): IUseListagemContas => {
 
   const handleModalConta = () => {
     if (conta) {
-      setConta(null)
+      setConta(null);
       setModeShowConta(false);
-      setModeEditConta(false)
+      setModeEditConta(false);
     }
     setToggleModalConta((prevState) => !prevState);
   };
 
   const handleEditarConta = () => {
     setModeShowConta(false);
-    setModeEditConta(true)
+    setModeEditConta(true);
   };
 
   const handleNavigate = () => {
@@ -87,7 +73,7 @@ export const useListagemContas = (): IUseListagemContas => {
     toggleModalConta,
     handleShowConta,
     modeEditConta,
-    fetchData,
-    handleNavigate
+    refetch,
+    handleNavigate,
   };
 };
