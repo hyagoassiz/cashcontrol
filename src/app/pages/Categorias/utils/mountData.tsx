@@ -4,7 +4,7 @@ import MuiSituacao from "../../../shared/components/MuiSituacao/MuiSituacao";
 import MuiTipo from "../../../shared/components/MuiTipo/MuiTipo";
 
 interface IMountData {
-  categorias: ICategoria[];
+  categorias: ICategoria[] | undefined;
   openModal: (openModal: boolean) => void;
   handleActivateDeactivate: (handleActivateDeactivate: ICategoria) => void;
   showConta: (showConta: ICategoria) => void;
