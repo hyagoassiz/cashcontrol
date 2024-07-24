@@ -56,7 +56,7 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
             sx={{
               bgcolor: "#1976D2",
               color: "white",
-              padding: theme.spacing(1),
+              padding: theme.spacing(1)
             }}
           >
             <Typography variant="h6">{title}</Typography>

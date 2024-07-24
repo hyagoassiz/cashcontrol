@@ -3,6 +3,8 @@ import { ContaService } from "../../../services/ContaService";
 import { ListagemContasContext } from "../../../contexts";
 import { IConta } from "../../../interfaces";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
 
 interface IUseAtivarInativarConta {
   isOpenDialog: boolean;
@@ -16,6 +18,8 @@ export const useAtivarInativarConta = (): IUseAtivarInativarConta => {
 
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
 
+  const dispatch = useDispatch();
+
   const querClient = useQueryClient();
 
   useEffect(() => {
@@ -26,8 +30,18 @@ export const useAtivarInativarConta = (): IUseAtivarInativarConta => {
 
   const { mutate } = useMutation({
     mutationFn: ContaService.ativarInativarConta,
-    onSuccess: () => querClient.invalidateQueries({ queryKey: ["contas"] }),
-    onError: (error) => console.log(error),
+    onSuccess: () => {
+      querClient.invalidateQueries({ queryKey: ["contas"] });
+      dispatch(
+        showSnackbar(
+          `Conta ${ativarInativarContaData?.ativo === false ? "ativada" : "inativada"} com sucesso`
+        )
+      );
+    },
+    onError: (error) => {
+      console.log(error);
+      dispatch(showSnackbar("Erro", "error"));
+    },
   });
 
   const handleConfirm = () => {
