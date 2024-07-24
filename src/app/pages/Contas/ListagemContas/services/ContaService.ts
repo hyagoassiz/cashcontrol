@@ -13,7 +13,6 @@ export const ContaService = {
   ): Promise<IConta[]> {
     try {
       const contas = await obterContasPorUsuario(usuario, filterData);
-      console.log(filterData);
       return contas;
     } catch (error) {
       console.error("Erro ao obter contas do usuário:", error);

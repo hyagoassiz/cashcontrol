@@ -1,5 +1,5 @@
 import { MoreVert } from "@mui/icons-material";
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 
 interface IMuiMoreVertIcon {
@@ -24,13 +24,15 @@ const MuiMoreVertIcon = ({ options }: IMuiMoreVertIcon) => {
 
   return (
     <>
-      <IconButton
-        aria-controls="options-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <MoreVert />
-      </IconButton>
+      <Tooltip placement="top" title="Opções">
+        <IconButton
+          aria-controls="options-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <MoreVert />
+        </IconButton>
+      </Tooltip>
       <Menu
         id="options-menu"
         anchorEl={anchorEl}
@@ -49,7 +51,7 @@ const MuiMoreVertIcon = ({ options }: IMuiMoreVertIcon) => {
               option.action();
               handleClose();
             }}
-            sx={{fontSize: '14px'}}
+            sx={{ fontSize: "14px" }}
           >
             {option.label}
           </MenuItem>
