@@ -1,19 +1,19 @@
-import { Dispatch, useContext } from "react";
-import { ListagemContasContext } from "../../../contexts";
+import { useContext } from "react";
 import { IFilterData } from "../../../interfaces";
 import { Control, useForm, UseFormHandleSubmit } from "react-hook-form";
+import { ListagemCategoriasContext } from "../../../contexts";
 
 interface IUseFilter {
   toggleFilter: boolean;
-  setToggleFilter: Dispatch<boolean>;
   control: Control<IFilterData>;
   handleSubmit: UseFormHandleSubmit<IFilterData>;
   onSubmit(data: IFilterData): void;
+  handleToggleFilter: () => void;
 }
 
 export const useFilter = (): IUseFilter => {
   const { toggleFilter, setToggleFilter, setFilterData } = useContext(
-    ListagemContasContext
+    ListagemCategoriasContext
   );
 
   const { control, handleSubmit } = useForm<IFilterData>();
@@ -21,14 +21,18 @@ export const useFilter = (): IUseFilter => {
   const onSubmit = (data: IFilterData) => {
     setFilterData(data);
 
-    setToggleFilter(false);
+    handleToggleFilter();
+  };
+
+  const handleToggleFilter = () => {
+    setToggleFilter((prevState) => !prevState);
   };
 
   return {
     toggleFilter,
-    setToggleFilter,
     control,
     handleSubmit,
     onSubmit,
+    handleToggleFilter,
   };
 };
