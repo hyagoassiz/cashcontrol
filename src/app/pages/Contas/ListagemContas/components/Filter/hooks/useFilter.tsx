@@ -28,7 +28,6 @@ export const useFilter = (): IUseFilter => {
 
     setFilterData(data);
 
-    console.log(data);
     setToggleFilter(false);
   };
 

@@ -1,6 +1,7 @@
 import "../App.css";
 import { AppRoutes } from "./routes";
 import { MuiCircularProgress } from "./shared/components/MuiCircularProgress/MuiCircularProgress";
+import MuiSnackBar from "./shared/components/MuiSnackBar";
 import {
   GlobalContextProvider,
   ProgressProvider,
@@ -20,6 +21,7 @@ const App: React.FC = () => {
             </ProgressProvider>
           </GlobalContextProvider>
       </QueryClientProvider>
+      <MuiSnackBar/>
     </>
   );
 };

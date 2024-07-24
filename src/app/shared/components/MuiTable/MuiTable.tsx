@@ -14,7 +14,7 @@ import InfoIcon from "@mui/icons-material/Info";
 
 interface IMuiTable {
   columns: ITableColumn[];
-  data: [];
+  data: any[];
   isLoading: boolean;
   textForEmptyData: string;
 }
