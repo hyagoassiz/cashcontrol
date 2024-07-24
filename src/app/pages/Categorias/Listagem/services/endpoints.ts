@@ -1,6 +1,6 @@
-import { IReturnBackEnd } from "../../../shared/interfaces/IReturnBackEnd";
-import { ICategoria, IFilterData } from "../interfaces";
-import { db } from "../../../../FirebaseConnection";
+import { db } from "../../../../../FirebaseConnection";
+import { ICategoria, IReturnBackEnd } from "../../../../shared/interfaces";
+import { IFilterData } from "../interfaces";
 import {
   collection,
   addDoc,
@@ -59,7 +59,6 @@ export const obterCategoriasPorUsuario = async function (
         nome: categoriaData.nome,
         tipo: categoriaData.tipo,
         ativo: categoriaData.ativo,
-        incluirSoma: categoriaData.incluirSoma,
       };
       categorias.push(categoria);
     });

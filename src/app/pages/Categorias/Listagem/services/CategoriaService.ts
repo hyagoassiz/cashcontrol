@@ -1,4 +1,4 @@
-import { ICategoria } from "../interfaces";
+import { ICategoria } from "../../../../shared/interfaces";
 import {
   adcionarCategoria,
   editarCategoria,
@@ -36,7 +36,7 @@ export const CategoriaService = {
       return [];
     }
   },
-  async editarSituacao(id: string, ativo: boolean) {
+  async editarSituacao({ id, ativo }: { id: string; ativo: boolean }) {
     try {
       const response = await editarSituacaoCategoria(id, ativo);
       if (response.status === 200) {
