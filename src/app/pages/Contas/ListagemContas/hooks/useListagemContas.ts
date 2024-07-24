@@ -13,11 +13,11 @@ interface IUseListagemContas {
   setToggleSearchBar: Dispatch<boolean>;
   textFilter: string;
   setTextFilter: Dispatch<string>;
-  setAtivarInativarContaData: Dispatch<IConta>;
   handleModalConta: () => void;
   handleEditarConta(conta: IConta): void;
   handleNavigate: () => void;
   refetch: () => void;
+  handleEditarSituacao(conta: IConta): void;
 }
 
 export const useListagemContas = (): IUseListagemContas => {
@@ -30,9 +30,9 @@ export const useListagemContas = (): IUseListagemContas => {
     toggleSearchBar,
     setTextFilter,
     textFilter,
-    setAtivarInativarContaData,
     setToggleModalConta,
     toggleModalConta,
+    setIsOpenDialog,
     setConta,
   } = useContext(ListagemContasContext);
 
@@ -41,6 +41,11 @@ export const useListagemContas = (): IUseListagemContas => {
   const handleEditarConta = (data: IConta) => {
     setConta(data);
     handleModalConta();
+  };
+
+  const handleEditarSituacao = (data: IConta) => {
+    setConta(data);
+    setIsOpenDialog((prevState) => !prevState);
   };
 
   const handleModalConta = () => {
@@ -60,10 +65,10 @@ export const useListagemContas = (): IUseListagemContas => {
     setToggleSearchBar,
     textFilter,
     setTextFilter,
-    setAtivarInativarContaData,
     handleModalConta,
     handleEditarConta,
     handleNavigate,
     refetch,
+    handleEditarSituacao,
   };
 };
