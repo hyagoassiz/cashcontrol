@@ -1,6 +1,6 @@
 import { IConta, IFilterData } from "../interfaces";
 import {
-  adcionarConta,
+  adicionarConta,
   ativarInativarConta,
   editarConta,
   obterContasPorUsuario,
@@ -21,7 +21,7 @@ export const ContaService = {
   },
   async criarConta(contaData: IConta) {
     try {
-      const response = await adcionarConta(contaData);
+      const response = await adicionarConta(contaData);
       if (response.status === 200) {
         return { success: true, message: "Conta adicionada com sucesso!" };
       } else {

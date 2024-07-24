@@ -24,7 +24,7 @@ export const ListagemContas: React.FC = () => {
     toggleSearchBar,
     textFilter,
     setTextFilter,
-    setAtivarInativarContaData,
+    handleEditarSituacao,
   } = useListagemContas();
 
   return (
@@ -62,7 +62,7 @@ export const ListagemContas: React.FC = () => {
           data={mountData({
             contas,
             editarConta: handleEditarConta,
-            handleAtivarInativarConta: setAtivarInativarContaData,
+            handleAtivarInativarConta: handleEditarSituacao,
             // openModal: setIsOpenDialog,
           })}
           isLoading={isLoading}
