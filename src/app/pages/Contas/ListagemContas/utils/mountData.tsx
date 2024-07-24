@@ -1,17 +1,17 @@
 import { ListItemText } from "@mui/material";
-import MuiMoreVertIcon from "../../../shared/components/MuiMoreVertIcon/MuiMoreVertIcon";
+import MuiMoreVertIcon from "../../../../shared/components/MuiMoreVertIcon/MuiMoreVertIcon";
 import { IConta } from "../interfaces";
-import MuiSituacao from "../../../shared/components/MuiSituacao/MuiSituacao";
+import MuiSituacao from "../../../../shared/components/MuiSituacao/MuiSituacao";
 
 interface IMountData {
   contas: IConta[];
-  showConta: (seeConta: IConta) => void;
+  editarConta: (conta: IConta) => void;
   handleAtivarInativarConta: (handleAtivarInativarConta: IConta) => void;
 }
 
 export function mountData({
   contas,
-  showConta,
+  editarConta,
   handleAtivarInativarConta
 }: // openModal,
 // handleActivateDeactivate,
@@ -41,8 +41,8 @@ IMountData) {
               action: () => handleAtivarInativarConta(conta),
             },
             {
-              label: "Visualizar",
-              action: () => showConta(conta),
+              label: "Editar",
+              action: () => editarConta(conta),
             },
           ]}
         />
