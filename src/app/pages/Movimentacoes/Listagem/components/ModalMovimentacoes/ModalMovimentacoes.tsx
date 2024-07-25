@@ -17,17 +17,25 @@ export const ModalMovimentacoes: React.FC = () => {
     toggleModalMovimentacoes,
     handleModalMovimentacoes,
     control,
-    isEntrada,
     categorias,
     contas,
     onSubmit,
     handleSubmit,
+    tipos,
+    getValues,
+    watch,
   } = useModalMovimentacoes();
 
   return (
     <MuiModal
       open={toggleModalMovimentacoes}
-      title={`Registrar ${isEntrada ? "Entrada" : "Saída"}`}
+      title={`Adicionar ${
+        getValues("tipo")
+          ? getValues("tipo") === "Entrada"
+            ? "Entrada"
+            : "Saída"
+          : ""
+      }`}
       buttons={
         <>
           <Button variant="text" onClick={handleModalMovimentacoes}>
@@ -41,6 +49,36 @@ export const ModalMovimentacoes: React.FC = () => {
       style={{ width: 700 }}
     >
       <Grid container spacing={2}>
+        <Grid container item xs={12} spacing={2}>
+          <Grid item xs={3}>
+            <Controller
+              name="tipo"
+              control={control}
+              rules={{ required: true }}
+              render={({ field, fieldState }) => (
+                <Autocomplete
+                  disablePortal
+                  id="tipo"
+                  options={tipos || []}
+                  onChange={(_, newValue) => {
+                    field.onChange(newValue);
+                  }}
+                  value={field.value ?? null}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="standard"
+                      label="Tipo"
+                      error={!!fieldState.error}
+                      required
+                    />
+                  )}
+                  fullWidth
+                />
+              )}
+            />
+          </Grid>
+        </Grid>
         <Grid item xs={3}>
           <Controller
             name="data"
@@ -59,6 +97,7 @@ export const ModalMovimentacoes: React.FC = () => {
                 required
                 error={!!fieldState.error}
                 fullWidth
+                disabled={watch("tipo") ? false : true}
               />
             )}
           />
@@ -86,9 +125,12 @@ export const ModalMovimentacoes: React.FC = () => {
                   <TextField
                     {...params}
                     variant="standard"
-                    label={`${isEntrada ? "Origem" : "Motivo"}`}
+                    label={
+                      getValues("tipo") === "Entrada" ? "Origem" : "Motivo"
+                    }
                     error={!!fieldState.error}
                     required
+                    disabled={watch("tipo") ? false : true}
                   />
                 )}
                 fullWidth
@@ -118,6 +160,7 @@ export const ModalMovimentacoes: React.FC = () => {
                 thousandSeparator={"."}
                 defaultValue={0}
                 required
+                disabled={watch("tipo") ? false : true}
                 error={!!fieldState.error}
               />
             )}
@@ -144,6 +187,7 @@ export const ModalMovimentacoes: React.FC = () => {
                     variant="standard"
                     label="Conta"
                     error={!!fieldState.error}
+                    disabled={watch("tipo") ? false : true}
                     required
                   />
                 )}
@@ -223,6 +267,7 @@ export const ModalMovimentacoes: React.FC = () => {
                   maxLength: 30,
                 }}
                 error={!!fieldState.error}
+                disabled={watch("tipo") ? false : true}
                 fullWidth
               />
             )}
@@ -230,9 +275,9 @@ export const ModalMovimentacoes: React.FC = () => {
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography variant="body2">{`${
-              isEntrada ? "Recebido" : "Pago"
-            }`}</Typography>
+            <Typography variant="body2">
+              {getValues("tipo") === "Entrada" ? "Recebido" : "Pago"}
+            </Typography>
             <Controller
               name="pago"
               control={control}
@@ -240,6 +285,7 @@ export const ModalMovimentacoes: React.FC = () => {
                 <Switch
                   checked={field.value ?? true}
                   onChange={field.onChange}
+                  disabled={watch("tipo") ? false : true}
                   size="small"
                 />
               )}
