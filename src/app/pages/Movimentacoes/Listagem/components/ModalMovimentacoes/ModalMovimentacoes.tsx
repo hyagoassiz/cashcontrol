@@ -212,8 +212,10 @@ export const ModalMovimentacoes: React.FC = () => {
                 inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
                 decimalScale={2}
                 fixedDecimalScale={true}
-                value={field.value ?? null}
-                onChange={field.onChange}
+                value={field.value ?? ""}
+                onValueChange={(values) => {
+                  field.onChange(values.floatValue);
+                }}
                 decimalSeparator=","
                 thousandSeparator={"."}
                 defaultValue={0}
