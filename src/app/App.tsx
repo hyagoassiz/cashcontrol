@@ -14,14 +14,14 @@ const App: React.FC = () => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-          <GlobalContextProvider>
-            <ProgressProvider>
-              <AppRoutes />
-              <MuiCircularProgress />
-            </ProgressProvider>
-          </GlobalContextProvider>
+        <GlobalContextProvider>
+          <ProgressProvider>
+            <AppRoutes />
+            <MuiCircularProgress />
+          </ProgressProvider>
+        </GlobalContextProvider>
       </QueryClientProvider>
-      <MuiSnackBar/>
+      <MuiSnackBar />
     </>
   );
 };
