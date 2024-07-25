@@ -6,7 +6,7 @@ import { IMovimentacao } from "../interfaces";
 
 interface IUseListagem {
   handleNavigate: () => void;
-  handleModalMovimentacoes: (isEntrada: boolean) => void;
+  handleModalMovimentacoes: () => void;
   movimentacoes: IMovimentacao[] | undefined;
   isFetchingMovimentacoes: boolean;
   handleEditarMovimentacao(data: IMovimentacao): void;
@@ -16,17 +16,15 @@ interface IUseListagem {
 export const useListagem = (): IUseListagem => {
   const {
     setToggleModalMovimentacoes,
-    setIsEntrada,
     movimentacoes,
     isFetchingMovimentacoes,
     setMovimentacao,
-    setToggleModalExcluir
+    setToggleModalExcluir,
   } = useContext(ListagemContext);
 
   const navigate = useNavigate();
 
-  const handleModalMovimentacoes = (isEntrada: boolean) => {
-    setIsEntrada(isEntrada);
+  const handleModalMovimentacoes = () => {
     setToggleModalMovimentacoes((prevState) => !prevState);
   };
 

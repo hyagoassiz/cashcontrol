@@ -17,8 +17,6 @@ interface IListagemContext {
 interface IListagemContextData {
   toggleModalMovimentacoes: boolean;
   setToggleModalMovimentacoes: Dispatch<SetStateAction<boolean>>;
-  isEntrada: boolean;
-  setIsEntrada: Dispatch<SetStateAction<boolean>>;
   movimentacoes: IMovimentacao[] | undefined;
   movimentacao: IMovimentacao | null;
   setMovimentacao: Dispatch<SetStateAction<IMovimentacao | null>>;
@@ -38,8 +36,6 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
 
   const { usuario } = useContext(GlobalContext);
 
-  const [isEntrada, setIsEntrada] = useState<boolean>(false);
-
   const [movimentacao, setMovimentacao] = useState<IMovimentacao | null>(null);
 
   const {
@@ -57,8 +53,6 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
         setToggleModalMovimentacoes,
         toggleModalExcluir,
         setToggleModalExcluir,
-        isEntrada,
-        setIsEntrada,
         movimentacoes,
         isFetchingMovimentacoes,
         refecthMovimentacoes,
