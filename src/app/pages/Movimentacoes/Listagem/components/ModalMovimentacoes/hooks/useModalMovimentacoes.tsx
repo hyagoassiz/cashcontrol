@@ -1,6 +1,13 @@
 import { useContext, useEffect } from "react";
 import { ListagemContext } from "../../../context";
-import { Control, useForm, UseFormHandleSubmit } from "react-hook-form";
+import {
+  Control,
+  useForm,
+  UseFormGetValues,
+  UseFormHandleSubmit,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
 import { IMovimentacao } from "../../../interfaces";
 import { getTodayDate } from "../../../../../../shared/utils/getTodayDate";
 import { useQueryListarCategoria } from "../../../../../../shared/hooks/useQueryListarCategoria";
@@ -14,32 +21,35 @@ interface IUseModalMovimentacoes {
   toggleModalMovimentacoes: boolean;
   handleModalMovimentacoes: () => void;
   control: Control<IMovimentacao>;
-  isEntrada: boolean;
   categorias: ICategoria[] | undefined;
   isFetchingCategorias: boolean;
   contas: IConta[] | undefined;
   isFetchingContas: boolean;
   handleSubmit: UseFormHandleSubmit<IMovimentacao>;
   onSubmit: () => void;
+  tipos: string[];
+  getValues: UseFormGetValues<IMovimentacao>;
+  watch: UseFormWatch<IMovimentacao>;
+  setValue: UseFormSetValue<IMovimentacao>;
 }
 
 export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
   const {
     toggleModalMovimentacoes,
     setToggleModalMovimentacoes,
-    isEntrada,
     refecthMovimentacoes,
     movimentacao,
-    setMovimentacao
+    setMovimentacao,
   } = useContext(ListagemContext);
 
-  const { control, handleSubmit, setValue, reset } = useForm<IMovimentacao>({
-    defaultValues: {
-      data: getTodayDate(),
-    },
-  });
-
   const { usuario } = useContext(GlobalContext);
+
+  const { control, handleSubmit, setValue, reset, getValues, watch } =
+    useForm<IMovimentacao>({
+      defaultValues: {
+        data: getTodayDate(),
+      },
+    });
 
   const { data: categorias, isLoading: isFetchingCategorias } =
     useQueryListarCategoria({ id: usuario.id });
@@ -48,14 +58,20 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
     id: usuario.id,
   });
 
+  const tipos = ["Entrada", "Saída"];
+
   useEffect(() => {
     if (movimentacao?.id) {
-      (Object.keys(movimentacao) as (keyof IMovimentacao)[]).forEach((key) => {
-        setValue(
-          key as keyof IMovimentacao,
-          movimentacao[key] as IMovimentacao[keyof IMovimentacao]
+      if (!getValues("id")) {
+        (Object.keys(movimentacao) as (keyof IMovimentacao)[]).forEach(
+          (key) => {
+            setValue(
+              key as keyof IMovimentacao,
+              movimentacao[key] as IMovimentacao[keyof IMovimentacao]
+            );
+          }
         );
-      });
+      }
     }
   });
 
@@ -69,7 +85,7 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
         id: data.id,
         usuario: usuario.id,
         data: data.data,
-        tipo: isEntrada ? "Entrada" : "Saída",
+        tipo: data.tipo,
         categoria: data.categoria,
         conta: data.conta,
         valor: data.valor,
@@ -103,19 +119,22 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
   const handleModalMovimentacoes = () => {
     setToggleModalMovimentacoes((prevState) => !prevState);
     setMovimentacao(null);
-    reset()
+    reset();
   };
 
   return {
     toggleModalMovimentacoes,
     handleModalMovimentacoes,
     control,
-    isEntrada,
     categorias,
     isFetchingCategorias,
     handleSubmit,
     onSubmit,
     contas,
     isFetchingContas,
+    tipos,
+    getValues,
+    watch,
+    setValue,
   };
 };
