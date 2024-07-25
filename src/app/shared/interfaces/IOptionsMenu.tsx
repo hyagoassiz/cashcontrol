@@ -1,7 +1,7 @@
 export interface IOptionsMenu {
-    title: "Sub Cadastros" | "Movimentações"
-    routes: {
-        name: string
-        route: string
-    }[]
+  title: "Sub Cadastros" | "Movimentações" | "Configurações";
+  routes: {
+    name: string;
+    route: string;
+  }[];
 }
