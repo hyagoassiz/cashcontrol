@@ -1,10 +1,5 @@
 import { IConta } from "../../../interfaces";
-import {
-  Control,
-  useForm,
-  UseFormGetValues,
-  UseFormHandleSubmit,
-} from "react-hook-form";
+import { Control, useForm, UseFormHandleSubmit } from "react-hook-form";
 import { ContaService } from "../../../services/ContaService";
 import { useContext, useEffect } from "react";
 import { ListagemContasContext } from "../../../contexts";
@@ -19,7 +14,7 @@ interface IUseModalConta {
   onSubmit: () => void;
   toggleModalConta: boolean;
   handleModalConta: () => void;
-  getValues: UseFormGetValues<IConta>;
+  conta: IConta | undefined;
   handleSubmit: UseFormHandleSubmit<IConta>;
 }
 
@@ -29,8 +24,7 @@ export const useModalConta = (): IUseModalConta => {
 
   const { usuario } = useContext(GlobalContext);
 
-  const { handleSubmit, control, getValues, setValue, reset } =
-    useForm<IConta>();
+  const { handleSubmit, control, setValue, reset } = useForm<IConta>();
 
   const dispatch = useDispatch();
 
@@ -103,7 +97,7 @@ export const useModalConta = (): IUseModalConta => {
     onSubmit,
     toggleModalConta,
     handleModalConta,
-    getValues,
     handleSubmit,
+    conta,
   };
 };
