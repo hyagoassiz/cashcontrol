@@ -1,8 +1,11 @@
+import { NumericFormat } from "react-number-format";
 import MuiMoreVertIcon from "../../../../shared/components/MuiMoreVertIcon/MuiMoreVertIcon";
 import MuiSituacao from "../../../../shared/components/MuiSituacao/MuiSituacao";
 import MuiTipo from "../../../../shared/components/MuiTipo/MuiTipo";
 import { SituacaoColors } from "../../../../shared/constants";
 import { IMovimentacao } from "../interfaces";
+import { formatDate } from "../../../../shared/utils/formatDate";
+import { Typography } from "@mui/material";
 
 interface IMountData {
   movimentacoes: IMovimentacao[] | undefined;
@@ -20,11 +23,23 @@ export function mountData({
 
     return movimentacoes.map((movimentacao) => ({
       id: movimentacao.id,
-      data: movimentacao.data,
+      data: formatDate(movimentacao.data),
       tipo: <MuiTipo tipo={movimentacao.tipo} />,
       categoria: movimentacao.categoria,
       conta: movimentacao.conta,
-      valor: movimentacao.valor,
+      valor: (
+        <Typography variant="body2">
+          <NumericFormat
+            value={movimentacao.valor}
+            prefix={"R$ "}
+            decimalScale={2}
+            fixedDecimalScale={true}
+            decimalSeparator=","
+            thousandSeparator={"."}
+            displayType="text"
+          />
+        </Typography>
+      ),
       situacao: (
         <MuiSituacao
           title={
