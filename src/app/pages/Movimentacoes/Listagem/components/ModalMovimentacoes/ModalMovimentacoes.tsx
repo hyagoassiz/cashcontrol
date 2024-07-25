@@ -29,7 +29,7 @@ export const ModalMovimentacoes: React.FC = () => {
   return (
     <MuiModal
       open={toggleModalMovimentacoes}
-      title={`Adicionar ${
+      title={`${getValues("id") ? "Editar" : "Adicionar"} ${
         getValues("tipo")
           ? getValues("tipo") === "Entrada"
             ? "Entrada"
