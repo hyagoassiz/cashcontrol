@@ -19,14 +19,14 @@ export const ModalConta: React.FC = () => {
     onSubmit,
     toggleModalConta,
     handleModalConta,
-    getValues,
     handleSubmit,
+    conta,
   } = useModalConta();
 
   return (
     <MuiModal
       open={toggleModalConta}
-      title={getValues("nome") ? "Editar Conta" : "Nova Conta"}
+      title={`${conta?.id ? "Editar" : "Nova"} Conta`}
       buttons={
         <>
           <Button onClick={handleModalConta}>Fechar</Button>
