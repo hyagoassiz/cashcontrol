@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import { MuiAppBar } from "../../../shared/components/MuiAppBar/AppBar";
 import { MuiFrame } from "../../../shared/components/MuiFrame/MuiFrame";
 import { ToolPainel } from "../../../shared/components/ToolPanel/ToolPanel";
 import { Add } from "@mui/icons-material";
@@ -29,8 +28,6 @@ export const ListagemCategorias: React.FC = () => {
 
   return (
     <>
-      <MuiAppBar />
-
       <BoxContainer>
         <MuiFrame title="Categorias" handleBack={handleNavigate} />
         <ToolPainel
