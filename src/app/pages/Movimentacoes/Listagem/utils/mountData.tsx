@@ -63,12 +63,12 @@ export function mountData({
         <MuiMoreVertIcon
           options={[
             {
-              label: "Excluir",
-              action: () => excluirMovimentacao(movimentacao),
-            },
-            {
               label: "Editar",
               action: () => editarMovimentacao(movimentacao),
+            },
+            {
+              label: "Excluir",
+              action: () => excluirMovimentacao(movimentacao),
             },
           ]}
         />

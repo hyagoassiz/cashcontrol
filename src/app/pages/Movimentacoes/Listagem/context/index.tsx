@@ -4,11 +4,14 @@ import {
   ReactNode,
   SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { useQueryListarMovimentacao } from "../../../../shared/hooks/useQueryListarMovimentacao";
 import { GlobalContext } from "../../../../shared/contexts";
 import { IMovimentacao } from "../interfaces";
+import { ISaldo } from "../../../../shared/interfaces";
+import { mountSaldos } from "../../../../shared/utils/mountSaldos";
 
 interface IListagemContext {
   children: ReactNode;
@@ -24,6 +27,7 @@ interface IListagemContextData {
   refecthMovimentacoes: () => void;
   toggleModalExcluir: boolean;
   setToggleModalExcluir: Dispatch<SetStateAction<boolean>>;
+  saldos: ISaldo[];
 }
 
 export const ListagemContext = createContext({} as IListagemContextData);
@@ -38,6 +42,8 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
 
   const [movimentacao, setMovimentacao] = useState<IMovimentacao | null>(null);
 
+  const [saldos, setSaldos] = useState<ISaldo[]>([]);
+
   const {
     data: movimentacoes,
     isLoading: isFetchingMovimentacoes,
@@ -45,6 +51,12 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
   } = useQueryListarMovimentacao({
     id: usuario.id,
   });
+
+  useEffect(() => {
+    if (movimentacoes) {
+      setSaldos(mountSaldos(movimentacoes));
+    }
+  }, [movimentacoes]);
 
   return (
     <ListagemContext.Provider
@@ -58,6 +70,7 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
         refecthMovimentacoes,
         movimentacao,
         setMovimentacao,
+        saldos,
       }}
     >
       {children}
