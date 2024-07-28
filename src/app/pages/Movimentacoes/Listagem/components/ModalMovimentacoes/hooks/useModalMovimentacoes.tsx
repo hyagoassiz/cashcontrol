@@ -1,4 +1,10 @@
-import { useContext, useEffect } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { ListagemContext } from "../../../context";
 import {
   Control,
@@ -16,7 +22,13 @@ import { GlobalContext } from "../../../../../../shared/contexts";
 import { useQueryListarConta } from "../../../../../../shared/hooks/useQueryListarConta";
 import { useMutationAdicionarMovimentacao } from "../../../../../../shared/hooks/useMutationAdicionarMovimentacao";
 import { useMutationEditarMovimentacao } from "../../../../../../shared/hooks/useMutationEditarMovimentacao";
+import { getSaldo } from "../../../../../../shared/utils/getSaldo";
 
+interface ISaldoConta {
+  saldo: number;
+  valorDigitado: number;
+  novoSaldo: number;
+}
 interface IUseModalMovimentacoes {
   toggleModalMovimentacoes: boolean;
   handleModalMovimentacoes: () => void;
@@ -31,6 +43,8 @@ interface IUseModalMovimentacoes {
   getValues: UseFormGetValues<IMovimentacao>;
   watch: UseFormWatch<IMovimentacao>;
   setValue: UseFormSetValue<IMovimentacao>;
+  saldoConta: ISaldoConta;
+  setValorOriginal: Dispatch<SetStateAction<number>>;
 }
 
 export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
@@ -40,6 +54,7 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
     refecthMovimentacoes,
     movimentacao,
     setMovimentacao,
+    saldos,
   } = useContext(ListagemContext);
 
   const { usuario } = useContext(GlobalContext);
@@ -48,6 +63,7 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
     useForm<IMovimentacao>({
       defaultValues: {
         data: getTodayDate(),
+        pago: true,
       },
     });
 
@@ -60,6 +76,44 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
 
   const tipos = ["Entrada", "Saída"];
 
+  const [saldoConta, setSaldoConta] = useState<ISaldoConta>({
+    saldo: 0,
+    valorDigitado: 0,
+    novoSaldo: 0,
+  });
+
+  const [valorOriginal, setValorOriginal] = useState<number>(0);
+
+  useEffect(() => {
+    const conta = getValues("conta");
+    const valor = getValues("valor");
+    const tipo = getValues("tipo");
+    const pago = getValues("pago");
+    const saldoAtual = getSaldo(conta, saldos);
+
+    const calcularNovoSaldo = () => {
+      if (pago) {
+        if (tipo === "Entrada") {
+          return valor >= valorOriginal
+            ? saldoAtual + valor
+            : saldoAtual - valorOriginal + valor;
+        } else {
+          return valor >= valorOriginal
+            ? saldoAtual + valorOriginal - valor
+            : saldoAtual + valorOriginal - valor;
+        }
+      } else {
+        return tipo === "Entrada" ? saldoAtual : saldoAtual + valorOriginal;
+      }
+    };
+
+    setSaldoConta({
+      saldo: saldoAtual,
+      valorDigitado: valor,
+      novoSaldo: calcularNovoSaldo(),
+    });
+  }, [watch("valor"), watch("conta"), watch("pago"), watch("tipo")]);
+
   useEffect(() => {
     if (movimentacao?.id) {
       if (!getValues("id")) {
@@ -69,6 +123,9 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
               key as keyof IMovimentacao,
               movimentacao[key] as IMovimentacao[keyof IMovimentacao]
             );
+            if (key === "valor") {
+              setValorOriginal(movimentacao[key]);
+            }
           }
         );
       }
@@ -120,6 +177,8 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
     setToggleModalMovimentacoes((prevState) => !prevState);
     setMovimentacao(null);
     reset();
+    setValorOriginal(0);
+    setValue("valor", 0);
   };
 
   return {
@@ -136,5 +195,7 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
     getValues,
     watch,
     setValue,
+    saldoConta,
+    setValorOriginal,
   };
 };
