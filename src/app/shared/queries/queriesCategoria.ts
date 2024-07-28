@@ -1,4 +1,13 @@
-import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { ICategoria, IReturnBackEnd } from "../interfaces";
 import { db } from "../../../FirebaseConnection";
 
@@ -9,8 +18,8 @@ export const queryListarCategoria = async function (
     const categoriasQuery = query(
       collection(db, "categoria"),
       where("usuario", "==", usuario),
-      where("ativo", "==", true),
-      where("tipo", "==", "Entrada")
+      where("ativo", "==", true)
+      // where("tipo", "==", "Entrada")
     );
 
     const querySnapshot = await getDocs(categoriasQuery);
