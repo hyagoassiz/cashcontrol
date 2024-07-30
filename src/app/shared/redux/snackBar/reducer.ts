@@ -1,13 +1,12 @@
-import { IUseSelector } from "../../interfaces/IUseSelector";
+import { ISnackBar } from "../../interfaces/ISnackBar";
 import SnackBarActionTypes from "./action-types";
 
-const initialState: IUseSelector = {
-  snackbar: {
-    message: "",
-    type: "success",
-    open: false,
-  },
+const initialState: ISnackBar = {
+  message: "",
+  type: "success",
+  open: false,
 };
+
 interface SnackBarAction {
   type: string;
   payload?: {
@@ -16,24 +15,21 @@ interface SnackBarAction {
   };
 }
 
-const snackBarReducer = (state = initialState, action: SnackBarAction): IUseSelector => {
+const snackBarReducer = (
+  state = initialState,
+  action: SnackBarAction
+): ISnackBar => {
   switch (action.type) {
-    case SnackBarActionTypes.SNACKBAR.HIDE:
+    case SnackBarActionTypes.HIDE:
       return {
         ...state,
-        snackbar: {
-          ...state.snackbar,
-          open: false,
-        },
+        open: false,
       };
-    case SnackBarActionTypes.SNACKBAR.SHOW:
+    case SnackBarActionTypes.SHOW:
       return {
         ...state,
-        snackbar: {
-          message: action.payload?.message ?? "",
-          type: action.payload?.type ?? "success",
-          open: true,
-        },
+        ...action.payload,
+        open: true,
       };
     default:
       return state;

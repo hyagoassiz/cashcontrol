@@ -1,11 +1,7 @@
 import "../App.css";
 import { AppRoutes } from "./routes";
-import { MuiCircularProgress } from "./shared/components/MuiCircularProgress/MuiCircularProgress";
 import MuiSnackBar from "./shared/components/MuiSnackBar";
-import {
-  GlobalContextProvider,
-  ProgressProvider,
-} from "./shared/contexts/index";
+import { GlobalContextProvider } from "./shared/contexts/index";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const App: React.FC = () => {
@@ -15,10 +11,7 @@ const App: React.FC = () => {
     <>
       <QueryClientProvider client={queryClient}>
         <GlobalContextProvider>
-          <ProgressProvider>
-            <AppRoutes />
-            <MuiCircularProgress />
-          </ProgressProvider>
+          <AppRoutes />
         </GlobalContextProvider>
       </QueryClientProvider>
       <MuiSnackBar />

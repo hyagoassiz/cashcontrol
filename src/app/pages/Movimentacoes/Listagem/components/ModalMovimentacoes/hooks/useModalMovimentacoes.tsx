@@ -68,10 +68,10 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
     });
 
   const { data: categorias, isLoading: isFetchingCategorias } =
-    useQueryListarCategoria({ id: usuario.id });
+    useQueryListarCategoria({ id: usuario.uid });
 
   const { data: contas, isLoading: isFetchingContas } = useQueryListarConta({
-    id: usuario.id,
+    id: usuario.uid,
   });
 
   const tipos = ["Entrada", "Saída"];
@@ -140,7 +140,7 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
     handleSubmit(async (data) => {
       const payload: IMovimentacao = {
         id: data.id,
-        usuario: usuario.id,
+        usuario: usuario.uid,
         data: data.data,
         tipo: data.tipo,
         categoria: data.categoria,
