@@ -1,7 +1,6 @@
 export interface IUsuario {
-  id: string;
-  nome: string;
-  sobrenome: string;
+  uid: string;
   email: string;
-  logado: boolean;
+  emailVerified: boolean;
+  displayName: string | null;
 }

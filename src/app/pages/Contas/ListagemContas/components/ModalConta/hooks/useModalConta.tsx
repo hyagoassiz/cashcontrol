@@ -36,7 +36,7 @@ export const useModalConta = (): IUseModalConta => {
       dispatch(showSnackbar("Conta criada com sucesso"));
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
       dispatch(showSnackbar("Erro ao criar conta", "error"));
     },
   });
@@ -49,7 +49,7 @@ export const useModalConta = (): IUseModalConta => {
       dispatch(showSnackbar("Conta editada com sucesso"));
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
       dispatch(showSnackbar("Erro ao editar conta", "error"));
     },
   });
@@ -68,7 +68,7 @@ export const useModalConta = (): IUseModalConta => {
     handleSubmit(async (data) => {
       const payload: IConta = {
         id: data.id,
-        usuario: usuario.id,
+        usuario: usuario.uid,
         nome: data.nome,
         tipoConta: data.tipoConta,
         agencia: data.agencia ?? "",
