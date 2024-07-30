@@ -1,14 +1,18 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import {
+  LoginRoute,
+  CadastroRoute,
   CategoriasRoute,
   ContasRoute,
   ListagemMenuRoute,
   MovimentacoesRoute,
   SaldosRoute,
+  VerificacaoRoute,
 } from "../pages/index";
 import * as PATHS from "./paths";
 import { ReactNode } from "react";
 import { MuiAppBar } from "../shared/components/MuiAppBar/AppBar";
+import Private from "./Private";
 
 interface LayoutProps {
   children: ReactNode;
@@ -25,23 +29,61 @@ export const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Adicionar aqui as rotas que não renderizarão o appbar */}
+        <Route path={PATHS.AUTENTICACAO.LOGIN} element={<LoginRoute />} />
+        <Route path={PATHS.AUTENTICACAO.CREATE} element={<CadastroRoute />} />
+        <Route
+          path={PATHS.AUTENTICACAO.CHECK}
+          element={
+            <Private>
+              <VerificacaoRoute />
+            </Private>
+          }
+        />
         <Route
           path="*"
           element={
             <Layout>
               <Routes>
-                <Route path={PATHS.MENU.LIST} element={<ListagemMenuRoute />} />
+                <Route
+                  path={PATHS.MENU.LIST}
+                  element={
+                    <Private>
+                      <ListagemMenuRoute />
+                    </Private>
+                  }
+                />
                 <Route
                   path={PATHS.ENTRADAS_SAIDAS.LIST}
-                  element={<MovimentacoesRoute />}
+                  element={
+                    <Private>
+                      <MovimentacoesRoute />
+                    </Private>
+                  }
                 />
-                <Route path={PATHS.SALDOS.LIST} element={<SaldosRoute />} />
+                <Route
+                  path={PATHS.SALDOS.LIST}
+                  element={
+                    <Private>
+                      <SaldosRoute />
+                    </Private>
+                  }
+                />
                 <Route
                   path={PATHS.CATEGORIAS.LIST}
-                  element={<CategoriasRoute />}
+                  element={
+                    <Private>
+                      <CategoriasRoute />
+                    </Private>
+                  }
                 />
-                <Route path={PATHS.CONTAS.LIST} element={<ContasRoute />} />
+                <Route
+                  path={PATHS.CONTAS.LIST}
+                  element={
+                    <Private>
+                      <ContasRoute />
+                    </Private>
+                  }
+                />
                 <Route path="*" element={<Navigate to={PATHS.MENU.LIST} />} />
               </Routes>
             </Layout>

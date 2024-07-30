@@ -2,6 +2,13 @@ export const MENU = {
   LIST: "/menu",
 };
 
+//AUTENTICACAO
+export const AUTENTICACAO = {
+  LOGIN: `/login`,
+  CREATE: `/criar-conta`,
+  CHECK: `/verificar-email`,
+};
+
 //MOVIMENTACOES
 export const ENTRADAS_SAIDAS = {
   LIST: `${MENU.LIST}/entradas-saidas`,
