@@ -38,7 +38,7 @@ export const useModalSituacao = (): IUseModalSituacao => {
       );
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
       dispatch(showSnackbar("Erro", "error"));
     },
   });

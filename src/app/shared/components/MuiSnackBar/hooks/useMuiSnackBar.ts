@@ -1,29 +1,30 @@
 import { useDispatch, useSelector } from "react-redux";
-import { IUseSelector } from "../../../interfaces/IUseSelector";
-import SnackBarActionTypes from "../../../redux/snackBar/action-types";
 import { useEffect } from "react";
+import { RootState } from "../../../redux/interfaces/IRedux";
+import { ISnackBar } from "../../../interfaces/ISnackBar";
+import { closeSnackbar } from "../../../redux/snackBar/actions";
 
 interface IUseMuiSnackBar {
-  snackBar: IUseSelector;
+  snackBar: ISnackBar;
   handleClose: () => void;
 }
 
 export const useMuiSnackBar = (): IUseMuiSnackBar => {
   const dispatch = useDispatch();
-  const snackBar = useSelector((rootReducer) => rootReducer.snackBarReducer);
+  const snackBar = useSelector((state: RootState) => state.snackBar);
 
   useEffect(() => {
-    if (snackBar.snackbar.open) {
+    if (snackBar.open) {
       setTimeout(() => {
         handleClose();
-      }, 4000);
+      }, 3000);
 
       return () => handleClose();
     }
   });
 
   const handleClose = () => {
-    dispatch({ type: SnackBarActionTypes.SNACKBAR.HIDE });
+    dispatch(closeSnackbar());
   };
 
   return { snackBar, handleClose };

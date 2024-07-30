@@ -3,6 +3,7 @@ import {
   ReactNode,
   SetStateAction,
   createContext,
+  useContext,
   useEffect,
   useState,
 } from "react";
@@ -10,6 +11,7 @@ import { IFilterData } from "../interfaces";
 import { obterCategoriasPorUsuario } from "../services/endpoints";
 import { useQuery } from "@tanstack/react-query";
 import { ICategoria } from "../../../../shared/interfaces";
+import { GlobalContext } from "../../../../shared/contexts";
 
 interface IListagemCategoriasContextProps {
   children: ReactNode;
@@ -57,6 +59,7 @@ export function ListagemCategoriasProvider({
   const [categoria, setCategoria] = useState<ICategoria | undefined>(undefined);
   const [toggleModalCategoria, setToggleModalCategoria] =
     useState<boolean>(false);
+  const { usuario } = useContext(GlobalContext);
 
   const {
     data: categorias,
@@ -64,8 +67,7 @@ export function ListagemCategoriasProvider({
     refetch,
   } = useQuery({
     queryKey: ["categorias"],
-    queryFn: () =>
-      obterCategoriasPorUsuario("DxARypJQGMZeb1fMT4ft4BI4S2D2", filterData),
+    queryFn: () => obterCategoriasPorUsuario(usuario.uid, filterData),
   });
 
   useEffect(() => {

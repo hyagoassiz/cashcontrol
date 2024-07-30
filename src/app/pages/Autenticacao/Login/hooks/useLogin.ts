@@ -43,7 +43,6 @@ export const useLogin = (): IUseLogin => {
         password: data.password,
       };
       mutate(payload);
-      console.log(data);
     })();
   };
 
