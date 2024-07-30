@@ -49,7 +49,7 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
     isLoading: isFetchingMovimentacoes,
     refetch: refecthMovimentacoes,
   } = useQueryListarMovimentacao({
-    id: usuario.id,
+    id: usuario.uid,
   });
 
   useEffect(() => {

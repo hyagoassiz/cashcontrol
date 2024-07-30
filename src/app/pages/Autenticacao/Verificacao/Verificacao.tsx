@@ -4,7 +4,7 @@ import { useVerificacao } from "./hooks/useVerificacao";
 import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
 
 export const Verificacao: React.FC = () => {
-  const { handleNavigate, userData } = useVerificacao();
+  const { handleNavigate, usuario } = useVerificacao();
 
   return (
     <>
@@ -16,9 +16,7 @@ export const Verificacao: React.FC = () => {
         </Grid>
         <Grid item xs={12} sx={{ display: "flex", gap: "8px" }}>
           <MarkEmailReadIcon sx={{ color: "green" }} />
-          <Typography sx={{ fontStyle: "italic" }}>
-            {userData?.email}
-          </Typography>
+          <Typography sx={{ fontStyle: "italic" }}>{usuario?.email}</Typography>
         </Grid>
         <Grid item>
           <Grid item xs>
