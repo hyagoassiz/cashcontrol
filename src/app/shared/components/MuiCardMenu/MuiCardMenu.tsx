@@ -18,7 +18,7 @@ export const MuiCardMenu = ({ options }: IMuiCardMenu) => {
   const theme = useTheme();
 
   return (
-    <Box sx={{display: 'flex'}}>
+    <Box sx={{ display: "flex" }}>
       {options.map((option) => (
         <Box
           sx={{
@@ -36,7 +36,9 @@ export const MuiCardMenu = ({ options }: IMuiCardMenu) => {
               padding: "20px",
             }}
           >
-            <Typography sx={{fontWeight: 600, fontSize: '16px'}}>{option.title}</Typography>
+            <Typography sx={{ fontWeight: 600, fontSize: "16px" }}>
+              {option.title}
+            </Typography>
           </Box>
           <Divider sx={{ borderBottomWidth: theme.spacing(0.1) }} />
 
@@ -46,7 +48,12 @@ export const MuiCardMenu = ({ options }: IMuiCardMenu) => {
                 <ListItem
                   button
                   key={route.route}
-                  onClick={() => navigate(route.route)}
+                  onClick={async () => {
+                    navigate(route.route);
+                    if (route.function) {
+                      await route.function();
+                    }
+                  }}
                 >
                   {route.name}
                 </ListItem>

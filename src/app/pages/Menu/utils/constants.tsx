@@ -1,5 +1,7 @@
+import { signOut } from "firebase/auth";
 import * as PATHS from "../../../routes/paths";
 import { IOptionsMenu } from "../../../shared/interfaces/IOptionsMenu";
+import { auth } from "../../../../FirebaseConnection";
 
 export const OPTIONS: IOptionsMenu[] = [
   {
@@ -21,6 +23,13 @@ export const OPTIONS: IOptionsMenu[] = [
     routes: [
       { name: "Preferências", route: "#" },
       { name: "Minha Conta", route: "#" },
+      {
+        name: "Sair",
+        route: "#",
+        function: async () => {
+          await signOut(auth);
+        },
+      },
     ],
   },
 ];
