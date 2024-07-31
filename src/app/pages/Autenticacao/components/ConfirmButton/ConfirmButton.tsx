@@ -14,7 +14,11 @@ export const ConfirmButton: React.FC<IConfirmButton> = ({
   loading = false,
 }) => {
   return (
-    <StyledButton onClick={loading ? undefined : onClick} variant="contained">
+    <StyledButton
+      color="secondary"
+      onClick={loading ? undefined : onClick}
+      variant="contained"
+    >
       {loading ? <CircularProgress size={24} color="inherit" /> : children}
     </StyledButton>
   );

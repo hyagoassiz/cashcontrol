@@ -29,8 +29,14 @@ export const ModalConta: React.FC = () => {
       title={`${conta?.id ? "Editar" : "Nova"} Conta`}
       buttons={
         <>
-          <Button onClick={handleModalConta}>Fechar</Button>
-          <Button variant="contained" onClick={handleSubmit(onSubmit)}>
+          <Button color="secondary" onClick={handleModalConta}>
+            Fechar
+          </Button>
+          <Button
+            color="secondary"
+            variant="contained"
+            onClick={handleSubmit(onSubmit)}
+          >
             Salvar
           </Button>
         </>
@@ -49,6 +55,7 @@ export const ModalConta: React.FC = () => {
                   label="Nome"
                   type="text"
                   variant="standard"
+                  color="secondary"
                   onChange={field.onChange}
                   value={field.value ?? ""}
                   inputProps={{
@@ -79,6 +86,7 @@ export const ModalConta: React.FC = () => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      color="secondary"
                       variant="standard"
                       label="Tipo da Conta"
                       error={!!fieldState.error}
@@ -102,6 +110,7 @@ export const ModalConta: React.FC = () => {
                   name="agencia"
                   type="text"
                   variant="standard"
+                  color="secondary"
                   onChange={field.onChange}
                   value={field.value ?? ""}
                   inputProps={{
@@ -125,6 +134,7 @@ export const ModalConta: React.FC = () => {
                   name="conta"
                   type="text"
                   variant="standard"
+                  color="secondary"
                   onChange={field.onChange}
                   value={field.value ?? ""}
                   inputProps={{
@@ -148,6 +158,7 @@ export const ModalConta: React.FC = () => {
                   name="observacao"
                   type="text"
                   variant="standard"
+                  color="secondary"
                   onChange={field.onChange}
                   value={field.value ?? ""}
                   inputProps={{
@@ -168,6 +179,7 @@ export const ModalConta: React.FC = () => {
                 control={control}
                 render={({ field }) => (
                   <Switch
+                    color="secondary"
                     checked={field.value ?? true}
                     onChange={field.onChange}
                     size="small"
