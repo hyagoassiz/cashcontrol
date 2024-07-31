@@ -36,7 +36,8 @@ export const ListagemCategorias: React.FC = () => {
             <>
               <Button
                 onClick={handleModalCategoria}
-                variant="text"
+                variant="contained"
+                color="primary"
                 startIcon={<Add />}
               >
                 Adicionar
