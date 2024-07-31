@@ -1,5 +1,5 @@
-import { Grid, Typography } from "@mui/material";
-import { BoxContainer, BoxMain } from "./styles/style";
+import { Grid } from "@mui/material";
+import { BoxContainer, BoxMain, TitleStyled } from "./styles/style";
 import { ReactNode } from "react";
 
 interface IPageContainer {
@@ -17,9 +17,9 @@ export const PageContainer: React.FC<IPageContainer> = ({
     <>
       <BoxMain onKeyDown={onKeyDown}>
         <BoxContainer>
-          <Typography component="h1" variant="h5">
+          <TitleStyled component="h1" variant="h5">
             {titleRoute}
-          </Typography>
+          </TitleStyled>
 
           <Grid container spacing={2} xs={12} sx={{ marginTop: "16px" }}>
             {children}
