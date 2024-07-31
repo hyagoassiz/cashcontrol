@@ -36,7 +36,8 @@ export const ListagemContas: React.FC = () => {
             <>
               <Button
                 onClick={handleModalConta}
-                variant="text"
+                color="primary"
+                variant="contained"
                 startIcon={<Add />}
               >
                 Adicionar

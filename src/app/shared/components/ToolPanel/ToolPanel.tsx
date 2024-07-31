@@ -1,9 +1,14 @@
-import { Divider, IconButton, Tooltip, useTheme } from "@mui/material";
-import { Container, Box, Typography } from "@mui/material";
+import { Divider, IconButton, Tooltip } from "@mui/material";
+import { Box } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchBar from "../SearchBar/SearchBar";
 import { ReactNode } from "react";
+import {
+  BoxContainer,
+  StyledContainer,
+  StyledTypography,
+} from "./styles/style";
 
 interface MuiFrameProps {
   title: string;
@@ -26,25 +31,12 @@ export const ToolPainel: React.FC<MuiFrameProps> = ({
   buttons,
   searchBar,
 }) => {
-  const theme = useTheme();
   return (
     <>
-      <Container
-        style={{
-          height: "auto",
-          width: "1000px",
-          padding: 0,
-          marginBottom: "8px",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            height: theme.spacing(4),
-            padding: theme.spacing(1),
-          }}
-        >
+      <Divider sx={{ borderBottomWidth: "1px" }} />
+
+      <StyledContainer>
+        <BoxContainer>
           {!searchBar?.open ? (
             <Box
               sx={{
@@ -53,9 +45,7 @@ export const ToolPainel: React.FC<MuiFrameProps> = ({
                 gap: "16px",
               }}
             >
-              <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                {title}
-              </Typography>
+              <StyledTypography variant="body2">{title}</StyledTypography>
               <Divider
                 orientation="vertical"
                 flexItem
@@ -88,9 +78,9 @@ export const ToolPainel: React.FC<MuiFrameProps> = ({
               </Tooltip>
             </Box>
           )}
-        </Box>
-        <Divider sx={{ borderBottomWidth: "2px" }} />
-      </Container>
+        </BoxContainer>
+      </StyledContainer>
+      <Divider sx={{ borderBottomWidth: "1px" }} />
     </>
   );
 };

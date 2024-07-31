@@ -17,10 +17,14 @@ const ModalSituacao = () => {
       }
       buttons={
         <>
-          <Button variant="text" onClick={handleModalSituacao}>
+          <Button
+            color="secondary"
+            variant="text"
+            onClick={handleModalSituacao}
+          >
             Fechar
           </Button>
-          <Button variant="contained" onClick={handleConfirm}>
+          <Button color="secondary" variant="contained" onClick={handleConfirm}>
             Confirmar
           </Button>
         </>

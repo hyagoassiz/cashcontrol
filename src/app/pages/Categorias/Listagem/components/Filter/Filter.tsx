@@ -26,12 +26,14 @@ const Filter = () => {
                   {...field}
                   multiple
                   id="tipo"
+                  color="secondary"
                   options={["Entrada", "Saída"]}
                   onChange={(event, value) => field.onChange(value)}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       variant="standard"
+                      color="secondary"
                       sx={{ width: "330px" }}
                       label="Tipo"
                       placeholder="Selecionar"
@@ -54,6 +56,7 @@ const Filter = () => {
                   {...field}
                   multiple
                   id="ativo"
+                  color="secondary"
                   options={["Ativo", "Inativo"]}
                   onChange={(event, value) => {
                     const formattedValue = value.map((option) =>
@@ -68,6 +71,7 @@ const Filter = () => {
                     <TextField
                       {...params}
                       variant="standard"
+                      color="secondary"
                       sx={{ width: "330px" }}
                       label="Situação"
                       placeholder="Selecionar"

@@ -3,29 +3,27 @@ import { createTheme } from "@mui/material";
 export const DarkTheme = createTheme({
   palette: {
     primary: {
-      main: "#4C4577",
-      dark: "#383163", // Ton mais escuro calculado
-      light: "#605B8B", // Ton mais claro calculado
-
+      main: "#1B2537",
+      dark: "#18202D",
+      light: "#283645",
       contrastText: "#D3D3D3",
     },
-
     secondary: {
-      main: "#E0980C",
-      dark: "#B8740A",
-      light: "#F3B242",
-
+      main: "#373B8A",
+      dark: "#2C2F6F",
+      light: "#6B6FBB",
       contrastText: "#151819",
     },
 
     background: {
-      paper: "#3A3E49",
-      default: "#F5F5F5",
+      paper: "#141A28",
+      default: "#18202D",
     },
     text: {
-      primary: "#E0980C", // Cor do texto primário
-      secondary: "#979797", // Cor do texto secundário
-      disabled: "#979797", // Cor do texto desabilitado
+      primary: "#D3D3D3",
+      secondary: "#B0B0B0",
+      disabled: "#6D6D6D",
     },
+    divider: "#283645",
   },
 });
