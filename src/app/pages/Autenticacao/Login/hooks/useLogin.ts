@@ -28,7 +28,7 @@ export const useLogin = (): IUseLogin => {
     mutationFn: ({ auth, email, password }: IAutenticacao) => {
       return signInWithEmailAndPassword(auth, email, password);
     },
-    onSuccess: () => navigate(PATHS.MENU.LIST),
+    onSuccess: () => navigate(PATHS.ENTRADAS_SAIDAS.LIST),
     onError: (error) => {
       dispatch(showSnackbar(`${error}`, "error"));
       reset();

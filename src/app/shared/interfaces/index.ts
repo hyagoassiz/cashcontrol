@@ -5,3 +5,4 @@ export * from "./IMovimentacao";
 export * from "./ISaldo";
 export * from "./IUsuario";
 export * from "./ISnackBar";
+export * from "./ILoading";

@@ -1,7 +1,6 @@
 import {
   IconButton,
   InputAdornment,
-  Slide,
   TextField,
   Tooltip,
   useTheme,
@@ -27,36 +26,35 @@ const SearchBar: React.FC<Props> = ({
 }) => {
   const theme = useTheme();
   return (
-    <Slide direction="left" in={true} timeout={500}>
-      <TextField
-        fullWidth
-        id="outlined-search"
-        variant="standard"
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        InputProps={{
-          style: {
-            paddingLeft: theme.spacing(1),
-            paddingRight: theme.spacing(1),
-            height: theme.spacing(4),
-            width: "100%",
-          },
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <Tooltip title="Fechar" placement="top">
-              <IconButton onClick={onClickClose}>
-                <CloseIcon fontSize={"small"} />
-              </IconButton>
-            </Tooltip>
-          ),
-        }}
-      />
-    </Slide>
+    <TextField
+      fullWidth
+      id="outlined-search"
+      variant="standard"
+      color="primary"
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      InputProps={{
+        style: {
+          paddingLeft: theme.spacing(1),
+          paddingRight: theme.spacing(1),
+          height: theme.spacing(4),
+          width: "100%",
+        },
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon color="info" />
+          </InputAdornment>
+        ),
+        endAdornment: (
+          <Tooltip title="Fechar" placement="top">
+            <IconButton onClick={onClickClose}>
+              <CloseIcon color="info" fontSize={"small"} />
+            </IconButton>
+          </Tooltip>
+        ),
+      }}
+    />
   );
 };
 

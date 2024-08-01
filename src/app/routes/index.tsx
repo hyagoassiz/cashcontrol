@@ -4,16 +4,17 @@ import {
   CadastroRoute,
   CategoriasRoute,
   ContasRoute,
-  ListagemMenuRoute,
   MovimentacoesRoute,
   SaldosRoute,
   VerificacaoRoute,
+  InicioRoute,
 } from "../pages/index";
 import * as PATHS from "./paths";
 import { ReactNode } from "react";
-import { MuiAppBar } from "../shared/components/MuiAppBar/AppBar";
+// import { MuiAppBar } from "../shared/components/MuiAppBar/AppBar";
 import Private from "./Private";
-import { Box, useTheme } from "@mui/material";
+import AppDrawer from "../shared/components/AppDrawer/AppDrawer";
+import { PageLayout } from "../shared/layouts/PageLayout";
 
 interface LayoutProps {
   children: ReactNode;
@@ -21,42 +22,36 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => (
   <>
-    <MuiAppBar />
-    {children}
+    {/* <MuiAppBar /> */}
+    <PageLayout>{children}</PageLayout>
   </>
 );
 
 export const AppRoutes = () => {
-  const theme = useTheme();
-
   return (
     <BrowserRouter>
-      <Box
-        width="100vw"
-        height="100vh"
-        bgcolor={theme.palette.background.default}
-      >
-        <Routes>
-          <Route path={PATHS.AUTENTICACAO.LOGIN} element={<LoginRoute />} />
-          <Route path={PATHS.AUTENTICACAO.CREATE} element={<CadastroRoute />} />
-          <Route
-            path={PATHS.AUTENTICACAO.CHECK}
-            element={
-              <Private>
-                <VerificacaoRoute />
-              </Private>
-            }
-          />
-          <Route
-            path="*"
-            element={
+      <Routes>
+        <Route path={PATHS.AUTENTICACAO.LOGIN} element={<LoginRoute />} />
+        <Route path={PATHS.AUTENTICACAO.CREATE} element={<CadastroRoute />} />
+        <Route
+          path={PATHS.AUTENTICACAO.CHECK}
+          element={
+            <Private>
+              <VerificacaoRoute />
+            </Private>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <AppDrawer>
               <Layout>
                 <Routes>
                   <Route
-                    path={PATHS.MENU.LIST}
+                    path={PATHS.INICIO.LIST}
                     element={
                       <Private>
-                        <ListagemMenuRoute />
+                        <InicioRoute />
                       </Private>
                     }
                   />
@@ -92,13 +87,16 @@ export const AppRoutes = () => {
                       </Private>
                     }
                   />
-                  <Route path="*" element={<Navigate to={PATHS.MENU.LIST} />} />
+                  <Route
+                    path="*"
+                    element={<Navigate to={PATHS.ENTRADAS_SAIDAS.LIST} />}
+                  />
                 </Routes>
               </Layout>
-            }
-          />
-        </Routes>
-      </Box>
+            </AppDrawer>
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 };
