@@ -31,18 +31,18 @@ export const MuiTable: React.FC<IMuiTable> = ({
   const theme = useTheme();
   return (
     <>
-      {data.length ? (
-        <Table size="small">
-          <StyledTableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <StyledTableCellHead size="small" key={column.key}>
-                  {column.label}
-                </StyledTableCellHead>
-              ))}
-            </TableRow>
-          </StyledTableHead>
+      <Table size="small">
+        <StyledTableHead>
+          <TableRow>
+            {columns.map((column) => (
+              <StyledTableCellHead size="small" key={column.key}>
+                {column.label}
+              </StyledTableCellHead>
+            ))}
+          </TableRow>
+        </StyledTableHead>
 
+        {data.length ? (
           <TableBody>
             <>
               {data.map((row, index) => (
@@ -60,36 +60,46 @@ export const MuiTable: React.FC<IMuiTable> = ({
               ))}
             </>
           </TableBody>
-        </Table>
-      ) : (
-        <>
-          {isLoading ? (
-            <Box
-              sx={{
-                width: "100%",
-              }}
-            >
-              <LinearProgress />
-            </Box>
-          ) : (
-            <Box
-              sx={{
-                padding: theme.spacing(1),
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <InfoIcon
-                sx={{ color: "orange", marginRight: theme.spacing(0.5) }}
-              />
-              <Typography color="secondary" variant="body2">
-                {textForEmptyData}
-              </Typography>
-            </Box>
-          )}
-        </>
-      )}
+        ) : (
+          <>
+            {isLoading ? (
+              <Box
+                sx={{
+                  width: "100%",
+                }}
+              >
+                <LinearProgress />
+              </Box>
+            ) : (
+              <TableBody>
+                <TableRow>
+                  <StyledTableCellBody colSpan={columns.length}>
+                    <Box
+                      sx={{
+                        width: "100%",
+                        padding: theme.spacing(1),
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <InfoIcon
+                        sx={{
+                          color: "orange",
+                          marginRight: theme.spacing(0.5),
+                        }}
+                      />
+                      <Typography color="secondary" variant="body2">
+                        {textForEmptyData}
+                      </Typography>
+                    </Box>
+                  </StyledTableCellBody>
+                </TableRow>
+              </TableBody>
+            )}
+          </>
+        )}
+      </Table>
     </>
   );
 };

@@ -10,7 +10,7 @@ import {
 } from "../shared/redux/user/actions";
 import { RootState } from "../shared/redux/interfaces/IRedux";
 import { IUsuario } from "../shared/interfaces";
-import LoadingPage from "../shared/components/LoadingPage/LoadingPage";
+import { setLoading } from "../shared/redux/loading/actions";
 
 interface IPrivate {
   children: ReactNode;
@@ -18,14 +18,15 @@ interface IPrivate {
 
 export default function Private({ children }: IPrivate) {
   const [signed, setSigned] = useState<boolean | null>(null);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const userReducer = useSelector((state: RootState) => state.user);
+  const loadingReducer = useSelector((state: RootState) => state.loading);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
+      dispatch(setLoading(true));
       if (user) {
         const userData: IUsuario = {
           uid: user.uid,
@@ -40,7 +41,7 @@ export default function Private({ children }: IPrivate) {
           navigate(PATHS.AUTENTICACAO.CHECK);
         } else {
           if (location.pathname === PATHS.AUTENTICACAO.CHECK) {
-            navigate(PATHS.MENU.LIST);
+            navigate(PATHS.ENTRADAS_SAIDAS.LIST);
           }
         }
 
@@ -50,14 +51,14 @@ export default function Private({ children }: IPrivate) {
         setSigned(false);
         navigate(PATHS.AUTENTICACAO.LOGIN);
       }
-      setLoading(false);
+      dispatch(setLoading(false));
     });
 
     return () => unsub();
   }, [navigate, location.pathname, dispatch]);
 
   useEffect(() => {
-    if (!loading && signed) {
+    if (!loadingReducer.open && signed) {
       if (!userReducer.emailVerified) {
         sendEmailVerification(auth.currentUser!)
           .then(() => {
@@ -68,11 +69,7 @@ export default function Private({ children }: IPrivate) {
           });
       }
     }
-  }, [loading, signed, userReducer]);
-
-  if (loading) {
-    return <LoadingPage />;
-  }
+  }, [loadingReducer, signed, userReducer]);
 
   return signed ? <>{children}</> : null;
 }

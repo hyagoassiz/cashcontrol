@@ -1,19 +1,14 @@
-import { Divider, IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { Box } from "@mui/material";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchBar from "../SearchBar/SearchBar";
-import { ReactNode } from "react";
-import {
-  BoxContainer,
-  StyledContainer,
-  StyledTypography,
-} from "./styles/style";
+import { ReactElement, ReactNode } from "react";
+import { BoxContainer, StyledContainer } from "./styles/style";
 
 interface MuiFrameProps {
-  title: string;
   buttons?: ReactNode;
   searchBar?: ISearchBar;
+  icons: ReactElement;
 }
 
 interface ISearchBar {
@@ -23,20 +18,19 @@ interface ISearchBar {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClickClose: () => void;
   handleSearchBar: () => void;
-  handleFilter: () => void;
 }
 
 export const ToolPainel: React.FC<MuiFrameProps> = ({
-  title,
   buttons,
   searchBar,
+  icons,
 }) => {
   return (
     <>
-      <Divider sx={{ borderBottomWidth: "1px" }} />
-
       <StyledContainer>
-        <BoxContainer>
+        <BoxContainer
+          sx={{ justifyContent: buttons ? "space-between" : "none" }}
+        >
           {!searchBar?.open ? (
             <Box
               sx={{
@@ -45,14 +39,6 @@ export const ToolPainel: React.FC<MuiFrameProps> = ({
                 gap: "16px",
               }}
             >
-              <StyledTypography variant="body2">{title}</StyledTypography>
-              <Divider
-                orientation="vertical"
-                flexItem
-                sx={{
-                  borderRightWidth: "3px",
-                }}
-              />
               {buttons}
             </Box>
           ) : (
@@ -63,24 +49,25 @@ export const ToolPainel: React.FC<MuiFrameProps> = ({
               onChange={searchBar.onChange}
             />
           )}
-          <Box sx={{ flexGrow: 1 }} />
-          {!searchBar?.open && searchBar && (
+          <Box />
+          {!searchBar?.open && (
             <Box sx={{ display: "flex" }}>
-              <Tooltip title="Pesquisar" placement="top">
-                <IconButton onClick={searchBar?.handleSearchBar}>
-                  <SearchIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Filtrar" placement="top">
-                <IconButton onClick={searchBar?.handleFilter}>
-                  <FilterListIcon />
-                </IconButton>
-              </Tooltip>
+              {!searchBar ? (
+                <>{icons}</>
+              ) : (
+                <>
+                  <Tooltip title="Pesquisar" placement="top">
+                    <IconButton onClick={searchBar?.handleSearchBar}>
+                      <SearchIcon color="info" />
+                    </IconButton>
+                  </Tooltip>
+                  {icons}
+                </>
+              )}
             </Box>
           )}
         </BoxContainer>
       </StyledContainer>
-      <Divider sx={{ borderBottomWidth: "1px" }} />
     </>
   );
 };

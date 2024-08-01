@@ -12,7 +12,13 @@ export const DarkTheme = createTheme({
       main: "#373B8A",
       dark: "#2C2F6F",
       light: "#6B6FBB",
-      contrastText: "#151819",
+      contrastText: "#D3D3D3",
+    },
+    info: {
+      main: "#44C89E",
+      dark: "#2F9C7E",
+      light: "#6CE0B0",
+      contrastText: "#FFFFFF",
     },
 
     background: {
