@@ -12,6 +12,8 @@ import { GlobalContext } from "../../../../shared/contexts";
 import { IMovimentacao } from "../interfaces";
 import { ISaldo } from "../../../../shared/interfaces";
 import { mountSaldos } from "../../../../shared/utils/mountSaldos";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../../../shared/redux/loading/actions";
 
 interface IListagemContext {
   children: ReactNode;
@@ -44,6 +46,8 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
 
   const [saldos, setSaldos] = useState<ISaldo[]>([]);
 
+  const dispatch = useDispatch();
+
   const {
     data: movimentacoes,
     isLoading: isFetchingMovimentacoes,
@@ -57,6 +61,10 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
       setSaldos(mountSaldos(movimentacoes));
     }
   }, [movimentacoes]);
+
+  useEffect(() => {
+    dispatch(setLoading(isFetchingMovimentacoes));
+  }, [isFetchingMovimentacoes, dispatch]);
 
   return (
     <ListagemContext.Provider
