@@ -11,6 +11,8 @@ import { useQueryListarMovimentacao } from "../../../../shared/hooks/useQueryLis
 import { GlobalContext } from "../../../../shared/contexts";
 import { IMovimentacao, ISaldo } from "../../../../shared/interfaces";
 import { mountSaldos } from "../../../../shared/utils/mountSaldos";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../../../shared/redux/loading/actions";
 
 interface IListagemContext {
   children: ReactNode;
@@ -33,6 +35,8 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
 
   const [saldos, setSaldos] = useState<ISaldo[]>([]);
 
+  const dispatch = useDispatch();
+
   const { data: movimentacoes, isLoading: isFetchingMovimentacoes } =
     useQueryListarMovimentacao({
       id: usuario.uid,
@@ -43,6 +47,10 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
       setSaldos(mountSaldos(movimentacoes));
     }
   }, [movimentacoes]);
+
+  useEffect(() => {
+    dispatch(setLoading(isFetchingMovimentacoes));
+  }, [isFetchingMovimentacoes, dispatch]);
 
   return (
     <ListagemContext.Provider

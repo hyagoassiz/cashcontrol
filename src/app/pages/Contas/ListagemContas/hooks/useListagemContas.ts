@@ -1,8 +1,6 @@
 import { Dispatch, useContext } from "react";
 import { IConta } from "../interfaces";
 import { ListagemContasContext } from "../contexts";
-import { useNavigate } from "react-router-dom";
-import * as PATHS from "../../../../routes/paths";
 
 interface IUseListagemContas {
   isLoading: boolean;
@@ -36,8 +34,6 @@ export const useListagemContas = (): IUseListagemContas => {
     setConta,
   } = useContext(ListagemContasContext);
 
-  const navigate = useNavigate();
-
   const handleEditarConta = (data: IConta) => {
     setConta(data);
     handleModalConta();
@@ -52,10 +48,6 @@ export const useListagemContas = (): IUseListagemContas => {
     setToggleModalConta((prevState) => !prevState);
   };
 
-  const handleNavigate = () => {
-    navigate(PATHS.MENU.LIST);
-  };
-
   return {
     isLoading,
     contas,
@@ -67,7 +59,6 @@ export const useListagemContas = (): IUseListagemContas => {
     setTextFilter,
     handleModalConta,
     handleEditarConta,
-    handleNavigate,
     refetch,
     handleEditarSituacao,
   };
