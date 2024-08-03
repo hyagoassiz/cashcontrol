@@ -15,8 +15,8 @@ export const ROTAS: IOptionsMenu[] = [
     title: "Movimentações",
     routes: [
       {
-        name: "Entradas e Saídas",
-        route: PATHS.ENTRADAS_SAIDAS.LIST,
+        name: "Transações",
+        route: PATHS.TRANSACOES.LIST,
         icon: <SwapVertIcon />,
       },
       { name: "Saldos", route: PATHS.SALDOS.LIST, icon: <AttachMoneyIcon /> },
