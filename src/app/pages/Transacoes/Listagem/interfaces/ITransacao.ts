@@ -1,8 +1,8 @@
-export interface IMovimentacao {
+export interface ITransacao {
   id?: string;
   usuario: string;
   data: string;
-  tipo: "Entrada" | "Saída"
+  tipo: "Entrada" | "Saída";
   categoria: string;
   conta: string;
   valor: number;

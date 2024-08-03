@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useQueryListarMovimentacao } from "../../../../shared/hooks/useQueryListarMovimentacao";
 import { GlobalContext } from "../../../../shared/contexts";
-import { IMovimentacao } from "../interfaces";
+import { ITransacao } from "../interfaces";
 import { ISaldo } from "../../../../shared/interfaces";
 import { mountSaldos } from "../../../../shared/utils/mountSaldos";
 import { useDispatch } from "react-redux";
@@ -20,12 +20,12 @@ interface IListagemContext {
 }
 
 interface IListagemContextData {
-  toggleModalMovimentacoes: boolean;
-  setToggleModalMovimentacoes: Dispatch<SetStateAction<boolean>>;
-  movimentacoes: IMovimentacao[] | undefined;
-  movimentacao: IMovimentacao | null;
-  setMovimentacao: Dispatch<SetStateAction<IMovimentacao | null>>;
-  isFetchingMovimentacoes: boolean;
+  toggleModalTransacoes: boolean;
+  setToggleModalTransacoes: Dispatch<SetStateAction<boolean>>;
+  transacoes: ITransacao[] | undefined;
+  transacao: ITransacao | null;
+  setTransacao: Dispatch<SetStateAction<ITransacao | null>>;
+  isFetchingTransacoes: boolean;
   refecthMovimentacoes: () => void;
   toggleModalExcluir: boolean;
   setToggleModalExcluir: Dispatch<SetStateAction<boolean>>;
@@ -35,49 +35,49 @@ interface IListagemContextData {
 export const ListagemContext = createContext({} as IListagemContextData);
 
 export function ListagemProvider({ children }: IListagemContext): JSX.Element {
-  const [toggleModalMovimentacoes, setToggleModalMovimentacoes] =
+  const [toggleModalTransacoes, setToggleModalTransacoes] =
     useState<boolean>(false);
 
   const [toggleModalExcluir, setToggleModalExcluir] = useState<boolean>(false);
 
   const { usuario } = useContext(GlobalContext);
 
-  const [movimentacao, setMovimentacao] = useState<IMovimentacao | null>(null);
+  const [transacao, setTransacao] = useState<ITransacao | null>(null);
 
   const [saldos, setSaldos] = useState<ISaldo[]>([]);
 
   const dispatch = useDispatch();
 
   const {
-    data: movimentacoes,
-    isLoading: isFetchingMovimentacoes,
+    data: transacoes,
+    isLoading: isFetchingTransacoes,
     refetch: refecthMovimentacoes,
   } = useQueryListarMovimentacao({
     id: usuario.uid,
   });
 
   useEffect(() => {
-    if (movimentacoes) {
-      setSaldos(mountSaldos(movimentacoes));
+    if (transacoes) {
+      setSaldos(mountSaldos(transacoes));
     }
-  }, [movimentacoes]);
+  }, [transacoes]);
 
   useEffect(() => {
-    dispatch(setLoading(isFetchingMovimentacoes));
-  }, [isFetchingMovimentacoes, dispatch]);
+    dispatch(setLoading(isFetchingTransacoes));
+  }, [isFetchingTransacoes, dispatch]);
 
   return (
     <ListagemContext.Provider
       value={{
-        toggleModalMovimentacoes,
-        setToggleModalMovimentacoes,
+        toggleModalTransacoes,
+        setToggleModalTransacoes,
         toggleModalExcluir,
         setToggleModalExcluir,
-        movimentacoes,
-        isFetchingMovimentacoes,
+        transacoes,
+        isFetchingTransacoes,
         refecthMovimentacoes,
-        movimentacao,
-        setMovimentacao,
+        transacao,
+        setTransacao,
         saldos,
       }}
     >

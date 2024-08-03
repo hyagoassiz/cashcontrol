@@ -41,7 +41,7 @@ export default function Private({ children }: IPrivate) {
           navigate(PATHS.AUTENTICACAO.CHECK);
         } else {
           if (location.pathname === PATHS.AUTENTICACAO.CHECK) {
-            navigate(PATHS.ENTRADAS_SAIDAS.LIST);
+            navigate(PATHS.TRANSACOES.LIST);
           }
         }
 
