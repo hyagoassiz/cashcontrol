@@ -1,19 +1,19 @@
 import { useContext } from "react";
 import { ListagemContext } from "../../../context";
 import { useMutationExcluirMovimentacao } from "../../../../../../shared/hooks/useMutationExcluirMovimentacao copy";
-import { IMovimentacao } from "../../../interfaces";
+import { ITransacao } from "../../../interfaces";
 
 interface IUseModalExcluir {
   toggleModalExcluir: boolean;
   handleConfirm: () => void;
   handleModalExcluir: () => void;
-  movimentacao: IMovimentacao | null
+  transacao: ITransacao | null;
 }
 
 export const useModalExcluir = (): IUseModalExcluir => {
   const {
-    movimentacao,
-    setMovimentacao,
+    transacao,
+    setTransacao,
     setToggleModalExcluir,
     toggleModalExcluir,
     refecthMovimentacoes,
@@ -22,11 +22,11 @@ export const useModalExcluir = (): IUseModalExcluir => {
   const { mutate } = useMutationExcluirMovimentacao();
 
   const handleConfirm = () => {
-    if (movimentacao) {
-      mutate(movimentacao, {
+    if (transacao) {
+      mutate(transacao, {
         onSuccess: () => {
-          handleModalExcluir()
-          refecthMovimentacoes()
+          handleModalExcluir();
+          refecthMovimentacoes();
         },
       });
     }
@@ -34,13 +34,13 @@ export const useModalExcluir = (): IUseModalExcluir => {
 
   const handleModalExcluir = () => {
     setToggleModalExcluir((prevState) => !prevState);
-    setMovimentacao(null);
+    setTransacao(null);
   };
 
   return {
     toggleModalExcluir,
     handleConfirm,
     handleModalExcluir,
-    movimentacao
+    transacao,
   };
 };

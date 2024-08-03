@@ -8,13 +8,13 @@ import {
   Typography,
 } from "@mui/material";
 import { MuiModal } from "../../../../../shared/components/MuiModal/MuiModal";
-import { useModalMovimentacoes } from "./hooks/useModalMovimentacoes";
+import { useModalTransacoes } from "./hooks/useModalTransacoes";
 import { Controller } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 
-export const ModalMovimentacoes: React.FC = () => {
+export const ModalTransacoes: React.FC = () => {
   const {
-    toggleModalMovimentacoes,
+    toggleModalTransacoes,
     handleModalMovimentacoes,
     control,
     categorias,
@@ -26,11 +26,11 @@ export const ModalMovimentacoes: React.FC = () => {
     watch,
     saldoConta,
     setValorOriginal,
-  } = useModalMovimentacoes();
+  } = useModalTransacoes();
 
   return (
     <MuiModal
-      open={toggleModalMovimentacoes}
+      open={toggleModalTransacoes}
       title={`${getValues("id") ? "Editar" : "Adicionar"} ${
         getValues("tipo")
           ? getValues("tipo") === "Entrada"

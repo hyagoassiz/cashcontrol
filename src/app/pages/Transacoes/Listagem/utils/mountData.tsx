@@ -3,34 +3,34 @@ import MuiMoreVertIcon from "../../../../shared/components/MuiMoreVertIcon/MuiMo
 import MuiSituacao from "../../../../shared/components/MuiSituacao/MuiSituacao";
 import MuiTipo from "../../../../shared/components/MuiTipo/MuiTipo";
 import { SituacaoColors } from "../../../../shared/constants";
-import { IMovimentacao } from "../interfaces";
+import { ITransacao } from "../interfaces";
 import { formatDate } from "../../../../shared/utils/formatDate";
 import { Typography } from "@mui/material";
 
 interface IMountData {
-  movimentacoes: IMovimentacao[] | undefined;
-  editarMovimentacao: (data: IMovimentacao) => void;
-  excluirMovimentacao: (data: IMovimentacao) => void;
+  transacoes: ITransacao[] | undefined;
+  editarTransacao: (data: ITransacao) => void;
+  excluirTransacao: (data: ITransacao) => void;
 }
 
 export function mountData({
-  movimentacoes,
-  editarMovimentacao,
-  excluirMovimentacao,
+  transacoes,
+  editarTransacao,
+  excluirTransacao,
 }: IMountData) {
-  if (movimentacoes?.length) {
-    movimentacoes.sort((a, b) => a.data.localeCompare(b.data));
+  if (transacoes?.length) {
+    transacoes.sort((a, b) => a.data.localeCompare(b.data));
 
-    return movimentacoes.map((movimentacao) => ({
-      id: movimentacao.id,
-      data: formatDate(movimentacao.data),
-      tipo: <MuiTipo tipo={movimentacao.tipo} />,
-      categoria: movimentacao.categoria,
-      conta: movimentacao.conta,
+    return transacoes.map((transacao) => ({
+      id: transacao.id,
+      data: formatDate(transacao.data),
+      tipo: <MuiTipo tipo={transacao.tipo} />,
+      categoria: transacao.categoria,
+      conta: transacao.conta,
       valor: (
         <Typography variant="body2">
           <NumericFormat
-            value={movimentacao.valor}
+            value={transacao.valor}
             prefix={"R$ "}
             decimalScale={2}
             fixedDecimalScale={true}
@@ -43,16 +43,16 @@ export function mountData({
       situacao: (
         <MuiSituacao
           title={
-            movimentacao.tipo === "Entrada"
-              ? movimentacao.pago
+            transacao.tipo === "Entrada"
+              ? transacao.pago
                 ? "Recebido"
                 : "À Receber"
-              : movimentacao.pago
+              : transacao.pago
               ? "Pago"
               : "À Pagar"
           }
           situacao={
-            movimentacao.pago
+            transacao.pago
               ? SituacaoColors.pago
               : SituacaoColors.inativo_pendente
           }
@@ -64,11 +64,11 @@ export function mountData({
           options={[
             {
               label: "Editar",
-              action: () => editarMovimentacao(movimentacao),
+              action: () => editarTransacao(transacao),
             },
             {
               label: "Excluir",
-              action: () => excluirMovimentacao(movimentacao),
+              action: () => excluirTransacao(transacao),
             },
           ]}
         />

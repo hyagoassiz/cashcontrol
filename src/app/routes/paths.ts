@@ -11,8 +11,8 @@ export const INICIO = {
 };
 
 //MOVIMENTACOES
-export const ENTRADAS_SAIDAS = {
-  LIST: `/entradas-saidas`,
+export const TRANSACOES = {
+  LIST: `/transacoes`,
 };
 
 export const SALDOS = {
