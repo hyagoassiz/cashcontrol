@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { LoadingProgress } from "../components/LoadingProgress/LoadingProgress";
+import { MuiAppBar } from "../components/MuiAppBar/AppBar";
 
 interface IPageLayout {
   children: React.ReactNode;
@@ -10,19 +11,24 @@ export const PageLayout: React.FC<IPageLayout> = ({ children }) => {
     <Box
       sx={{
         display: "flex",
-        justifyContent: "center",
+        flexDirection: "column",
+        minHeight: "100vh",
         backgroundColor: "#141A28",
-        height: "100vh",
       }}
     >
+      <MuiAppBar />
+
       <Box
         sx={{
-          marginTop: "16px",
-          height: "auto",
+          flexGrow: 1,
+          paddingTop: (theme) => theme.spacing(3),
           width: "95%",
+          margin: "0 auto",
+          overflowY: "auto",
         }}
       >
         <LoadingProgress />
+
         {children}
       </Box>
     </Box>
