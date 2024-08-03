@@ -4,7 +4,7 @@ import {
   CadastroRoute,
   CategoriasRoute,
   ContasRoute,
-  MovimentacoesRoute,
+  TransacoesRoute,
   SaldosRoute,
   VerificacaoRoute,
   InicioRoute,
@@ -54,10 +54,10 @@ export const AppRoutes = () => {
                     }
                   />
                   <Route
-                    path={PATHS.ENTRADAS_SAIDAS.LIST}
+                    path={PATHS.TRANSACOES.LIST}
                     element={
                       <Private>
-                        <MovimentacoesRoute />
+                        <TransacoesRoute />
                       </Private>
                     }
                   />
@@ -87,7 +87,7 @@ export const AppRoutes = () => {
                   />
                   <Route
                     path="*"
-                    element={<Navigate to={PATHS.ENTRADAS_SAIDAS.LIST} />}
+                    element={<Navigate to={PATHS.TRANSACOES.LIST} />}
                   />
                 </Routes>
               </Layout>

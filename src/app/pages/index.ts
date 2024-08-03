@@ -1,4 +1,4 @@
-export * from "./Movimentacoes";
+export * from "./Transacoes";
 export * from "./Categorias";
 export * from "./Contas";
 export * from "./Saldos";

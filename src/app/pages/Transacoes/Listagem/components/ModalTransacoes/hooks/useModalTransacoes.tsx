@@ -14,7 +14,7 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
-import { IMovimentacao } from "../../../interfaces";
+import { ITransacao } from "../../../interfaces";
 import { getTodayDate } from "../../../../../../shared/utils/getTodayDate";
 import { useQueryListarCategoria } from "../../../../../../shared/hooks/useQueryListarCategoria";
 import { ICategoria, IConta } from "../../../../../../shared/interfaces";
@@ -29,38 +29,38 @@ interface ISaldoConta {
   valorDigitado: number;
   novoSaldo: number;
 }
-interface IUseModalMovimentacoes {
-  toggleModalMovimentacoes: boolean;
+interface IUseModalTransacoes {
+  toggleModalTransacoes: boolean;
   handleModalMovimentacoes: () => void;
-  control: Control<IMovimentacao>;
+  control: Control<ITransacao>;
   categorias: ICategoria[] | undefined;
   isFetchingCategorias: boolean;
   contas: IConta[] | undefined;
   isFetchingContas: boolean;
-  handleSubmit: UseFormHandleSubmit<IMovimentacao>;
+  handleSubmit: UseFormHandleSubmit<ITransacao>;
   onSubmit: () => void;
   tipos: string[];
-  getValues: UseFormGetValues<IMovimentacao>;
-  watch: UseFormWatch<IMovimentacao>;
-  setValue: UseFormSetValue<IMovimentacao>;
+  getValues: UseFormGetValues<ITransacao>;
+  watch: UseFormWatch<ITransacao>;
+  setValue: UseFormSetValue<ITransacao>;
   saldoConta: ISaldoConta;
   setValorOriginal: Dispatch<SetStateAction<number>>;
 }
 
-export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
+export const useModalTransacoes = (): IUseModalTransacoes => {
   const {
-    toggleModalMovimentacoes,
-    setToggleModalMovimentacoes,
+    toggleModalTransacoes,
+    setToggleModalTransacoes,
     refecthMovimentacoes,
-    movimentacao,
-    setMovimentacao,
+    transacao,
+    setTransacao,
     saldos,
   } = useContext(ListagemContext);
 
   const { usuario } = useContext(GlobalContext);
 
   const { control, handleSubmit, setValue, reset, getValues, watch } =
-    useForm<IMovimentacao>({
+    useForm<ITransacao>({
       defaultValues: {
         data: getTodayDate(),
         pago: true,
@@ -115,19 +115,17 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
   }, [watch("valor"), watch("conta"), watch("pago"), watch("tipo")]);
 
   useEffect(() => {
-    if (movimentacao?.id) {
+    if (transacao?.id) {
       if (!getValues("id")) {
-        (Object.keys(movimentacao) as (keyof IMovimentacao)[]).forEach(
-          (key) => {
-            setValue(
-              key as keyof IMovimentacao,
-              movimentacao[key] as IMovimentacao[keyof IMovimentacao]
-            );
-            if (key === "valor") {
-              setValorOriginal(movimentacao[key]);
-            }
+        (Object.keys(transacao) as (keyof ITransacao)[]).forEach((key) => {
+          setValue(
+            key as keyof ITransacao,
+            transacao[key] as ITransacao[keyof ITransacao]
+          );
+          if (key === "valor") {
+            setValorOriginal(transacao[key]);
           }
-        );
+        });
       }
     }
   });
@@ -138,7 +136,7 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
 
   const onSubmit = () => {
     handleSubmit(async (data) => {
-      const payload: IMovimentacao = {
+      const payload: ITransacao = {
         id: data.id,
         usuario: usuario.uid,
         data: data.data,
@@ -174,15 +172,15 @@ export const useModalMovimentacoes = (): IUseModalMovimentacoes => {
   };
 
   const handleModalMovimentacoes = () => {
-    setToggleModalMovimentacoes((prevState) => !prevState);
-    setMovimentacao(null);
+    setToggleModalTransacoes((prevState) => !prevState);
+    setTransacao(null);
     reset();
     setValorOriginal(0);
     setValue("valor", 0);
   };
 
   return {
-    toggleModalMovimentacoes,
+    toggleModalTransacoes,
     handleModalMovimentacoes,
     control,
     categorias,

@@ -2,29 +2,26 @@ import { Button, IconButton, Tooltip } from "@mui/material";
 import { ToolPainel } from "../../../shared/components/ToolPanel/ToolPanel";
 import { Add } from "@mui/icons-material";
 import { useListagem } from "./hooks/useListagem";
-import { ModalMovimentacoes } from "./components/ModalMovimentacoes/ModalMovimentacoes";
+import { ModalTransacoes } from "./components/ModalTransacoes/ModalTransacoes";
 import { MuiTable } from "../../../shared/components/MuiTable/MuiTable";
 import { mountData } from "./utils/mountData";
-import { COLLUMS_MOVIMENTACAO } from "./utils/collumnsNames";
+import { COLLUMS_TRANSACAO } from "./utils/collumnsNames";
 import ModalExcluir from "./components/ModalExcluir/ModalExcluir";
 import { TitlePage } from "../../../shared/components/TitlePage/TitlePage";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
 export const Listagem: React.FC = () => {
   const {
-    handleModalMovimentacoes,
-    movimentacoes,
-    isFetchingMovimentacoes,
-    handleEditarMovimentacao,
-    handleExcluirMovimentacao,
+    handleModalTransacoes,
+    transacoes,
+    isFetchingTransacoes,
+    handleEditarTransacao,
+    handleExcluirTransacao,
   } = useListagem();
 
   return (
     <>
-      <TitlePage
-        title="Movimentações"
-        subTitle="Registe suas entradas e saídas"
-      />
+      <TitlePage title="Transações" subTitle="Registe suas entradas e saídas" />
 
       <ToolPainel
         icons={
@@ -39,7 +36,7 @@ export const Listagem: React.FC = () => {
             <Button
               variant="contained"
               color="primary"
-              onClick={handleModalMovimentacoes}
+              onClick={handleModalTransacoes}
               startIcon={<Add />}
             >
               Adicionar
@@ -48,16 +45,16 @@ export const Listagem: React.FC = () => {
         }
       />
       <MuiTable
-        columns={COLLUMS_MOVIMENTACAO}
-        isLoading={isFetchingMovimentacoes}
+        columns={COLLUMS_TRANSACAO}
+        isLoading={isFetchingTransacoes}
         textForEmptyData="Nenhum resultado encontrado"
         data={mountData({
-          movimentacoes,
-          editarMovimentacao: handleEditarMovimentacao,
-          excluirMovimentacao: handleExcluirMovimentacao,
+          transacoes,
+          editarTransacao: handleEditarTransacao,
+          excluirTransacao: handleExcluirTransacao,
         })}
       />
-      <ModalMovimentacoes />
+      <ModalTransacoes />
       <ModalExcluir />
     </>
   );

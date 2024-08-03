@@ -3,19 +3,15 @@ import MuiDialog from "../../../../../shared/components/MuiDialog/MuiDialog";
 import { useModalExcluir } from "./hooks/useModalExcluir";
 
 const ModalExcluir = () => {
-  const {
-    toggleModalExcluir,
-    handleConfirm,
-    handleModalExcluir,
-    movimentacao,
-  } = useModalExcluir();
+  const { toggleModalExcluir, handleConfirm, handleModalExcluir, transacao } =
+    useModalExcluir();
 
   return (
     <MuiDialog
       open={toggleModalExcluir}
       title="Excluir"
       message={`Tem certeza que deseja excluir esta ${
-        movimentacao?.tipo === "Entrada" ? "Entrada" : "Saída"
+        transacao?.tipo === "Entrada" ? "Entrada" : "Saída"
       }?`}
       buttons={
         <>
