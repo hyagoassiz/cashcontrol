@@ -11,7 +11,6 @@ import {
 } from "../pages/index";
 import * as PATHS from "./paths";
 import { ReactNode } from "react";
-// import { MuiAppBar } from "../shared/components/MuiAppBar/AppBar";
 import Private from "./Private";
 import AppDrawer from "../shared/components/AppDrawer/AppDrawer";
 import { PageLayout } from "../shared/layouts/PageLayout";
@@ -22,7 +21,6 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => (
   <>
-    {/* <MuiAppBar /> */}
     <PageLayout>{children}</PageLayout>
   </>
 );
