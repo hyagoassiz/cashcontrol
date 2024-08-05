@@ -44,13 +44,13 @@ export const useModalSituacao = (): IUseModalSituacao => {
   });
 
   const handleConfirm = () => {
-    if (categoria) {
+    if (categoria && categoria.id) {
       mutate({
         id: categoria.id,
         ativo: !categoria.ativo,
       });
+      handleModalSituacao();
     }
-    handleModalSituacao();
   };
 
   const handleModalSituacao = () => {
