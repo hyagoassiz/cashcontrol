@@ -27,7 +27,7 @@ const Layout = ({ children }: LayoutProps) => (
 
 export const AppRoutes = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/cashcontrol">
       <Routes>
         <Route path={PATHS.AUTENTICACAO.LOGIN} element={<LoginRoute />} />
         <Route path={PATHS.AUTENTICACAO.CREATE} element={<CadastroRoute />} />
