@@ -8,6 +8,7 @@ import {
   Switch,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useModalConta } from "./hooks/useModalConta";
@@ -22,6 +23,8 @@ export const ModalConta: React.FC = () => {
     handleSubmit,
     conta,
   } = useModalConta();
+
+  const theme = useTheme();
 
   return (
     <MuiModal
@@ -173,7 +176,9 @@ export const ModalConta: React.FC = () => {
 
           <Grid item xs={12}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="body2">Incluir na soma</Typography>
+              <Typography color={theme.palette.text.primary} variant="body2">
+                Incluir na soma
+              </Typography>
               <Controller
                 name="incluirSoma"
                 control={control}

@@ -1,31 +1,35 @@
-import { Button } from "@mui/material";
-import MuiDialog from "../../../../../shared/components/MuiDialog/MuiDialog";
+import { Button, Typography, useTheme } from "@mui/material";
 import { useAtivarInativarConta } from "./hooks/useAtivarInativarConta";
+import { MuiModal } from "../../../../../shared/components/MuiModal/MuiModal";
 
 const Dialog = () => {
   const { isOpenDialog, handleModalDialog, conta, handleConfirm } =
     useAtivarInativarConta();
 
+  const theme = useTheme();
+
   return (
-    <MuiDialog
+    <MuiModal
       open={isOpenDialog}
       title={conta?.ativo ? "Inativar" : "Ativar"}
-      message={
-        conta?.ativo
-          ? `Tem certeza que deseja inativar ${conta?.nome}?`
-          : `Tem certeza que deseja ativar ${conta?.nome}?`
-      }
+      style={{ width: "400px" }}
       buttons={
         <>
-          <Button variant="text" onClick={handleModalDialog}>
+          <Button color="secondary" variant="text" onClick={handleModalDialog}>
             Fechar
           </Button>
-          <Button variant="contained" onClick={handleConfirm}>
+          <Button color="secondary" variant="contained" onClick={handleConfirm}>
             Confirmar
           </Button>
         </>
       }
-    ></MuiDialog>
+    >
+      <Typography color={theme.palette.text.primary}>
+        {conta?.ativo
+          ? `Tem certeza que deseja inativar ${conta?.nome}?`
+          : `Tem certeza que deseja ativar ${conta?.nome}?`}
+      </Typography>
+    </MuiModal>
   );
 };
 
