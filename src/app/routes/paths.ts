@@ -1,7 +1,3 @@
-export const MENU = {
-  LIST: "/menu",
-};
-
 //AUTENTICACAO
 export const AUTENTICACAO = {
   LOGIN: `/login`,
@@ -9,20 +5,25 @@ export const AUTENTICACAO = {
   CHECK: `/verificar-email`,
 };
 
+//DASHBOARD
+export const INICIO = {
+  LIST: `/inicio`,
+};
+
 //MOVIMENTACOES
 export const ENTRADAS_SAIDAS = {
-  LIST: `${MENU.LIST}/entradas-saidas`,
+  LIST: `/entradas-saidas`,
 };
 
 export const SALDOS = {
-  LIST: `${MENU.LIST}/saldos`,
+  LIST: `/saldos`,
 };
 
 // SUBCADASTROS
 export const CATEGORIAS = {
-  LIST: `${MENU.LIST}/categorias`,
+  LIST: `/categorias`,
 };
 
 export const CONTAS = {
-  LIST: `${MENU.LIST}/contas`,
+  LIST: `/contas`,
 };

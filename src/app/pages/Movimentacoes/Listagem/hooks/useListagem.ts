@@ -1,11 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import * as PATHS from "../../../../routes/paths";
 import { useContext } from "react";
 import { ListagemContext } from "../context";
 import { IMovimentacao } from "../interfaces";
 
 interface IUseListagem {
-  handleNavigate: () => void;
   handleModalMovimentacoes: () => void;
   movimentacoes: IMovimentacao[] | undefined;
   isFetchingMovimentacoes: boolean;
@@ -22,8 +19,6 @@ export const useListagem = (): IUseListagem => {
     setToggleModalExcluir,
   } = useContext(ListagemContext);
 
-  const navigate = useNavigate();
-
   const handleModalMovimentacoes = () => {
     setToggleModalMovimentacoes((prevState) => !prevState);
   };
@@ -38,12 +33,7 @@ export const useListagem = (): IUseListagem => {
     setToggleModalExcluir((prevState) => !prevState);
   };
 
-  const handleNavigate = () => {
-    navigate(PATHS.MENU.LIST);
-  };
-
   return {
-    handleNavigate,
     handleModalMovimentacoes,
     movimentacoes,
     isFetchingMovimentacoes,

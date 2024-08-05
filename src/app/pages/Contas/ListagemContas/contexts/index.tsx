@@ -11,6 +11,8 @@ import { IConta, IFilterData } from "../interfaces";
 import { useQuery } from "@tanstack/react-query";
 import { obterContasPorUsuario } from "../services/endpoints";
 import { GlobalContext } from "../../../../shared/contexts";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../../../shared/redux/loading/actions";
 
 interface IListagemContasContext {
   children: ReactNode;
@@ -56,6 +58,8 @@ export function ListagemContasProvider({
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
   const { usuario } = useContext(GlobalContext);
 
+  const dispatch = useDispatch();
+
   const {
     data: contas,
     isLoading,
@@ -68,6 +72,10 @@ export function ListagemContasProvider({
   useEffect(() => {
     refetch();
   }, [filterData]);
+
+  useEffect(() => {
+    dispatch(setLoading(isLoading));
+  }, [isLoading, dispatch]);
 
   return (
     <ListagemContasContext.Provider
