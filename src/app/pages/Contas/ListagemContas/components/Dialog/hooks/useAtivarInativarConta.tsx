@@ -41,7 +41,7 @@ export const useAtivarInativarConta = (): IUseAtivarInativarConta => {
   });
 
   const handleConfirm = () => {
-    if (conta) {
+    if (conta && conta.id) {
       mutate({
         id: conta.id,
         ativo: !conta.ativo,
