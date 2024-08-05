@@ -21,8 +21,14 @@ export const ModalCategoria: React.FC = () => {
       title={`${getValues("id") ? "Editar" : "Criar"} Categoria`}
       buttons={
         <>
-          <Button onClick={handleModalCategoria}>Fechar</Button>
-          <Button variant="contained" onClick={handleSubmit(onSubmit)}>
+          <Button color="secondary" onClick={handleModalCategoria}>
+            Fechar
+          </Button>
+          <Button
+            color="secondary"
+            variant="contained"
+            onClick={handleSubmit(onSubmit)}
+          >
             Salvar
           </Button>
         </>
@@ -40,6 +46,7 @@ export const ModalCategoria: React.FC = () => {
                 <TextField
                   label="Nome"
                   type="text"
+                  color="secondary"
                   variant="standard"
                   onChange={field.onChange}
                   value={field.value ?? ""}
@@ -62,6 +69,7 @@ export const ModalCategoria: React.FC = () => {
                 <Autocomplete
                   disablePortal
                   id="tipo"
+                  color="secondary"
                   options={tipos || []}
                   onChange={(_, newValue) => {
                     field.onChange(newValue);
@@ -70,6 +78,7 @@ export const ModalCategoria: React.FC = () => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      color="secondary"
                       variant="standard"
                       label="Tipo"
                       error={!!fieldState.error}

@@ -2,34 +2,28 @@ import { createTheme } from "@mui/material";
 
 export const DarkTheme = createTheme({
   palette: {
-    primary: {// usada normalmente para coisas que precisam de destaque
-      // variações da cor
-      main: "#4285F4",
-      dark: "#1967D2",
-      light: "#66A3FF",
-
-            // serve para fazer contraste com a cor primária
-      contrastText: "#000000",
-
+    primary: {
+      main: "#1B2537",
+      dark: "#18202D",
+      light: "#283645",
+      contrastText: "#D3D3D3",
     },
-
     secondary: {
-
-      // variações da cor
-      main: "#DB4437",
-      dark: "#CC0000",
-      light: "#FF6B60",
-
-
-      // serve para fazer contraste com a cor primária
-      contrastText: "#FFFFFF",
+      main: "#373B8A",
+      dark: "#2C2F6F",
+      light: "#6B6FBB",
+      contrastText: "#151819",
     },
 
     background: {
-        paper: "#FFFFFF", //usado dentro de carde normalnete destaca do fundo
-        default: "#F5F5F5", //normalmenbte usado em fundo
-        
-
-    }
+      paper: "#141A28",
+      default: "#18202D",
+    },
+    text: {
+      primary: "#D3D3D3",
+      secondary: "#B0B0B0",
+      disabled: "#6D6D6D",
+    },
+    divider: "#283645",
   },
 });

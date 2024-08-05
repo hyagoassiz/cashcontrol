@@ -1,8 +1,9 @@
-import { Grid, Link, TextField } from "@mui/material";
+import { Grid } from "@mui/material";
 import { ConfirmButton } from "../components/ConfirmButton/ConfirmButton";
 import { PageContainer } from "../components/PageContainer/PageContainer";
 import { Controller } from "react-hook-form";
 import { useCadastro } from "./hooks/useCadastro";
+import { StyledDivider, StyledLink, StyledTextField } from "../styles/style";
 
 export const Cadastro: React.FC = () => {
   const {
@@ -25,19 +26,12 @@ export const Cadastro: React.FC = () => {
             minLength: 2,
           }}
           render={({ field, fieldState }) => (
-            <TextField
+            <StyledTextField
               label="Nome"
               type="text"
               variant="outlined"
-              onChange={(e) => {
-                field.onChange(e);
-              }}
-              onBlur={() => {
-                const cleanedValue = field.value.trim().replace(/\s+/g, " ");
-                field.onChange({
-                  target: { name: field.name, value: cleanedValue },
-                });
-              }}
+              color="secondary"
+              onChange={field.onChange}
               value={field.value ?? ""}
               inputProps={{
                 maxLength: 40,
@@ -59,10 +53,11 @@ export const Cadastro: React.FC = () => {
             pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
           }}
           render={({ field, fieldState }) => (
-            <TextField
+            <StyledTextField
               label="Email"
               type="email"
               variant="outlined"
+              color="secondary"
               onChange={field.onChange}
               value={field.value ?? ""}
               inputProps={{
@@ -82,10 +77,11 @@ export const Cadastro: React.FC = () => {
           control={control}
           rules={{ required: true, minLength: 6 }}
           render={({ field, fieldState }) => (
-            <TextField
-              label="Senha (mínimo: 6, máximo: 30)"
+            <StyledTextField
+              label="Senha (min: 6, max: 30)"
               type="password"
               variant="outlined"
+              color="secondary"
               onChange={(e) => {
                 const cleanedValue = e.target.value.replace(/\s+/g, "");
                 field.onChange({
@@ -110,10 +106,11 @@ export const Cadastro: React.FC = () => {
           control={control}
           rules={{ required: true, minLength: 6 }}
           render={({ field, fieldState }) => (
-            <TextField
+            <StyledTextField
               label="Repetir Senha"
               type="password"
               variant="outlined"
+              color="secondary"
               onChange={(e) => {
                 const cleanedValue = e.target.value.replace(/\s+/g, "");
                 field.onChange({
@@ -137,15 +134,18 @@ export const Cadastro: React.FC = () => {
           CRIAR CONTA
         </ConfirmButton>
       </Grid>
+      <Grid item xs={12}>
+        <StyledDivider />
+      </Grid>
       <Grid item>
         <Grid item xs>
-          <Link
+          <StyledLink
             onClick={handleNavigate}
             variant="body2"
             sx={{ cursor: "pointer" }}
           >
-            Já tem conta? Clique aqui
-          </Link>
+            Já possui conta? Clique aqui
+          </StyledLink>
         </Grid>
       </Grid>
     </PageContainer>

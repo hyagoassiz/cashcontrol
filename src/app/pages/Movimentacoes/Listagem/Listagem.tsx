@@ -29,7 +29,8 @@ export const Listagem: React.FC = () => {
           buttons={
             <>
               <Button
-                variant="text"
+                variant="contained"
+                color="primary"
                 onClick={handleModalMovimentacoes}
                 startIcon={<Add />}
               >

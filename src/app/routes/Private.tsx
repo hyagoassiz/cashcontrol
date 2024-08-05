@@ -3,7 +3,6 @@ import { auth } from "../../FirebaseConnection";
 import { onAuthStateChanged, sendEmailVerification } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as PATHS from "../routes/paths";
-import { Box, CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   adicionarUserData,
@@ -11,6 +10,7 @@ import {
 } from "../shared/redux/user/actions";
 import { RootState } from "../shared/redux/interfaces/IRedux";
 import { IUsuario } from "../shared/interfaces";
+import LoadingPage from "../shared/components/LoadingPage/LoadingPage";
 
 interface IPrivate {
   children: ReactNode;
@@ -71,24 +71,7 @@ export default function Private({ children }: IPrivate) {
   }, [loading, signed, userReducer]);
 
   if (loading) {
-    return (
-      <Box
-        sx={{
-          width: "100vw",
-          height: "100vh",
-          backgroundColor: "white",
-          position: "fixed",
-          top: 0,
-          left: 0,
-          zIndex: 9999,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <LoadingPage />;
   }
 
   return signed ? <>{children}</> : null;

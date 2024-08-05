@@ -9,27 +9,26 @@ import {
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { ReactNode } from "react";
+import { HeaderBox, StyledBox } from "./style/style";
 
 interface IMuiDrawer {
   open: boolean;
-  children: ReactNode
-  closeFilter: () => void
-  applyFilter: () => void
+  children: ReactNode;
+  closeFilter: () => void;
+  applyFilter: () => void;
 }
 
-const MuiDrawer = ({ open, children, closeFilter, applyFilter  }: IMuiDrawer) => {
+const MuiDrawer = ({
+  open,
+  children,
+  closeFilter,
+  applyFilter,
+}: IMuiDrawer) => {
   const theme = useTheme();
   return (
     <Drawer open={open} anchor="right">
-      <Box sx={{ width: theme.spacing(45), height: "100vw" }}>
-        <Box
-          sx={{
-            height: theme.spacing(7),
-            backgroundColor: "#1976d2",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
+      <StyledBox>
+        <HeaderBox>
           <Box
             sx={{
               display: "flex",
@@ -56,17 +55,18 @@ const MuiDrawer = ({ open, children, closeFilter, applyFilter  }: IMuiDrawer) =>
                 width: "100%",
               }}
             >
-              <Button variant="contained" sx={{ color: "white" }} onClick={applyFilter}>
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={applyFilter}
+              >
                 Aplicar
               </Button>
             </Box>
           </Box>
-        </Box>
-        <Box sx={{margin: theme.spacing(2)}}>
-          
-          {children}
-        </Box>
-      </Box>
+        </HeaderBox>
+        <Box sx={{ margin: theme.spacing(2) }}>{children}</Box>
+      </StyledBox>
     </Drawer>
   );
 };

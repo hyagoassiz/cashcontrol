@@ -1,13 +1,12 @@
-import {
-  Box,
-  Divider,
-  List,
-  ListItem,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Divider, List, useTheme } from "@mui/material";
 import { IOptionsMenu } from "../../interfaces/IOptionsMenu";
 import { useNavigate } from "react-router-dom";
+import {
+  BoxContainer,
+  StyledBox,
+  StyledListItem,
+  StyledTypography,
+} from "./styles/style";
 
 interface IMuiCardMenu {
   options: IOptionsMenu[];
@@ -20,32 +19,16 @@ export const MuiCardMenu = ({ options }: IMuiCardMenu) => {
   return (
     <Box sx={{ display: "flex" }}>
       {options.map((option) => (
-        <Box
-          sx={{
-            width: "200px",
-            height: "250px",
-            margin: "10px",
-            boxShadow: "0.5px 1px 4px rgba(0, 0, 0, 0.3)",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "20px",
-            }}
-          >
-            <Typography sx={{ fontWeight: 600, fontSize: "16px" }}>
-              {option.title}
-            </Typography>
-          </Box>
+        <BoxContainer>
+          <StyledBox>
+            <StyledTypography>{option.title}</StyledTypography>
+          </StyledBox>
           <Divider sx={{ borderBottomWidth: theme.spacing(0.1) }} />
 
           <Box>
             <List>
               {option.routes.map((route) => (
-                <ListItem
+                <StyledListItem
                   button
                   key={route.route}
                   onClick={async () => {
@@ -56,11 +39,11 @@ export const MuiCardMenu = ({ options }: IMuiCardMenu) => {
                   }}
                 >
                   {route.name}
-                </ListItem>
+                </StyledListItem>
               ))}
             </List>
           </Box>
-        </Box>
+        </BoxContainer>
       ))}
     </Box>
   );

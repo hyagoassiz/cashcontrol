@@ -2,8 +2,6 @@ import {
   Box,
   LinearProgress,
   TableBody,
-  TableCell,
-  TableHead,
   TableRow,
   Typography,
   useTheme,
@@ -11,6 +9,11 @@ import {
 import Table from "@mui/material/Table";
 import { ITableColumn } from "./interfaces/ITableCollum";
 import InfoIcon from "@mui/icons-material/Info";
+import {
+  StyledTableCellBody,
+  StyledTableCellHead,
+  StyledTableHead,
+} from "./styles/style";
 
 interface IMuiTable {
   columns: ITableColumn[];
@@ -30,32 +33,28 @@ export const MuiTable: React.FC<IMuiTable> = ({
     <>
       {data.length ? (
         <Table size="small">
-          <TableHead sx={{ height: theme.spacing(3) }}>
+          <StyledTableHead>
             <TableRow>
               {columns.map((column) => (
-                <TableCell
-                  size="small"
-                  sx={{ fontWeight: 600 }}
-                  key={column.key}
-                >
+                <StyledTableCellHead size="small" key={column.key}>
                   {column.label}
-                </TableCell>
+                </StyledTableCellHead>
               ))}
             </TableRow>
-          </TableHead>
+          </StyledTableHead>
 
           <TableBody>
             <>
               {data.map((row, index) => (
                 <TableRow key={index}>
                   {columns.map((column) => (
-                    <TableCell
+                    <StyledTableCellBody
                       size="small"
                       key={column.key}
                       style={{ ...column?.style }}
                     >
                       {row[column.key]}
-                    </TableCell>
+                    </StyledTableCellBody>
                   ))}
                 </TableRow>
               ))}
@@ -84,7 +83,9 @@ export const MuiTable: React.FC<IMuiTable> = ({
               <InfoIcon
                 sx={{ color: "orange", marginRight: theme.spacing(0.5) }}
               />
-              <Typography variant="body2">{textForEmptyData}</Typography>
+              <Typography color="secondary" variant="body2">
+                {textForEmptyData}
+              </Typography>
             </Box>
           )}
         </>
