@@ -27,10 +27,10 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
             left: 0,
             width: "100%",
             height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)", // Cor escura para a sobreposição
-            zIndex: 1300, // Coloque um valor maior que o zIndex do modal
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 1300,
           }}
-          onClick={(e) => e.stopPropagation()} // Impede a interação com os elementos abaixo da sobreposição
+          onClick={(e) => e.stopPropagation()}
         />
       )}
       <Modal
@@ -56,10 +56,12 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
             sx={{
               bgcolor: "#1976D2",
               color: "white",
-              padding: theme.spacing(1)
+              padding: theme.spacing(1),
             }}
           >
-            <Typography variant="h6">{title}</Typography>
+            <Typography variant="h6" sx={{ marginLeft: "8px" }}>
+              {title}
+            </Typography>
           </Box>
           <Box sx={{ padding: theme.spacing(3) }}>{children}</Box>
           {buttons && (
