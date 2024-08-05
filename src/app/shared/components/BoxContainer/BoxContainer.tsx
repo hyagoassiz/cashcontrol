@@ -14,6 +14,7 @@ export const BoxContainer: React.FC<IBoxContainer> = ({ children }) => {
         width: "1000px",
         boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.3)",
         marginTop: "16px",
+        marginBottom: "32px",
       }}
     >
       {children}

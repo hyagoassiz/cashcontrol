@@ -24,6 +24,8 @@ export const ModalMovimentacoes: React.FC = () => {
     tipos,
     getValues,
     watch,
+    saldoConta,
+    setValorOriginal,
   } = useModalMovimentacoes();
 
   return (
@@ -73,6 +75,7 @@ export const ModalMovimentacoes: React.FC = () => {
                       required
                     />
                   )}
+                  disabled={getValues("id") ? true : false}
                   fullWidth
                 />
               )}
@@ -121,6 +124,7 @@ export const ModalMovimentacoes: React.FC = () => {
                 onChange={(_, newValue) => {
                   field.onChange(newValue ? newValue.id : null);
                 }}
+                disabled={watch("tipo") ? false : true}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -130,7 +134,6 @@ export const ModalMovimentacoes: React.FC = () => {
                     }
                     error={!!fieldState.error}
                     required
-                    disabled={watch("tipo") ? false : true}
                   />
                 )}
                 fullWidth
@@ -155,7 +158,9 @@ export const ModalMovimentacoes: React.FC = () => {
                 decimalScale={2}
                 fixedDecimalScale={true}
                 value={field.value ?? null}
-                onChange={field.onChange}
+                onValueChange={(values) => {
+                  field.onChange(values.floatValue ?? 0);
+                }}
                 decimalSeparator=","
                 thousandSeparator={"."}
                 defaultValue={0}
@@ -179,7 +184,9 @@ export const ModalMovimentacoes: React.FC = () => {
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
                   field.onChange(newValue ? newValue.id : null);
+                  setValorOriginal(0);
                 }}
+                disabled={watch("tipo") ? false : true}
                 value={contas?.find((c) => c.id === field.value) || null}
                 renderInput={(params) => (
                   <TextField
@@ -187,7 +194,6 @@ export const ModalMovimentacoes: React.FC = () => {
                     variant="standard"
                     label="Conta"
                     error={!!fieldState.error}
-                    disabled={watch("tipo") ? false : true}
                     required
                   />
                 )}
@@ -197,59 +203,40 @@ export const ModalMovimentacoes: React.FC = () => {
           />
         </Grid>
         <Grid item xs={3}>
-          <Controller
-            name="valor"
-            control={control}
-            rules={{ required: true }}
-            render={({ field, fieldState }) => (
-              <NumericFormat
-                label="Saldo Atual"
-                margin="none"
-                variant="standard"
-                customInput={TextField}
-                prefix={"R$ "}
-                fullWidth
-                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                decimalScale={2}
-                fixedDecimalScale={true}
-                value={field.value ?? ""}
-                onValueChange={(values) => {
-                  field.onChange(values.floatValue);
-                }}
-                decimalSeparator=","
-                thousandSeparator={"."}
-                defaultValue={0}
-                error={!!fieldState.error}
-                disabled
-              />
-            )}
+          <NumericFormat
+            label="Saldo Atual"
+            margin="none"
+            variant="standard"
+            customInput={TextField}
+            prefix={"R$ "}
+            fullWidth
+            inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+            decimalScale={2}
+            fixedDecimalScale={true}
+            value={saldoConta.saldo}
+            decimalSeparator=","
+            thousandSeparator={"."}
+            defaultValue={0}
+            disabled
           />
         </Grid>
         <Grid item xs={3}>
-          <Controller
-            name="valor"
-            control={control}
-            rules={{ required: true }}
-            render={({ field, fieldState }) => (
-              <NumericFormat
-                label="Novo Saldo"
-                margin="none"
-                variant="standard"
-                customInput={TextField}
-                prefix={"R$ "}
-                fullWidth
-                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                decimalScale={2}
-                fixedDecimalScale={true}
-                value={field.value ?? null}
-                onChange={field.onChange}
-                decimalSeparator=","
-                thousandSeparator={"."}
-                defaultValue={0}
-                error={!!fieldState.error}
-                disabled
-              />
-            )}
+          <NumericFormat
+            label="Novo Saldo"
+            margin="none"
+            variant="standard"
+            customInput={TextField}
+            prefix={"R$ "}
+            fullWidth
+            inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+            decimalScale={2}
+            fixedDecimalScale={true}
+            value={getValues("conta") ? saldoConta.novoSaldo : 0}
+            decimalSeparator=","
+            thousandSeparator={"."}
+            defaultValue={0}
+            disabled
+            error={saldoConta.novoSaldo < 0 ? true : false}
           />
         </Grid>
         <Grid item xs={12}>
