@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { ContaService } from "../../../services/ContaService";
 import { ListagemContasContext } from "../../../contexts";
 import { IConta } from "../../../interfaces";
@@ -8,25 +8,19 @@ import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
 
 interface IUseAtivarInativarConta {
   isOpenDialog: boolean;
-  setIsOpenDialog: (setIsOpenDialog: boolean) => void;
-  ativarInativarContaData: IConta | null;
+  conta: IConta | undefined;
   handleConfirm: () => void;
+  handleModalDialog: () => void;
 }
 
 export const useAtivarInativarConta = (): IUseAtivarInativarConta => {
-  const { ativarInativarContaData } = useContext(ListagemContasContext);
-
-  const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
+  const { conta, isOpenDialog, setIsOpenDialog, setConta } = useContext(
+    ListagemContasContext
+  );
 
   const dispatch = useDispatch();
 
   const querClient = useQueryClient();
-
-  useEffect(() => {
-    if (ativarInativarContaData) {
-      handleModalDialog();
-    }
-  }, [ativarInativarContaData]);
 
   const { mutate } = useMutation({
     mutationFn: ContaService.ativarInativarConta,
@@ -34,7 +28,9 @@ export const useAtivarInativarConta = (): IUseAtivarInativarConta => {
       querClient.invalidateQueries({ queryKey: ["contas"] });
       dispatch(
         showSnackbar(
-          `Conta ${ativarInativarContaData?.ativo === false ? "ativada" : "inativada"} com sucesso`
+          `Conta ${
+            conta?.ativo === false ? "ativada" : "inativada"
+          } com sucesso`
         )
       );
     },
@@ -45,23 +41,24 @@ export const useAtivarInativarConta = (): IUseAtivarInativarConta => {
   });
 
   const handleConfirm = () => {
-    if (ativarInativarContaData) {
+    if (conta) {
       mutate({
-        id: ativarInativarContaData.id,
-        ativo: !ativarInativarContaData.ativo,
+        id: conta.id,
+        ativo: !conta.ativo,
       });
     }
-    setIsOpenDialog((prevState) => !prevState);
+    handleModalDialog();
   };
 
   const handleModalDialog = () => {
     setIsOpenDialog((prevState) => !prevState);
+    setConta(undefined);
   };
 
   return {
     isOpenDialog,
-    setIsOpenDialog,
-    ativarInativarContaData,
+    conta,
     handleConfirm,
+    handleModalDialog,
   };
 };

@@ -3,21 +3,21 @@ import MuiDialog from "../../../../../shared/components/MuiDialog/MuiDialog";
 import { useAtivarInativarConta } from "./hooks/useAtivarInativarConta";
 
 const Dialog = () => {
-  const { isOpenDialog, setIsOpenDialog, ativarInativarContaData, handleConfirm } =
+  const { isOpenDialog, handleModalDialog, conta, handleConfirm } =
     useAtivarInativarConta();
 
   return (
     <MuiDialog
       open={isOpenDialog}
-      title={ativarInativarContaData?.ativo ? "Inativar" : "Ativar"}
+      title={conta?.ativo ? "Inativar" : "Ativar"}
       message={
-        ativarInativarContaData?.ativo
-          ? `Tem certeza que deseja inativar ${ativarInativarContaData?.nome}?`
-          : `Tem certeza que deseja ativar ${ativarInativarContaData?.nome}?`
+        conta?.ativo
+          ? `Tem certeza que deseja inativar ${conta?.nome}?`
+          : `Tem certeza que deseja ativar ${conta?.nome}?`
       }
       buttons={
         <>
-          <Button variant="text" onClick={() => setIsOpenDialog(false)}>
+          <Button variant="text" onClick={handleModalDialog}>
             Fechar
           </Button>
           <Button variant="contained" onClick={handleConfirm}>
