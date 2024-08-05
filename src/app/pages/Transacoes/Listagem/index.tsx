@@ -1,7 +1,7 @@
 import { ListagemProvider } from "./context";
 import { Listagem } from "./Listagem";
 
-export function MovimentacoesRoute(): JSX.Element {
+export function TransacoesRoute(): JSX.Element {
   return (
     <ListagemProvider>
       <Listagem />
