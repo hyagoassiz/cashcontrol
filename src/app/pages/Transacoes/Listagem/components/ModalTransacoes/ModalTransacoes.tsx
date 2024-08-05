@@ -6,6 +6,7 @@ import {
   Switch,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { MuiModal } from "../../../../../shared/components/MuiModal/MuiModal";
 import { useModalTransacoes } from "./hooks/useModalTransacoes";
@@ -27,6 +28,8 @@ export const ModalTransacoes: React.FC = () => {
     saldoConta,
     setValorOriginal,
   } = useModalTransacoes();
+
+  const theme = useTheme();
 
   return (
     <MuiModal
@@ -278,7 +281,7 @@ export const ModalTransacoes: React.FC = () => {
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography variant="body2">
+            <Typography color={theme.palette.text.primary} variant="body2">
               {getValues("tipo") === "Entrada" ? "Recebido" : "Pago"}
             </Typography>
             <Controller

@@ -1,12 +1,5 @@
-import { Box, BoxProps, Typography, useTheme } from "@mui/material";
+import { Box, BoxProps, Modal, Typography, useTheme } from "@mui/material";
 import { ReactNode } from "react";
-import {
-  BoxContainer,
-  BoxFooter,
-  BoxTitle,
-  InsideColor,
-  StyledModal,
-} from "./styles/style";
 
 interface IMuiModalProps {
   title: string;
@@ -24,24 +17,40 @@ export const MuiModal: React.FC<IMuiModalProps> = ({
   style,
 }) => {
   const theme = useTheme();
+
   return (
     <>
-      {open && <BoxContainer onClick={(e) => e.stopPropagation()} />}
-      <StyledModal open={open} keepMounted>
-        <InsideColor
+      <Modal open={open}>
+        <Box
           sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: theme.palette.primary.dark,
+            boxShadow: 24,
+            p: 4,
+            borderRadius: theme.spacing(2),
+            padding: theme.spacing(3),
             ...style,
           }}
         >
-          <BoxTitle>
-            <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-              {title}
-            </Typography>
-          </BoxTitle>
-          <Box sx={{ padding: theme.spacing(3) }}>{children}</Box>
-          {buttons && <BoxFooter>{buttons}</BoxFooter>}
-        </InsideColor>
-      </StyledModal>
+          <Typography
+            sx={{ fontWeight: 600, color: theme.palette.text.primary }}
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+          >
+            {title}
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 4 }}>
+            {children}
+          </Typography>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 5 }}>
+            {buttons}
+          </Box>
+        </Box>
+      </Modal>
     </>
   );
 };

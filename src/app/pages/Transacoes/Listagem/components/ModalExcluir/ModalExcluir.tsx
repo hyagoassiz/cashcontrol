@@ -1,18 +1,18 @@
-import { Button } from "@mui/material";
-import MuiDialog from "../../../../../shared/components/MuiDialog/MuiDialog";
+import { Button, Typography, useTheme } from "@mui/material";
 import { useModalExcluir } from "./hooks/useModalExcluir";
+import { MuiModal } from "../../../../../shared/components/MuiModal/MuiModal";
 
 const ModalExcluir = () => {
   const { toggleModalExcluir, handleConfirm, handleModalExcluir, transacao } =
     useModalExcluir();
 
+  const theme = useTheme();
+
   return (
-    <MuiDialog
+    <MuiModal
       open={toggleModalExcluir}
       title="Excluir"
-      message={`Tem certeza que deseja excluir esta ${
-        transacao?.tipo === "Entrada" ? "Entrada" : "Saída"
-      }?`}
+      style={{ width: "400px" }}
       buttons={
         <>
           <Button color="secondary" variant="text" onClick={handleModalExcluir}>
@@ -23,7 +23,13 @@ const ModalExcluir = () => {
           </Button>
         </>
       }
-    />
+    >
+      <Typography
+        color={theme.palette.text.primary}
+      >{`Tem certeza que deseja excluir esta ${
+        transacao?.tipo === "Entrada" ? "Entrada" : "Saída"
+      }?`}</Typography>
+    </MuiModal>
   );
 };
 
