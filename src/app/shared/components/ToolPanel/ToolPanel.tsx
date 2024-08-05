@@ -28,9 +28,7 @@ export const ToolPainel: React.FC<MuiFrameProps> = ({
   return (
     <>
       <StyledContainer>
-        <BoxContainer
-          sx={{ justifyContent: buttons ? "space-between" : "none" }}
-        >
+        <BoxContainer sx={{ justifyContent: "space-between" }}>
           {!searchBar?.open ? (
             <Box
               sx={{
