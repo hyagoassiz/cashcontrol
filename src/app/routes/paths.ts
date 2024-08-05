@@ -1,29 +1,33 @@
+const REPOSITORIO = {
+  LIST: "/cashcontrol",
+};
+
 //AUTENTICACAO
 export const AUTENTICACAO = {
-  LOGIN: `/login`,
-  CREATE: `/criar-conta`,
-  CHECK: `/verificar-email`,
+  LOGIN: `${REPOSITORIO.LIST}/login`,
+  CREATE: `${REPOSITORIO.LIST}/criar-conta`,
+  CHECK: `${REPOSITORIO.LIST}/verificar-email`,
 };
 
 //DASHBOARD
 export const INICIO = {
-  LIST: `/inicio`,
+  LIST: `${REPOSITORIO.LIST}/inicio`,
 };
 
 //MOVIMENTACOES
 export const TRANSACOES = {
-  LIST: `/transacoes`,
+  LIST: `${REPOSITORIO.LIST}/transacoes`,
 };
 
 export const SALDOS = {
-  LIST: `/saldos`,
+  LIST: `${REPOSITORIO.LIST}/saldos`,
 };
 
 // SUBCADASTROS
 export const CATEGORIAS = {
-  LIST: `/categorias`,
+  LIST: `${REPOSITORIO.LIST}/categorias`,
 };
 
 export const CONTAS = {
-  LIST: `/contas`,
+  LIST: `${REPOSITORIO.LIST}/contas`,
 };
