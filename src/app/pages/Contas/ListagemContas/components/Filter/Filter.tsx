@@ -1,21 +1,11 @@
-import {
-  Autocomplete,
-  FormControl,
-  Grid,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, FormControl, Grid, TextField } from "@mui/material";
 import MuiDrawer from "../../../../../shared/components/MuiDrawer/MuiDrawer";
 import { Controller } from "react-hook-form";
 import { useFilter } from "./hooks/useFilter";
 
 const Filter = () => {
-  const {
-    toggleFilter,
-    setToggleFilter,
-    control,
-    handleSubmit,
-    onSubmit
-  } = useFilter();
+  const { toggleFilter, setToggleFilter, control, handleSubmit, onSubmit } =
+    useFilter();
 
   return (
     <>
@@ -47,7 +37,7 @@ const Filter = () => {
                     "Investimentos",
                     "Outros",
                   ]}
-                  onChange={(event, value) => field.onChange(value)}
+                  onChange={(_, value) => field.onChange(value)}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -75,7 +65,7 @@ const Filter = () => {
                   multiple
                   id="ativo"
                   options={["Ativo", "Inativo"]}
-                  onChange={(event, value) => {
+                  onChange={(_, value) => {
                     const formattedValue = value.map((option) =>
                       option === "Ativo" ? true : false
                     );

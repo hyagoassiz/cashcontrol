@@ -13,7 +13,6 @@ interface IUseListagemContas {
   setTextFilter: Dispatch<string>;
   handleModalConta: () => void;
   handleEditarConta(conta: IConta): void;
-  handleNavigate: () => void;
   refetch: () => void;
   handleEditarSituacao(conta: IConta): void;
 }
