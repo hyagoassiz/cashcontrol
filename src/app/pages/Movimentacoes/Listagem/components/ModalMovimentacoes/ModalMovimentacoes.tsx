@@ -40,10 +40,18 @@ export const ModalMovimentacoes: React.FC = () => {
       }`}
       buttons={
         <>
-          <Button variant="text" onClick={handleModalMovimentacoes}>
+          <Button
+            color="secondary"
+            variant="text"
+            onClick={handleModalMovimentacoes}
+          >
             Fechar
           </Button>
-          <Button variant="contained" onClick={handleSubmit(onSubmit)}>
+          <Button
+            color="secondary"
+            variant="contained"
+            onClick={handleSubmit(onSubmit)}
+          >
             Salvar
           </Button>
         </>
@@ -69,6 +77,7 @@ export const ModalMovimentacoes: React.FC = () => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      color="secondary"
                       variant="standard"
                       label="Tipo"
                       error={!!fieldState.error}
@@ -92,6 +101,7 @@ export const ModalMovimentacoes: React.FC = () => {
                 label="Data"
                 type="date"
                 variant="standard"
+                color="secondary"
                 onChange={field.onChange}
                 value={field.value ?? ""}
                 inputProps={{
@@ -129,6 +139,7 @@ export const ModalMovimentacoes: React.FC = () => {
                   <TextField
                     {...params}
                     variant="standard"
+                    color="secondary"
                     label={
                       getValues("tipo") === "Entrada" ? "Origem" : "Motivo"
                     }
@@ -165,6 +176,7 @@ export const ModalMovimentacoes: React.FC = () => {
                 thousandSeparator={"."}
                 defaultValue={0}
                 required
+                color="secondary"
                 disabled={watch("tipo") ? false : true}
                 error={!!fieldState.error}
               />
@@ -192,6 +204,7 @@ export const ModalMovimentacoes: React.FC = () => {
                   <TextField
                     {...params}
                     variant="standard"
+                    color="secondary"
                     label="Conta"
                     error={!!fieldState.error}
                     required
@@ -250,6 +263,7 @@ export const ModalMovimentacoes: React.FC = () => {
                 name="observacao"
                 type="text"
                 variant="standard"
+                color="secondary"
                 onChange={field.onChange}
                 value={field.value ?? ""}
                 inputProps={{
@@ -272,6 +286,7 @@ export const ModalMovimentacoes: React.FC = () => {
               control={control}
               render={({ field }) => (
                 <Switch
+                  color="secondary"
                   checked={field.value ?? true}
                   onChange={field.onChange}
                   disabled={watch("tipo") ? false : true}

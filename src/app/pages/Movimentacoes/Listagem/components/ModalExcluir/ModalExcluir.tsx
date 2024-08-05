@@ -19,10 +19,10 @@ const ModalExcluir = () => {
       }?`}
       buttons={
         <>
-          <Button variant="text" onClick={handleModalExcluir}>
+          <Button color="secondary" variant="text" onClick={handleModalExcluir}>
             Fechar
           </Button>
-          <Button variant="contained" onClick={handleConfirm}>
+          <Button color="secondary" variant="contained" onClick={handleConfirm}>
             Confirmar
           </Button>
         </>
