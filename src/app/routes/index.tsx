@@ -1,4 +1,9 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  HashRouter as BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import {
   LoginRoute,
   CadastroRoute,
