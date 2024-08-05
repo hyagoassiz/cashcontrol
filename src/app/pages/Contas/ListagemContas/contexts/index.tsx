@@ -3,12 +3,14 @@ import {
   ReactNode,
   SetStateAction,
   createContext,
+  useContext,
   useEffect,
   useState,
 } from "react";
 import { IConta, IFilterData } from "../interfaces";
 import { useQuery } from "@tanstack/react-query";
 import { obterContasPorUsuario } from "../services/endpoints";
+import { GlobalContext } from "../../../../shared/contexts";
 
 interface IListagemContasContext {
   children: ReactNode;
@@ -52,6 +54,7 @@ export function ListagemContasProvider({
   const [toggleModalConta, setToggleModalConta] = useState<boolean>(false);
   const [conta, setConta] = useState<IConta | undefined>(undefined);
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
+  const { usuario } = useContext(GlobalContext);
 
   const {
     data: contas,
@@ -59,8 +62,7 @@ export function ListagemContasProvider({
     refetch,
   } = useQuery({
     queryKey: ["contas"],
-    queryFn: () =>
-      obterContasPorUsuario("DxARypJQGMZeb1fMT4ft4BI4S2D2", filterData),
+    queryFn: () => obterContasPorUsuario(usuario.uid, filterData),
   });
 
   useEffect(() => {

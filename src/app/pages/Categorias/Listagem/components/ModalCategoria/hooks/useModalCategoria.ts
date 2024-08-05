@@ -59,7 +59,7 @@ export const useModalCategoria = (): IUseModalCategoria => {
     handleSubmit(async (data) => {
       const payload: ICategoria = {
         id: data.id,
-        usuario: usuario.id,
+        usuario: usuario.uid,
         nome: data.nome,
         ativo: data.ativo || true,
         tipo: data.tipo,
