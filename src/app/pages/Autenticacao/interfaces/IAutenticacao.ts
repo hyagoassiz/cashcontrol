@@ -1,7 +1,7 @@
 import { Auth } from "firebase/auth";
 export interface IAutenticacao {
   auth: Auth;
-  displayName: string;
+  displayName?: string;
   email: string;
   password: string;
 }

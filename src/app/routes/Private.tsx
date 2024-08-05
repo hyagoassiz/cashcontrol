@@ -2,9 +2,15 @@ import { useState, useEffect, ReactNode } from "react";
 import { auth } from "../../FirebaseConnection";
 import { onAuthStateChanged, sendEmailVerification } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
-import { IUserData } from "../shared/interfaces/IUserData";
 import * as PATHS from "../routes/paths";
 import { Box, CircularProgress } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  adicionarUserData,
+  removerUserData,
+} from "../shared/redux/user/actions";
+import { RootState } from "../shared/redux/interfaces/IRedux";
+import { IUsuario } from "../shared/interfaces";
 
 interface IPrivate {
   children: ReactNode;
@@ -15,18 +21,20 @@ export default function Private({ children }: IPrivate) {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const userReducer = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const userData: IUserData = {
+        const userData: IUsuario = {
           uid: user.uid,
           email: user.email ?? "",
           emailVerified: user.emailVerified,
           displayName: user.displayName ?? null,
         };
 
-        localStorage.setItem("@detailUser", JSON.stringify(userData));
+        dispatch(adicionarUserData(userData));
 
         if (!user.emailVerified) {
           navigate(PATHS.AUTENTICACAO.CHECK);
@@ -38,7 +46,7 @@ export default function Private({ children }: IPrivate) {
 
         setSigned(true);
       } else {
-        localStorage.removeItem("@detailUser");
+        dispatch(removerUserData());
         setSigned(false);
         navigate(PATHS.AUTENTICACAO.LOGIN);
       }
@@ -46,25 +54,21 @@ export default function Private({ children }: IPrivate) {
     });
 
     return () => unsub();
-  }, [navigate, location.pathname]);
+  }, [navigate, location.pathname, dispatch]);
 
   useEffect(() => {
     if (!loading && signed) {
-      const userDataString = localStorage.getItem("@detailUser");
-      if (userDataString) {
-        const userData: IUserData = JSON.parse(userDataString);
-        if (!userData.emailVerified) {
-          sendEmailVerification(auth.currentUser!)
-            .then(() => {
-              console.log("E-mail de verificação enviado");
-            })
-            .catch((error) => {
-              console.error("Erro ao enviar e-mail de verificação:", error);
-            });
-        }
+      if (!userReducer.emailVerified) {
+        sendEmailVerification(auth.currentUser!)
+          .then(() => {
+            console.log("E-mail de verificação enviado");
+          })
+          .catch((error) => {
+            console.error("Erro ao enviar e-mail de verificação:", error);
+          });
       }
     }
-  }, [loading, signed]);
+  }, [loading, signed, userReducer]);
 
   if (loading) {
     return (
@@ -72,7 +76,7 @@ export default function Private({ children }: IPrivate) {
         sx={{
           width: "100vw",
           height: "100vh",
-          backgroundColor: "#1976D2",
+          backgroundColor: "white",
           position: "fixed",
           top: 0,
           left: 0,
