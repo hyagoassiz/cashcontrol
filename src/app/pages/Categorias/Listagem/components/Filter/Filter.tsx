@@ -28,7 +28,7 @@ const Filter = () => {
                   id="tipo"
                   color="secondary"
                   options={["Entrada", "Saída"]}
-                  onChange={(event, value) => field.onChange(value)}
+                  onChange={(_, value) => field.onChange(value)}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -58,7 +58,7 @@ const Filter = () => {
                   id="ativo"
                   color="secondary"
                   options={["Ativo", "Inativo"]}
-                  onChange={(event, value) => {
+                  onChange={(_, value) => {
                     const formattedValue = value.map((option) =>
                       option === "Ativo" ? true : false
                     );

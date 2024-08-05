@@ -1,4 +1,5 @@
 import { ICategoria } from "../../../../shared/interfaces";
+import { IFilterData } from "../interfaces";
 import {
   adcionarCategoria,
   editarCategoria,
@@ -26,7 +27,7 @@ export const CategoriaService = {
   },
   async obterCategoriasPorUsuario(
     usuario: string,
-    ativo: boolean[]
+    ativo: IFilterData
   ): Promise<ICategoria[]> {
     try {
       const categorias = await obterCategoriasPorUsuario(usuario, ativo);
