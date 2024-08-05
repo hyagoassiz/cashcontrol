@@ -12,6 +12,8 @@ import { obterCategoriasPorUsuario } from "../services/endpoints";
 import { useQuery } from "@tanstack/react-query";
 import { ICategoria } from "../../../../shared/interfaces";
 import { GlobalContext } from "../../../../shared/contexts";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../../../shared/redux/loading/actions";
 
 interface IListagemCategoriasContextProps {
   children: ReactNode;
@@ -61,6 +63,8 @@ export function ListagemCategoriasProvider({
     useState<boolean>(false);
   const { usuario } = useContext(GlobalContext);
 
+  const dispatch = useDispatch();
+
   const {
     data: categorias,
     isLoading,
@@ -73,6 +77,10 @@ export function ListagemCategoriasProvider({
   useEffect(() => {
     refetch();
   }, [filterData]);
+
+  useEffect(() => {
+    dispatch(setLoading(isLoading));
+  }, [isLoading, dispatch]);
 
   return (
     <ListagemCategoriasContext.Provider

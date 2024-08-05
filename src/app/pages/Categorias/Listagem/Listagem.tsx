@@ -1,15 +1,15 @@
-import { Button } from "@mui/material";
-import { MuiFrame } from "../../../shared/components/MuiFrame/MuiFrame";
+import { Button, IconButton, Tooltip } from "@mui/material";
 import { ToolPainel } from "../../../shared/components/ToolPanel/ToolPanel";
 import { Add } from "@mui/icons-material";
 import { useListagem } from "./hooks/useListagem";
-import { BoxContainer } from "../../../shared/components/BoxContainer/BoxContainer";
 import { MuiTable } from "../../../shared/components/MuiTable/MuiTable";
 import { COLLUMS_CATEGORIA } from "./utils/collumnsNames";
 import { mountData } from "./utils/mountData";
 import { ModalCategoria } from "./components/ModalCategoria/ModalCategoria";
 import ModalSituacao from "./components/ModalSituacao/ModalSituacao";
 import Filter from "./components/Filter/Filter";
+import { TitlePage } from "../../../shared/components/TitlePage/TitlePage";
+import FilterListIcon from "@mui/icons-material/FilterList";
 
 export const ListagemCategorias: React.FC = () => {
   const {
@@ -17,7 +17,6 @@ export const ListagemCategorias: React.FC = () => {
     isLoading,
     handleEditarCategoria,
     handleModalCategoria,
-    handleNavigate,
     handleSearchBar,
     toggleSearchBar,
     textFilter,
@@ -28,49 +27,55 @@ export const ListagemCategorias: React.FC = () => {
 
   return (
     <>
-      <BoxContainer>
-        <MuiFrame title="Categorias" handleBack={handleNavigate} />
-        <ToolPainel
-          title={`Quantidade (${categorias?.length})`}
-          buttons={
-            <>
-              <Button
-                onClick={handleModalCategoria}
-                variant="contained"
-                color="primary"
-                startIcon={<Add />}
-              >
-                Adicionar
-              </Button>
-            </>
-          }
-          searchBar={{
-            open: toggleSearchBar,
-            placeholder: "Buscar categorias...",
-            value: textFilter,
-            onChange: (e) => setTextFilter(e.target.value),
-            handleSearchBar: handleSearchBar,
-            onClickClose: handleSearchBar,
-            handleFilter: handleToggleFilter,
-          }}
-        />
-        <MuiTable
-          columns={COLLUMS_CATEGORIA}
-          textForEmptyData="Nenhuma categoria encontrada"
-          data={mountData({
-            categorias,
-            alterarSituacao: handleEditarSituacao,
-            editarCategoria: handleEditarCategoria,
-          })}
-          isLoading={isLoading}
-        />
+      <TitlePage
+        title="Categorias"
+        subTitle="Crie categorias para entradas e saídas"
+      />
+      <ToolPainel
+        buttons={
+          <>
+            <Button
+              onClick={handleModalCategoria}
+              variant="contained"
+              color="primary"
+              startIcon={<Add />}
+            >
+              Adicionar
+            </Button>
+          </>
+        }
+        searchBar={{
+          open: toggleSearchBar,
+          placeholder: "Buscar categorias...",
+          value: textFilter,
+          onChange: (e) => setTextFilter(e.target.value),
+          handleSearchBar: handleSearchBar,
+          onClickClose: handleSearchBar,
+        }}
+        icons={
+          <Tooltip title="Filtrar" placement="top">
+            <IconButton onClick={handleToggleFilter}>
+              <FilterListIcon color="info" />
+            </IconButton>
+          </Tooltip>
+        }
+      />
+      <MuiTable
+        columns={COLLUMS_CATEGORIA}
+        textForEmptyData="Nenhuma categoria encontrada"
+        data={mountData({
+          categorias,
+          alterarSituacao: handleEditarSituacao,
+          editarCategoria: handleEditarCategoria,
+        })}
+        isLoading={isLoading}
+      />
 
-        <ModalCategoria />
+      <ModalCategoria />
 
-        <ModalSituacao />
+      <ModalSituacao />
 
-        <Filter />
-      </BoxContainer>
+      <Filter />
     </>
   );
 };

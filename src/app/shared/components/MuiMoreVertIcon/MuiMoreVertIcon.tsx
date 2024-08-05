@@ -26,6 +26,7 @@ const MuiMoreVertIcon = ({ options }: IMuiMoreVertIcon) => {
     <>
       <Tooltip placement="top" title="Opções">
         <IconButton
+          color="info"
           aria-controls="options-menu"
           aria-haspopup="true"
           onClick={handleClick}

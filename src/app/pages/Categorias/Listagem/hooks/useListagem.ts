@@ -1,9 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Dispatch, SetStateAction, useContext, useEffect } from "react";
 import { ListagemCategoriasContext } from "../contexts";
-import { useNavigate } from "react-router-dom";
 import { ICategoria } from "../../../../shared/interfaces";
-import * as PATHS from '../../../../routes/paths';
 
 interface IUseListagem {
   isLoading: boolean;
@@ -12,7 +10,6 @@ interface IUseListagem {
   handleEditarCategoria: (data: ICategoria) => void;
   handleModalCategoria: () => void;
   refetch: () => void;
-  handleNavigate: () => void;
   handleSearchBar: () => void;
   toggleSearchBar: boolean;
   setTextFilter: Dispatch<SetStateAction<string>>;
@@ -40,8 +37,6 @@ export const useListagem = (): IUseListagem => {
     setToggleFilter,
     toggleFilter,
   } = useContext(ListagemCategoriasContext);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     refetch();
@@ -72,10 +67,6 @@ export const useListagem = (): IUseListagem => {
     setToggleFilter((prevState) => !prevState);
   };
 
-  const handleNavigate = () => {
-    navigate(PATHS.MENU.LIST);
-  };
-
   return {
     isLoading,
     handleEditarCategoria,
@@ -83,7 +74,6 @@ export const useListagem = (): IUseListagem => {
     categorias,
     categoria,
     refetch,
-    handleNavigate,
     handleSearchBar,
     toggleSearchBar,
     setTextFilter,
