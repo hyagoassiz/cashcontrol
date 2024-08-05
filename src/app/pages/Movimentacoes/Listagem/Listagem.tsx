@@ -18,7 +18,7 @@ export const Listagem: React.FC = () => {
     movimentacoes,
     isFetchingMovimentacoes,
     handleEditarMovimentacao,
-    handleExcluirMovimentacao
+    handleExcluirMovimentacao,
   } = useListagem();
 
   return (
@@ -31,20 +31,11 @@ export const Listagem: React.FC = () => {
           buttons={
             <>
               <Button
-                variant="outlined"
-                onClick={() => handleModalMovimentacoes(true)}
+                variant="text"
+                onClick={handleModalMovimentacoes}
                 startIcon={<Add />}
-                sx={{color: 'green'}}
               >
-                Entrada
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={() => handleModalMovimentacoes(false)}
-                startIcon={<Add />}
-                sx={{color: 'red'}}
-              >
-                Saída
+                Adicionar
               </Button>
             </>
           }
@@ -56,12 +47,12 @@ export const Listagem: React.FC = () => {
           data={mountData({
             movimentacoes,
             editarMovimentacao: handleEditarMovimentacao,
-            excluirMovimentacao: handleExcluirMovimentacao
+            excluirMovimentacao: handleExcluirMovimentacao,
           })}
         />
       </BoxContainer>
       <ModalMovimentacoes />
-      <ModalExcluir/>
+      <ModalExcluir />
     </>
   );
 };
