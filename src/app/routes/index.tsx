@@ -1,5 +1,5 @@
 import {
-  HashRouter as Router,
+  HashRouter as BrowserRouter,
   Routes,
   Route,
   Navigate,
@@ -32,7 +32,7 @@ const Layout = ({ children }: LayoutProps) => (
 
 export const AppRoutes = () => {
   return (
-    <Router basename="/cashcontrol">
+    <BrowserRouter basename="/cashcontrol">
       <Routes>
         <Route path={PATHS.AUTENTICACAO.LOGIN} element={<LoginRoute />} />
         <Route path={PATHS.AUTENTICACAO.CREATE} element={<CadastroRoute />} />
@@ -100,6 +100,6 @@ export const AppRoutes = () => {
           }
         />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
