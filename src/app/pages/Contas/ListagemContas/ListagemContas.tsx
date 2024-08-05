@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import { MuiAppBar } from "../../../shared/components/MuiAppBar/AppBar";
 import { MuiFrame } from "../../../shared/components/MuiFrame/MuiFrame";
 import { MuiTable } from "../../../shared/components/MuiTable/MuiTable";
 import { COLLUMS_CONTA } from "./utils/collumnsNames";
@@ -29,8 +28,6 @@ export const ListagemContas: React.FC = () => {
 
   return (
     <>
-      <MuiAppBar />
-
       <BoxContainer>
         <MuiFrame title="Contas" handleBack={handleNavigate} />
         <ToolPainel
