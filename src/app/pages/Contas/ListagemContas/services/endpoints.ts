@@ -53,11 +53,14 @@ export const obterContasPorUsuario = async function (
   }
 };
 
-export const adcionarConta = async function (
+
+export const adicionarConta = async function (
   data: IConta
 ): Promise<IReturnBackEnd> {
   try {
-    await addDoc(collection(db, "conta"), data);
+    const { id, ...dataToSend } = data;
+
+    await addDoc(collection(db, "conta"), dataToSend);
     return {
       status: 200,
       message: "success",
@@ -70,6 +73,9 @@ export const adcionarConta = async function (
     };
   }
 };
+
+
+
 
 export const editarConta = async function (
   payload: IConta

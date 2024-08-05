@@ -1,15 +1,10 @@
 import { IConta } from "../../../interfaces";
-import {
-  Control,
-  useForm,
-  UseFormGetValues,
-  UseFormHandleSubmit,
-} from "react-hook-form";
+import { Control, useForm, UseFormHandleSubmit } from "react-hook-form";
 import { ContaService } from "../../../services/ContaService";
 import { useContext, useEffect } from "react";
 import { ListagemContasContext } from "../../../contexts";
 import { GlobalContext } from "../../../../../../shared/contexts";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
 
@@ -19,28 +14,25 @@ interface IUseModalConta {
   onSubmit: () => void;
   toggleModalConta: boolean;
   handleModalConta: () => void;
-  getValues: UseFormGetValues<IConta>;
+  conta: IConta | undefined;
   handleSubmit: UseFormHandleSubmit<IConta>;
 }
 
 export const useModalConta = (): IUseModalConta => {
-  const { toggleModalConta, setToggleModalConta, conta, setConta } = useContext(
-    ListagemContasContext
-  );
+  const { toggleModalConta, setToggleModalConta, conta, setConta, refetch } =
+    useContext(ListagemContasContext);
 
   const { usuario } = useContext(GlobalContext);
 
-  const { handleSubmit, control, getValues, setValue, reset } =
-    useForm<IConta>();
-
-  const queryClient = useQueryClient();
+  const { handleSubmit, control, setValue, reset } = useForm<IConta>();
 
   const dispatch = useDispatch();
 
-  const { mutate } = useMutation({
+  const { mutate: adicionarConta } = useMutation({
     mutationFn: ContaService.criarConta,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["contas"] });
+      refetch();
+      handleModalConta();
       dispatch(showSnackbar("Conta criada com sucesso"));
     },
     onError: (error) => {
@@ -52,7 +44,8 @@ export const useModalConta = (): IUseModalConta => {
   const { mutate: editarConta } = useMutation({
     mutationFn: ContaService.editarConta,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["contas"] });
+      refetch();
+      handleModalConta();
       dispatch(showSnackbar("Conta editada com sucesso"));
     },
     onError: (error) => {
@@ -64,16 +57,14 @@ export const useModalConta = (): IUseModalConta => {
   const tipos = ["Conta Corrente", "Poupança", "Investimentos", "Outros"];
 
   useEffect(() => {
-    if (conta?.id) {
+    if (conta?.id && toggleModalConta) {
       (Object.keys(conta) as (keyof IConta)[]).forEach((key) => {
         setValue(key as keyof IConta, conta[key] as IConta[keyof IConta]);
       });
     }
-    return () => setConta(undefined);
   });
 
   const onSubmit = () => {
-    handleModalConta();
     handleSubmit(async (data) => {
       const payload: IConta = {
         id: data.id,
@@ -89,7 +80,7 @@ export const useModalConta = (): IUseModalConta => {
       if (data.id) {
         editarConta(payload);
       } else {
-        console.log(payload);
+        adicionarConta(payload);
       }
     })();
   };
@@ -106,7 +97,7 @@ export const useModalConta = (): IUseModalConta => {
     onSubmit,
     toggleModalConta,
     handleModalConta,
-    getValues,
     handleSubmit,
+    conta,
   };
 };
