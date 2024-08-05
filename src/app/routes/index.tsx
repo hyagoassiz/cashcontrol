@@ -1,9 +1,4 @@
-import {
-  HashRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import {
   LoginRoute,
   CadastroRoute,
@@ -32,7 +27,7 @@ const Layout = ({ children }: LayoutProps) => (
 
 export const AppRoutes = () => {
   return (
-    <Router basename="/cashcontrol">
+    <BrowserRouter>
       <Routes>
         <Route path={PATHS.AUTENTICACAO.LOGIN} element={<LoginRoute />} />
         <Route path={PATHS.AUTENTICACAO.CREATE} element={<CadastroRoute />} />
@@ -100,6 +95,6 @@ export const AppRoutes = () => {
           }
         />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
