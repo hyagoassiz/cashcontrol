@@ -3,5 +3,6 @@ export interface IOptionsMenu {
   routes: {
     name: string;
     route: string;
+    function?: () => Promise<void>;
   }[];
 }
