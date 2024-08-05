@@ -1,20 +1,18 @@
-import { Button } from "@mui/material";
+import { Button, Typography, useTheme } from "@mui/material";
 import { useModalSituacao } from "./hooks/useModalSituacao";
-import MuiDialog from "../../../../../shared/components/MuiDialog/MuiDialog";
+import { MuiModal } from "../../../../../shared/components/MuiModal/MuiModal";
 
 const ModalSituacao = () => {
   const { handleModalSituacao, handleConfirm, toggleModalSituacao, categoria } =
     useModalSituacao();
 
+  const theme = useTheme();
+
   return (
-    <MuiDialog
+    <MuiModal
       open={toggleModalSituacao}
       title={categoria?.ativo ? "Inativar" : "Ativar"}
-      message={
-        categoria?.ativo
-          ? `Tem certeza que deseja inativar ${categoria?.nome}?`
-          : `Tem certeza que deseja ativar ${categoria?.nome}?`
-      }
+      style={{ width: "400px" }}
       buttons={
         <>
           <Button
@@ -29,7 +27,13 @@ const ModalSituacao = () => {
           </Button>
         </>
       }
-    ></MuiDialog>
+    >
+      <Typography color={theme.palette.text.primary}>
+        {categoria?.ativo
+          ? `Tem certeza que deseja inativar ${categoria?.nome}?`
+          : `Tem certeza que deseja ativar ${categoria?.nome}?`}
+      </Typography>
+    </MuiModal>
   );
 };
 
