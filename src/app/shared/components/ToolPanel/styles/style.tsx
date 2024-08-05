@@ -4,7 +4,6 @@ import { styled } from "@mui/system";
 export const StyledContainer = styled(Box)(() => ({
   height: "auto",
   padding: 0,
-  width: "400px",
 }));
 
 export const BoxContainer = styled(Box)(({ theme }) => ({
