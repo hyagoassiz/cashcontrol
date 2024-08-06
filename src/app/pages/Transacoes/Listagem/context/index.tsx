@@ -3,17 +3,14 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
-  useContext,
   useEffect,
   useState,
 } from "react";
-import { useQueryListarMovimentacao } from "../../../../shared/hooks/useQueryListarMovimentacao";
-import { GlobalContext } from "../../../../shared/contexts";
-import { ITransacao } from "../interfaces";
-import { ISaldo } from "../../../../shared/interfaces";
+import { ISaldo, ITransacao } from "../../../../shared/interfaces";
 import { mountSaldos } from "../../../../shared/utils/mountSaldos";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../../../shared/redux/loading/actions";
+import { useQueryListarTransacoes } from "../../../../shared/hooks/transacoes/useQuery/useQueryListarTransacoes";
 
 interface IListagemContext {
   children: ReactNode;
@@ -26,7 +23,7 @@ interface IListagemContextData {
   transacao: ITransacao | null;
   setTransacao: Dispatch<SetStateAction<ITransacao | null>>;
   isFetchingTransacoes: boolean;
-  refecthMovimentacoes: () => void;
+  refetchTransacoes: () => void;
   toggleModalExcluir: boolean;
   setToggleModalExcluir: Dispatch<SetStateAction<boolean>>;
   saldos: ISaldo[];
@@ -40,8 +37,6 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
 
   const [toggleModalExcluir, setToggleModalExcluir] = useState<boolean>(false);
 
-  const { usuario } = useContext(GlobalContext);
-
   const [transacao, setTransacao] = useState<ITransacao | null>(null);
 
   const [saldos, setSaldos] = useState<ISaldo[]>([]);
@@ -51,10 +46,8 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
   const {
     data: transacoes,
     isLoading: isFetchingTransacoes,
-    refetch: refecthMovimentacoes,
-  } = useQueryListarMovimentacao({
-    id: usuario.uid,
-  });
+    refetch: refetchTransacoes,
+  } = useQueryListarTransacoes();
 
   useEffect(() => {
     if (transacoes) {
@@ -75,7 +68,7 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
         setToggleModalExcluir,
         transacoes,
         isFetchingTransacoes,
-        refecthMovimentacoes,
+        refetchTransacoes,
         transacao,
         setTransacao,
         saldos,

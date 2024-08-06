@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { ListagemContext } from "../context";
-import { ITransacao } from "../interfaces";
+import { ITransacao } from "../../../../shared/interfaces";
 
 interface IUseListagem {
   handleModalTransacoes: () => void;

@@ -3,16 +3,14 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
-  useContext,
   useEffect,
   useState,
 } from "react";
-import { useQueryListarMovimentacao } from "../../../../shared/hooks/useQueryListarMovimentacao";
-import { GlobalContext } from "../../../../shared/contexts";
-import { IMovimentacao, ISaldo } from "../../../../shared/interfaces";
+import { ISaldo, ITransacao } from "../../../../shared/interfaces";
 import { mountSaldos } from "../../../../shared/utils/mountSaldos";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../../../shared/redux/loading/actions";
+import { useQueryListarTransacoes } from "../../../../shared/hooks/transacoes/useQuery/useQueryListarTransacoes";
 
 interface IListagemContext {
   children: ReactNode;
@@ -22,14 +20,13 @@ interface IListagemContextData {
   toggleModalAjusteSaldo: boolean;
   setToggleMOdalAjusteSaldo: Dispatch<SetStateAction<boolean>>;
   saldos: ISaldo[];
-  movimentacoes: IMovimentacao[] | undefined;
+  movimentacoes: ITransacao[] | undefined;
   isFetchingMovimentacoes: boolean;
 }
 
 export const ListagemContext = createContext({} as IListagemContextData);
 
 export function ListagemProvider({ children }: IListagemContext): JSX.Element {
-  const { usuario } = useContext(GlobalContext);
   const [toggleModalAjusteSaldo, setToggleMOdalAjusteSaldo] =
     useState<boolean>(false);
 
@@ -38,9 +35,7 @@ export function ListagemProvider({ children }: IListagemContext): JSX.Element {
   const dispatch = useDispatch();
 
   const { data: movimentacoes, isLoading: isFetchingMovimentacoes } =
-    useQueryListarMovimentacao({
-      id: usuario.uid,
-    });
+    useQueryListarTransacoes();
 
   useEffect(() => {
     if (movimentacoes) {

@@ -14,15 +14,18 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
-import { ITransacao } from "../../../interfaces";
 import { getTodayDate } from "../../../../../../shared/utils/getTodayDate";
-import { useQueryListarCategoria } from "../../../../../../shared/hooks/useQueryListarCategoria";
-import { ICategoria, IConta } from "../../../../../../shared/interfaces";
+import {
+  ICategoria,
+  IConta,
+  ITransacao,
+} from "../../../../../../shared/interfaces";
 import { GlobalContext } from "../../../../../../shared/contexts";
-import { useQueryListarConta } from "../../../../../../shared/hooks/useQueryListarConta";
 import { useMutationAdicionarMovimentacao } from "../../../../../../shared/hooks/useMutationAdicionarMovimentacao";
 import { useMutationEditarMovimentacao } from "../../../../../../shared/hooks/useMutationEditarMovimentacao";
 import { getSaldo } from "../../../../../../shared/utils/getSaldo";
+import { useQueryListarCategorias } from "../../../../../../shared/hooks/categorias/useQuery/useQueryListarCategorias";
+import { useQueryListarContas } from "../../../../../../shared/hooks/contas/useQuery/useQueryListarContas";
 
 interface ISaldoConta {
   saldo: number;
@@ -51,7 +54,7 @@ export const useModalTransacoes = (): IUseModalTransacoes => {
   const {
     toggleModalTransacoes,
     setToggleModalTransacoes,
-    refecthMovimentacoes,
+    refetchTransacoes,
     transacao,
     setTransacao,
     saldos,
@@ -68,10 +71,14 @@ export const useModalTransacoes = (): IUseModalTransacoes => {
     });
 
   const { data: categorias, isLoading: isFetchingCategorias } =
-    useQueryListarCategoria({ id: usuario.uid });
+    useQueryListarCategorias({
+      tipo: getValues("tipo") === "Entrada" ? ["Entrada"] : ["Saída"],
+      ativo: [true],
+    });
 
-  const { data: contas, isLoading: isFetchingContas } = useQueryListarConta({
-    id: usuario.uid,
+  const { data: contas, isLoading: isFetchingContas } = useQueryListarContas({
+    ativo: [true],
+    tipoConta: ["Conta Corrente", "Conta Corrente", "Outros", "Poupança"],
   });
 
   const tipos = ["Entrada", "Saída"];
@@ -151,7 +158,7 @@ export const useModalTransacoes = (): IUseModalTransacoes => {
         editar(payload, {
           onSuccess: () => {
             handleModalMovimentacoes();
-            refecthMovimentacoes();
+            refetchTransacoes();
           },
           onError: () => {
             handleModalMovimentacoes;
@@ -161,7 +168,7 @@ export const useModalTransacoes = (): IUseModalTransacoes => {
         adicionar(payload, {
           onSuccess: () => {
             handleModalMovimentacoes();
-            refecthMovimentacoes();
+            refetchTransacoes();
           },
           onError: () => {
             handleModalMovimentacoes;
