@@ -3,16 +3,13 @@ import {
   ReactNode,
   SetStateAction,
   createContext,
-  useContext,
   useEffect,
   useState,
 } from "react";
 import { IConta, IFilterData } from "../interfaces";
-import { useQuery } from "@tanstack/react-query";
-import { obterContasPorUsuario } from "../services/endpoints";
-import { GlobalContext } from "../../../../shared/contexts";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../../../shared/redux/loading/actions";
+import { useQueryListarContas } from "../../../../shared/hooks/contas/useQuery/useQueryListarContas";
 
 interface IListagemContasContext {
   children: ReactNode;
@@ -56,22 +53,14 @@ export function ListagemContasProvider({
   const [toggleModalConta, setToggleModalConta] = useState<boolean>(false);
   const [conta, setConta] = useState<IConta | undefined>(undefined);
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
-  const { usuario } = useContext(GlobalContext);
 
   const dispatch = useDispatch();
 
-  const {
-    data: contas,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["contas"],
-    queryFn: () => obterContasPorUsuario(usuario.uid, filterData),
-  });
+  const { data: contas, isLoading, refetch } = useQueryListarContas(filterData);
 
   useEffect(() => {
     refetch();
-  }, [filterData]);
+  }, [filterData, refetch]);
 
   useEffect(() => {
     dispatch(setLoading(isLoading));

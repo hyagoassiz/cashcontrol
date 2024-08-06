@@ -1,4 +1,6 @@
 export interface IFilterData {
-    tipo: string[]
-    ativo: boolean[]
+  tipo: TipoCategoria[];
+  ativo: boolean[];
 }
+
+type TipoCategoria = "Entrada" | "Saída";

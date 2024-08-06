@@ -9,12 +9,12 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { IMovimentacao, IReturnBackEnd } from "../interfaces";
+import { ITransacao, IReturnBackEnd } from "../interfaces";
 import { db } from "../../../FirebaseConnection";
 
 export const queryListarMovimentacoes = async function (
   usuario: string
-): Promise<IMovimentacao[]> {
+): Promise<ITransacao[]> {
   try {
     const movimentacoesQuery = query(
       collection(db, "movimentacao"),
@@ -22,11 +22,11 @@ export const queryListarMovimentacoes = async function (
     );
 
     const querySnapshot = await getDocs(movimentacoesQuery);
-    const movimentacoes: IMovimentacao[] = [];
+    const movimentacoes: ITransacao[] = [];
 
     querySnapshot.forEach((doc) => {
       const movimentacaoData = doc.data();
-      const movimentacao: IMovimentacao = {
+      const movimentacao: ITransacao = {
         id: doc.id,
         usuario: movimentacaoData.usuario,
         data: movimentacaoData.data,
@@ -48,7 +48,7 @@ export const queryListarMovimentacoes = async function (
 };
 
 export const queryAdicionarMovimentacao = async function (
-  payload: IMovimentacao
+  payload: ITransacao
 ): Promise<IReturnBackEnd> {
   try {
     const { id, ...payloadWithoutId } = payload;
@@ -67,7 +67,7 @@ export const queryAdicionarMovimentacao = async function (
 };
 
 export const queryEditarMovimentacao = async function (
-  payload: IMovimentacao
+  payload: ITransacao
 ): Promise<IReturnBackEnd> {
   try {
     const { id, ...updateData } = payload;
@@ -99,7 +99,7 @@ export const queryEditarMovimentacao = async function (
 };
 
 export const queryExcluirMovimentacao = async function (
-  payload: IMovimentacao
+  payload: ITransacao
 ): Promise<IReturnBackEnd> {
   try {
     const { id, usuario } = payload;
