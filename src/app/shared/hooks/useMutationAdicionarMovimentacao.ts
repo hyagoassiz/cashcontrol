@@ -1,5 +1,5 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { IMovimentacao, IReturnBackEnd } from "../interfaces";
+import { IReturnBackEnd, ITransacao } from "../interfaces";
 import { MovimentacaoService } from "../services/movimentacaoService";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "../redux/snackBar/actions";
@@ -7,16 +7,18 @@ import { showSnackbar } from "../redux/snackBar/actions";
 export const useMutationAdicionarMovimentacao = (): UseMutationResult<
   IReturnBackEnd,
   unknown,
-  IMovimentacao
+  ITransacao
 > => {
   const dispatch = useDispatch();
   return useMutation({
-    mutationFn: (payload: IMovimentacao) => 
+    mutationFn: (payload: ITransacao) =>
       MovimentacaoService.addMovimentacao(payload),
     onSuccess: (_, variables) => {
       dispatch(
         showSnackbar(
-          `${variables.tipo === "Entrada" ? "Entrada" : "Saída"} registrada com sucesso`
+          `${
+            variables.tipo === "Entrada" ? "Entrada" : "Saída"
+          } registrada com sucesso`
         )
       );
     },
