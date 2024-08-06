@@ -3,9 +3,9 @@ import MuiMoreVertIcon from "../../../../shared/components/MuiMoreVertIcon/MuiMo
 import MuiSituacao from "../../../../shared/components/MuiSituacao/MuiSituacao";
 import MuiTipo from "../../../../shared/components/MuiTipo/MuiTipo";
 import { SituacaoColors } from "../../../../shared/constants";
-import { ITransacao } from "../interfaces";
 import { formatDate } from "../../../../shared/utils/formatDate";
 import { Typography } from "@mui/material";
+import { ITransacao } from "../../../../shared/interfaces";
 
 interface IMountData {
   transacoes: ITransacao[] | undefined;
