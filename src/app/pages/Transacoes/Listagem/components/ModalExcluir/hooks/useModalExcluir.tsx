@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ListagemContext } from "../../../context";
 import { useMutationExcluirMovimentacao } from "../../../../../../shared/hooks/useMutationExcluirMovimentacao copy";
-import { ITransacao } from "../../../interfaces";
+import { ITransacao } from "../../../../../../shared/interfaces";
 
 interface IUseModalExcluir {
   toggleModalExcluir: boolean;
@@ -16,7 +16,7 @@ export const useModalExcluir = (): IUseModalExcluir => {
     setTransacao,
     setToggleModalExcluir,
     toggleModalExcluir,
-    refecthMovimentacoes,
+    refetchTransacoes,
   } = useContext(ListagemContext);
 
   const { mutate } = useMutationExcluirMovimentacao();
@@ -26,7 +26,7 @@ export const useModalExcluir = (): IUseModalExcluir => {
       mutate(transacao, {
         onSuccess: () => {
           handleModalExcluir();
-          refecthMovimentacoes();
+          refetchTransacoes();
         },
       });
     }

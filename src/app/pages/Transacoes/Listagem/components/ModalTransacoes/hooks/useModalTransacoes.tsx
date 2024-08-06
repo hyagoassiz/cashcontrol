@@ -14,9 +14,12 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
-import { ITransacao } from "../../../interfaces";
 import { getTodayDate } from "../../../../../../shared/utils/getTodayDate";
-import { ICategoria, IConta } from "../../../../../../shared/interfaces";
+import {
+  ICategoria,
+  IConta,
+  ITransacao,
+} from "../../../../../../shared/interfaces";
 import { GlobalContext } from "../../../../../../shared/contexts";
 import { useMutationAdicionarMovimentacao } from "../../../../../../shared/hooks/useMutationAdicionarMovimentacao";
 import { useMutationEditarMovimentacao } from "../../../../../../shared/hooks/useMutationEditarMovimentacao";
@@ -51,7 +54,7 @@ export const useModalTransacoes = (): IUseModalTransacoes => {
   const {
     toggleModalTransacoes,
     setToggleModalTransacoes,
-    refecthMovimentacoes,
+    refetchTransacoes,
     transacao,
     setTransacao,
     saldos,
@@ -155,7 +158,7 @@ export const useModalTransacoes = (): IUseModalTransacoes => {
         editar(payload, {
           onSuccess: () => {
             handleModalMovimentacoes();
-            refecthMovimentacoes();
+            refetchTransacoes();
           },
           onError: () => {
             handleModalMovimentacoes;
@@ -165,7 +168,7 @@ export const useModalTransacoes = (): IUseModalTransacoes => {
         adicionar(payload, {
           onSuccess: () => {
             handleModalMovimentacoes();
-            refecthMovimentacoes();
+            refetchTransacoes();
           },
           onError: () => {
             handleModalMovimentacoes;
