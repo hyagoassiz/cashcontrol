@@ -3,17 +3,14 @@ import {
   ReactNode,
   SetStateAction,
   createContext,
-  useContext,
   useEffect,
   useState,
 } from "react";
 import { IFilterData } from "../interfaces";
-import { obterCategoriasPorUsuario } from "../services/endpoints";
-import { useQuery } from "@tanstack/react-query";
 import { ICategoria } from "../../../../shared/interfaces";
-import { GlobalContext } from "../../../../shared/contexts";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../../../shared/redux/loading/actions";
+import { useQueryListarCategorias } from "../../../../shared/hooks/categorias/useQuery/useQueryListarCategorias";
 
 interface IListagemCategoriasContextProps {
   children: ReactNode;
@@ -61,22 +58,18 @@ export function ListagemCategoriasProvider({
   const [categoria, setCategoria] = useState<ICategoria | undefined>(undefined);
   const [toggleModalCategoria, setToggleModalCategoria] =
     useState<boolean>(false);
-  const { usuario } = useContext(GlobalContext);
 
   const dispatch = useDispatch();
 
   const {
     data: categorias,
-    isLoading,
     refetch,
-  } = useQuery({
-    queryKey: ["categorias"],
-    queryFn: () => obterCategoriasPorUsuario(usuario.uid, filterData),
-  });
+    isLoading,
+  } = useQueryListarCategorias(filterData);
 
   useEffect(() => {
     refetch();
-  }, [filterData]);
+  }, [filterData, refetch]);
 
   useEffect(() => {
     dispatch(setLoading(isLoading));

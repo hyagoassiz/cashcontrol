@@ -16,13 +16,13 @@ import {
 } from "react-hook-form";
 import { ITransacao } from "../../../interfaces";
 import { getTodayDate } from "../../../../../../shared/utils/getTodayDate";
-import { useQueryListarCategoria } from "../../../../../../shared/hooks/useQueryListarCategoria";
 import { ICategoria, IConta } from "../../../../../../shared/interfaces";
 import { GlobalContext } from "../../../../../../shared/contexts";
 import { useQueryListarConta } from "../../../../../../shared/hooks/useQueryListarConta";
 import { useMutationAdicionarMovimentacao } from "../../../../../../shared/hooks/useMutationAdicionarMovimentacao";
 import { useMutationEditarMovimentacao } from "../../../../../../shared/hooks/useMutationEditarMovimentacao";
 import { getSaldo } from "../../../../../../shared/utils/getSaldo";
+import { useQueryListarCategorias } from "../../../../../../shared/hooks/categorias/useQuery/useQueryListarCategorias";
 
 interface ISaldoConta {
   saldo: number;
@@ -68,7 +68,10 @@ export const useModalTransacoes = (): IUseModalTransacoes => {
     });
 
   const { data: categorias, isLoading: isFetchingCategorias } =
-    useQueryListarCategoria({ id: usuario.uid });
+    useQueryListarCategorias({
+      tipo: getValues("tipo") === "Entrada" ? ["Entrada"] : ["Saída"],
+      ativo: [true],
+    });
 
   const { data: contas, isLoading: isFetchingContas } = useQueryListarConta({
     id: usuario.uid,
